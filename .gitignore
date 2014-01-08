@@ -1,2 +1,4 @@
 hackingweek/private_settings.py
 *~
+*.pyc
+dev.db
