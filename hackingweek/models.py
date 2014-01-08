@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Challenge(models.Model):
+    name   = models.CharField(max_length=128)
+    author = models.CharField(max_length=128)
+    description = models.CharField(max_length=2048)
+    password = models.CharField(max_length=128)
+
+
 class Team(models.Model):
     name = models.CharField(max_length=128)
     members = models.ManyToManyField(User,
