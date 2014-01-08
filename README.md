@@ -24,4 +24,4 @@ $> python manage.py runserver
 2. Get the hackingweek code
 ---------------------------
 
-git clone ....
+git clone git@github.com:perror/hackingweek.git
