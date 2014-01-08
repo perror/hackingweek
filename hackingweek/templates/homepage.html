@@ -1,0 +1,79 @@
+{% extends "banner_base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block head_title %}HackingWeek{% endblock %}
+{% block body_class %}home{% endblock %}
+
+{% block banner %}    
+    <h1>Bienvenue à la HackingWeek&nbsp;!</h1>
+    <p>
+      La Hacking Week est un concours de sécurité en ligne destiné aux
+      étudiants Francophones. Elle se déroulera du Vendredi 21 Février
+      2014 (18h) au Dimanche 2 Mars 2014 (minuit).
+    </p>
+    
+    {% if user.is_authenticated %}
+        <p>Créez ou rejoignez une <a href="{{ teams_url }}" class="btn btn-primary large">équipe</a> !</p>
+    {% else %}
+        {% url "account_login" as login_url %}
+        {% url "account_signup" as signup_url %}
+        <p>Vous pouvez <a href="{{ login_url }}" class="btn btn-default">vous loger</a> ou bien <a href="{{ signup_url }}" class="btn btn-primary">créer un compte</a> pour participer au concours.</p>
+    {% endif %}
+
+    <div class="message" style="text-align:center;margin-top:15px"></div>
+    <div class="clock" style="margin-left:auto;margin-right:auto;width:42em;"></div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{% static "js/flipclock/flipclock.min.js" %}"></script>
+    <script src="{% static "js/flipclock/lang/fr-fr.js" %}"></script>
+
+    <script type="text/javascript">
+      // FIXME: Transition from one state to another is not handled
+      var clock;
+
+      $(document).ready(function() {
+        // Grab the current date
+        var currentDate = new Date();
+
+        // Set the starting date
+        var startDate  = new Date("2014 February 21 18:00:00");
+
+        // Set the ending date
+        var endDate = new Date("2014 March 2 24:00:00");
+
+      if (currentDate < startDate)
+      {		      
+        // Calculate the difference in seconds between start and current date
+        var diff = startDate.getTime() / 1000 - currentDate.getTime() / 1000;
+        var msg = 'La HackingWeek commence dans:';
+      }
+      else if (currentDate < endDate) 
+      {
+        // Calculate the difference in seconds between current and end date
+        var diff = endDate.getTime() / 1000 - currentDate.getTime() / 1000;
+        var msg = 'La HackingWeek fini dans:';
+      }
+      else
+      {
+        // Game is over
+        var diff = 0;
+        var msg = 'Le concours est termin&eacute;.';
+      }			       
+        // Instantiate a coutdown FlipClock
+        clock = $('.clock').FlipClock(diff, {
+          countdown: true,
+          clockFace: 'DailyCounter',
+          language: 'fr',
+          showSeconds: false,
+          callbacks: {
+            start: function() {
+              $('.message').html(msg);
+            }
+	  }
+        });
+      });
+    </script>		
+{% endblock %}
