@@ -129,16 +129,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.staticfiles",
-    
+
     # theme
     "bootstrapform",
     "pinax_theme_bootstrap",
-    
+
     # external
     "account",
     "eventlog",
     "metron",
-    
+
     # project
     "hackingweek",
 ]
@@ -176,7 +176,10 @@ FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]
 
-from private_settings import *
+try:
+    from private_settings import *  # noqa
+except ImportError:
+    pass
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
