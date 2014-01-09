@@ -18,7 +18,7 @@ class Team(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    
+
     real_name   = models.CharField(max_length=128)
     school      = models.CharField(max_length=128)
     study_level = models.CharField(max_length=8)

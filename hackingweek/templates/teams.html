@@ -9,9 +9,20 @@
 {% block body %}
     <div class="row">
         <div class="col-lg-4">
-	  Coucou
+	  <h1>List of teams</h1>
+	  <ul>
+	    {% for team in object_list %}
+	    <li><h4>{{ team.name }}</h4>
+	      {{ team.members.all|join:", " }}.
+	    </li>
+	    {% empty %}
+	    <li>{% trans "No team registered yet" %}.</li>
+	    {% endfor %}
+	  </ul>
         </div>
-        <div class="col-lg-4">
-        </div>
+	<div>
+	  <span class="badge">Équipes {{ object_list|length }}</span>
+	  <span class="badge">Utilisateurs {{ users|length }}</span>
+	</div>
     </div>
 {% endblock %}

@@ -3,6 +3,9 @@ import hackingweek.forms
 
 from django.contrib.auth.decorators import login_required
 
+from django.views.generic.list import ListView
+from hackingweek.models import Team
+
 
 class SignupView(account.views.SignupView):
 
@@ -46,3 +49,12 @@ class SettingsView(account.views.SettingsView):
       profile.study_level = form.cleaned_data['study_level']
       
       profile.save()
+
+
+class TeamListView(ListView):
+
+   model = Team
+
+   def get_context_data(self, **kwargs):
+      context = super(TeamListView, self).get_context_data(**kwargs)
+      return context
