@@ -20,6 +20,9 @@
       <li><a href="{{ SITEURL }}/teams/"{% if request.path == "/teams/" %} class="active"{% endif %}>{% trans "Teams" %}</a></li>
       <li><a href="{{ SITEURL }}/about/"{% if request.path == "/about/" %} class="active"{% endif %}>{% trans "About" %}</a></li>
     </ul>
+
+    <span class="badge">Équipes {{ object_list|length }}</span>
+    <span class="badge">Utilisateurs {{ users|length }}</span>
 {% endblock %}
 
 {% block footer %}

@@ -8,24 +8,24 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-lg-4">
-	  <h1>List of teams</h1>
-	  <ul>
-	    {% for team in object_list %}
-	    <li><h4>{{ team.name }} {% if user.is_authenticated %}<a href="{{ join_team }}" class="btn btn-primary btn-xs">{% trans "Join" %}</a>{% endif %}</h4>
-	      {{ team.members.all|join:", " }}.
-	    </li>
-	    {% empty %}
-	    <li>{% trans "No team registered yet" %}.</li>
-	    {% endfor %}
-	  </ul>
-	  {% if user.is_authenticated %}
-	  <a href="{{ create_team }}" class="btn btn-primary btn-xs">{% trans "Create Team" %}</a>
-	  {% endif %}
-	</div>
-	<div>
-	  <span class="badge">Équipes {{ object_list|length }}</span>
-	  <span class="badge">Utilisateurs {{ users|length }}</span>
-	</div>
+      <div class="col-md-10 col-md-offset-1">
+	<table class="table table-striped">
+	  <tr>
+	    <th>{% trans "Name" %}</th><th>{% trans "Members" %}</th>{% if user.is_authenticated %}<th></th>{% endif %}
+	  </tr>
+	  {% for team in object_list %}
+	  <tr>
+	    <td>{{ team.name }}</td><td>{{ team.members.all|join:", " }}.</td>
+	    {% if user.is_authenticated %}<td><a href="{{ join_team }}" class="btn btn-primary btn-xs pull-right">{% trans "Join" %}</a></td>{% endif %}
+	  </tr>
+	  {% empty %}
+	  <tr><td>{% trans "No team registered yet" %}.</td></tr>
+	  {% endfor %}
+	</table>
+
+	{% if user.is_authenticated %}
+	<div class="pull-right"><a href="{{ create_team }}" class="btn btn-primary btn-xs">{% trans "Create Team" %}</a></div>
+	{% endif %}
+      </div>
     </div>
-{% endblock %}
+ {% endblock %}
