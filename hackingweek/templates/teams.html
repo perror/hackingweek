@@ -12,14 +12,17 @@
 	  <h1>List of teams</h1>
 	  <ul>
 	    {% for team in object_list %}
-	    <li><h4>{{ team.name }}</h4>
+	    <li><h4>{{ team.name }} {% if user.is_authenticated %}<a href="{{ join_team }}" class="btn btn-primary btn-xs">{% trans "Join" %}</a>{% endif %}</h4>
 	      {{ team.members.all|join:", " }}.
 	    </li>
 	    {% empty %}
 	    <li>{% trans "No team registered yet" %}.</li>
 	    {% endfor %}
 	  </ul>
-        </div>
+	  {% if user.is_authenticated %}
+	  <a href="{{ create_team }}" class="btn btn-primary btn-xs">{% trans "Create Team" %}</a>
+	  {% endif %}
+	</div>
 	<div>
 	  <span class="badge">Équipes {{ object_list|length }}</span>
 	  <span class="badge">Utilisateurs {{ users|length }}</span>
