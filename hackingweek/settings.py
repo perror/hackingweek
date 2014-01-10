@@ -138,6 +138,7 @@ INSTALLED_APPS = [
     "account",
     "eventlog",
     "metron",
+    "south",
 
     # project
     "hackingweek",
