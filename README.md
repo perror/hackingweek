@@ -25,3 +25,9 @@ Work in progress...
 ---------------------------
 
     git clone git@github.com:perror/hackingweek.git
+
+
+3. Generate the locals
+----------------------
+
+    django-admin.py compilemessages --locale=fr
