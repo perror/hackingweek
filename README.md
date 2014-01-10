@@ -12,10 +12,7 @@ Work in progress...
     $> virtualenv pinax
     $> cd pinax
     $> . bin/activate
-    $> pip install django
-    $> django-admin.py startproject \
-       --template=https://github.com/pinax/pinax-project-account/zipball/master mysite
-    $> cd mysite
+    $> cd hackingweek
     $> pip install -r requirements.txt
     $> python manage.py syncdb
     $> python manage.py runserver
