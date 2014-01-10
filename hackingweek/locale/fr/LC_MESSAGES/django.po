@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-03 20:19+0100\n"
+"POT-Creation-Date: 2014-01-10 19:27+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,38 +18,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:20
+#: forms.py:20 forms.py:25
 msgid "Real Name"
 msgstr "Nom Réel"
 
-#: forms.py:21
+#: forms.py:21 forms.py:26
 msgid "School"
 msgstr "Établissement"
 
-#: forms.py:22
+#: forms.py:22 forms.py:27
 msgid "Study Level"
 msgstr "Diplôme en cours"
 
-#: templates/_account_bar.html:11 templates/account/base.html:10
+#: templates/_account_bar.html:12 templates/account/base.html:10
 #: templates/account/settings.html:9 templates/account/settings.html.py:15
 msgid "Account"
 msgstr "Votre compte"
 
-#: templates/_account_bar.html:13
+#: templates/_account_bar.html:14
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/_account_bar.html:16
+#: templates/_account_bar.html:17
 msgid "Logout"
 msgstr "Se déloger"
 
-#: templates/_account_bar.html:20
+#: templates/_account_bar.html:21
 msgid "Login"
 msgstr "Se loger"
 
-#: templates/_account_bar.html:22
+#: templates/_account_bar.html:23
 msgid "Signup"
 msgstr "Créer un compte"
+
+#: templates/about.html:6 templates/site_base.html:21
+msgid "About"
+msgstr "À propos"
+
+#: templates/site_base.html:20 templates/teams.html:7
+msgid "Teams"
+msgstr "Équipes"
+
+#: templates/teams.html:15
+msgid "Join"
+msgstr "Rejoindre"
+
+#: templates/teams.html:19
+msgid "No team registered yet"
+msgstr "Aucune équipe n'est encore inscrite"
+
+#: templates/teams.html:23
+msgid "Create Team"
+msgstr "Créer un équipe"
 
 #: templates/account/base.html:13
 msgid "Settings"
