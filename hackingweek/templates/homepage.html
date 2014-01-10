@@ -26,6 +26,76 @@
     <div class="clock" style="margin-left:auto;margin-right:auto;width:42em;"></div>
 {% endblock %}
 
+{% block column-1 %}
+    <h2>Qu'est-ce que c'est&nbsp;?</h2>
+
+    <p>La HackingWeek est un <strong>concours de sécurité
+      informatique</strong> ouvert à toute personne ayant <strong>le
+      status d'étudiant</strong> quelle que soit sa nationalité et son
+      pays de résidence. Cependant, les épreuves étant en français, il
+      faut pouvoir comprendre cette langue.</p>
+
+    <p>Le concours se déroule <strong>entièrement en-ligne</strong>
+      via ce site qui permet à la fois d'accéder aux épreuves et d'y
+      répondre. Il n'est donc pas nécessaire de se déplacer pour
+      participer à ce concours (oui, vous pouvez participer depuis
+      votre divan en mangeant des chips!).</p>
+
+    <p>Le concours débutera le <strong>Vendredi 21 Février 2014 à
+      18h</strong> (Europe/Paris) et se terminera le <strong>Dimanche
+      2 Mars 2014 à minuit</strong> (Europe/Paris). Ce qui laisse
+      environs neuf jours à toutes les équipes pour faire un maximum
+      d'épreuves et de marquer des points.</p>
+
+    <p>Le classement sera affiché en temps-réel et ne sera définitif
+      qu'une fois le concours achevé. Les gagnants seront alors
+      indiqués par ce classement.</p>
+
+    <p>Pour finir, il est important de signaler que vous vous battez
+      pour la gloire, car il n'y a rien à gagner à l'issue du
+      concours.</p>
+{% endblock %}
+
+{% block column-2 %}
+    <h2>Déroulement</h2>
+
+    <p><strong>Les inscriptions sont ouvertes</strong> et le seront
+      jusqu'au début du concours. Les inscrits doivent créer une
+      équipe ou bien en rejoindre une (maximum 5 personnes par équipe)
+      pour participer au concours.</p>
+
+    <p><strong class="text-danger">Attention!</strong> Notez bien que
+       seules les personnes qui font parti d'une équipe pourront
+       participer au concours. Il faut donc impérativement que
+       essayiez de rejoindre ou de créer une équipe avant le démarrage
+       du concours.</p>
+
+    <p>Lors du coup d'envoi, les épreuves seront rendues accessibles
+      en ligne à tous les inscrit qui auront une équipe. Ces épreuves
+      sont du type
+      «&nbsp;<a href="https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security">Capture
+      The Flag</a>&nbsp;» (CTF). C'est à dire que chaque épreuve
+      contient une petite énigme à résoudre qui permettra de trouver
+      un mot de passe qu'il conviendra ensuite d'écrire dans le champs
+      prévu à cet effet sur la page de l'épreuve afin de valider
+      l'épreuve pour votre équipe.</p>
+
+     <p>Les épreuves feront appel à des compétences variées parmi les
+       cinq thèmes suivants: <strong>cryptologie</strong>,
+       <strong>exploit</strong>, <strong>forensic</strong>,
+       <strong>reverse</strong> et <strong>réseau</strong>.</p>
+{% endblock %}
+
+{% block column-3 %}
+    <h2>Nous contacter</h2>
+
+    <p>Si vous avez des questions sur l'événement, que vous souhaitez
+       devenir partenaires, proposer une épreuve ou tout simplement
+       obtenir des informations, n'hésitez pas à nous contacter&nbsp;:</p>
+    <h3 class="col-lg-1 col-centered"><a href="mailto:contact@hackingweek.fr">contact@hackingweek.fr</a></h3>
+    <!-- <h3><a href="http://twitter.com/hackingweek">@HackingWeek</a></h3> -->
+{% endblock %}
+
 {% block extra_script %}
     <script src="{% static "js/flipclock/flipclock.min.js" %}"></script>
     <script src="{% static "js/flipclock/lang/fr-fr.js" %}"></script>
