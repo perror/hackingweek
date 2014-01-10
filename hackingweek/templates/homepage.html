@@ -15,7 +15,7 @@
     </p>
     
     {% if user.is_authenticated %}
-        <p>Créez ou rejoignez une <a href="{{ teams_url }}" class="btn btn-primary large">équipe</a> !</p>
+        <p>Créez ou rejoignez une <a href="{{ SITEURL }}/teams/" class="btn btn-primary large">équipe</a> !</p>
     {% else %}
         {% url "account_login" as login_url %}
         {% url "account_signup" as signup_url %}
