@@ -61,7 +61,7 @@ msgstr "Équipes"
 
 #: templates/site_base.html:21 templates/users.html:7
 msgid "Users"
-msgstr "Utilisateurs"
+msgstr "Candidats"
 
 #: templates/teams.html:14 templates/users.html:14
 msgid "Name"
