@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-11 11:45+0100\n"
+"POT-Creation-Date: 2014-01-11 20:46+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,7 @@ msgstr "Rejoindre"
 msgid "No team registered yet"
 msgstr "Aucune équipe n'est encore inscrite"
 
-#: templates/teams.html:27
+#: templates/teams.html:29
 msgid "Create Team"
 msgstr "Créer un équipe"
 
