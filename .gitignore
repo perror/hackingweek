@@ -2,4 +2,4 @@
 *.pyc
 dev.db
 hackingweek/private_settings.py
-locale/fr/LC_MESSAGES/django.mo
+hackingweek/locale/fr/LC_MESSAGES/django.mo
