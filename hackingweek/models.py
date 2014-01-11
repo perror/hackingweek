@@ -10,6 +10,7 @@ class Challenge(models.Model):
 
 
 class Team(models.Model):
+    max_members = 5
     name = models.CharField(max_length=128)
     members = models.ManyToManyField(User,
                                      related_name='team_list',

@@ -16,7 +16,7 @@
 	  {% for team in object_list %}
 	  <tr>
 	    <td>{{ team.name }}</td><td>{{ team.members.all|join:", " }}.</td>
-	    {% if user.is_authenticated %}<td><a href="{{ join_team }}" class="btn btn-primary btn-xs pull-right">{% trans "Join" %}</a></td>{% endif %}
+	    {% if user.is_authenticated %}<td>{% if team.members.all|length < team.max_members %}<a href="{{ join_team }}" class="btn btn-primary btn-xs pull-right">{% trans "Join" %}</a>{% endif %}</td>{% endif %}
 	  </tr>
 	  {% empty %}
 	  <tr><td>{% trans "No team registered yet" %}.</td></tr>
