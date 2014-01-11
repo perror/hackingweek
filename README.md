@@ -13,7 +13,7 @@ Work in progress...
     $> cd pinax
     $> . bin/activate
     $> cd hackingweek
-    $> pip install -r requirements.txt
+    $> pip install -r config/requirements.pip
     $> python manage.py syncdb
     $> python manage.py runserver
 
