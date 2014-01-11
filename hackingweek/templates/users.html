@@ -1,0 +1,32 @@
+{% extends "site_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap %}
+
+{% block head_title %}{% trans "Users" %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+	<table class="table table-striped">
+	  <tr>
+	    <th>{% trans "Name" %}</th>
+	    <th>{% trans "School" %}</th>
+	    <th>{% trans "Study Level" %}</th>
+	  </tr>
+	  {% for profile in object_list %}
+	  {% if not profile.user.is_staff %}
+	  <tr>
+	    <td>{{ profile.user }}</td>
+	    <td>{{ profile.school }}</td>
+	    <td>{{ profile.study_level }}</td>
+	  </tr>
+	  {% endif %}
+	  {% empty %}
+	  <tr><td>{% trans "No user registered yet" %}.</td></tr>
+	  {% endfor %}
+	</table>
+      </div>
+    </div>
+ {% endblock %}

@@ -1,10 +1,12 @@
 import account.views
 import hackingweek.forms
 
+from django.contrib.auth.models import User
+from django.views.generic.list import ListView
+
 from django.contrib.auth.decorators import login_required
 
-from django.views.generic.list import ListView
-from hackingweek.models import Team
+from hackingweek.models import UserProfile, Team
 
 
 class SignupView(account.views.SignupView):
@@ -57,4 +59,13 @@ class TeamListView(ListView):
 
    def get_context_data(self, **kwargs):
       context = super(TeamListView, self).get_context_data(**kwargs)
+      return context
+
+
+class UserListView(ListView):
+
+   model = UserProfile
+
+   def get_context_data(self, **kwargs):
+      context = super(UserListView, self).get_context_data(**kwargs)
       return context
