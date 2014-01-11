@@ -4,6 +4,8 @@
 {% load metron_tags %}
 {% load i18n %}
 
+{% load hw_tags %}
+
 {% block style_base %}
     <link href="{% static "pinax/css/theme.css" %}" rel="stylesheet">
     <link href="{% static "css/site.css" %}" rel="stylesheet">
@@ -17,8 +19,8 @@
 
 {% block nav %}
     <ul class="nav navbar-nav">
-      <li><a href="{{ SITEURL }}/teams/"{% if request.path == "/teams/" %} class="active"{% endif %}>{% trans "Teams" %}&nbsp;<span class="badge">{{ object_list|length }}</span></a></li>
-      <li><a href="{{ SITEURL }}/users/"{% if request.path == "/users/" %} class="active"{% endif %}>{% trans "Users" %}&nbsp;<span class="badge">{{ user_list|length }}</span></a></li>
+      <li><a href="{{ SITEURL }}/teams/"{% if request.path == "/teams/" %} class="active"{% endif %}>{% trans "Teams" %}&nbsp;<span class="badge">{% count_teams %}</span></a></li>
+      <li><a href="{{ SITEURL }}/users/"{% if request.path == "/users/" %} class="active"{% endif %}>{% trans "Users" %}&nbsp;<span class="badge">{% count_users %}</span></a></li>
       <li><a href="{{ SITEURL }}/about/"{% if request.path == "/about/" %} class="active"{% endif %}>{% trans "About" %}</a></li>
     </ul>
 {% endblock %}
