@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-11 20:46+0100\n"
+"POT-Creation-Date: 2014-01-12 20:31+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "Real Name"
 msgstr "Nom Réel"
 
-#: forms.py:21 forms.py:26 templates/users.html:15
+#: forms.py:21 forms.py:26 templates/contestants.html:15
 msgid "School"
 msgstr "Établissement"
 
-#: forms.py:22 forms.py:27 templates/users.html:16
+#: forms.py:22 forms.py:27 templates/contestants.html:16
 msgid "Study Level"
 msgstr "Diplôme en cours"
 
@@ -51,21 +51,25 @@ msgstr "Se loger"
 msgid "Signup"
 msgstr "Créer un compte"
 
-#: templates/about.html:6 templates/site_base.html:22
+#: templates/about.html:6 templates/site_base.html:24
 msgid "About"
 msgstr "À propos"
 
-#: templates/site_base.html:20 templates/teams.html:7
-msgid "Teams"
-msgstr "Équipes"
-
-#: templates/site_base.html:21 templates/users.html:7
-msgid "Users"
+#: templates/contestants.html:7 templates/site_base.html:23
+msgid "Contestants"
 msgstr "Candidats"
 
-#: templates/teams.html:14 templates/users.html:14
+#: templates/contestants.html:14 templates/teams.html:14
 msgid "Name"
 msgstr "Nom"
+
+#: templates/contestants.html:27
+msgid "No contestant registered yet"
+msgstr "Aucun candidat n'est encore inscrite"
+
+#: templates/site_base.html:22 templates/teams.html:7
+msgid "Teams"
+msgstr "Équipes"
 
 #: templates/teams.html:14
 msgid "Members"
@@ -79,13 +83,9 @@ msgstr "Rejoindre"
 msgid "No team registered yet"
 msgstr "Aucune équipe n'est encore inscrite"
 
-#: templates/teams.html:29
+#: templates/teams.html:27
 msgid "Create Team"
 msgstr "Créer un équipe"
-
-#: templates/users.html:27
-msgid "No user registered yet"
-msgstr "Aucun utilisateur n'est encore inscrit"
 
 #: templates/account/base.html:13
 msgid "Settings"
@@ -279,24 +279,25 @@ msgstr ""
 #: templates/account/email/email_confirmation_subject.txt:1
 #, python-format
 msgid "Confirm email address for %(site_name)s"
-msgstr "Couriel de confirmation d'inscription à la %(site_name)s"
+msgstr "Confirmation d'inscription à la %(site_name)s"
 
 #: templates/account/email/password_reset.txt:1
 #, python-format
 msgid ""
-"You're receiving this email because you or someone else has requested a "
+"You're receiving this email because you or someone else has requested a\n"
 "password for your user account at %(site_name)s.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"link below to reset your password.\n"
+"\n"
+"It can be safely ignored if you did not request a password reset.\n"
+"Click the link below to reset your password.\n"
 "\n"
 "%(password_reset_url)s\n"
 msgstr ""
-"Vous recevez ce couriel car vous ou quelqu'un d'autre a fait une demande de "
-"réinitialisation de mot de passe pour votre compte utilisateur à "
+"Vous recevez ce couriel car vous ou quelqu'un d'autre a fait une demande de\n"
+"réinitialisation de mot de passe pour votre compte utilisateur à\n"
 "%(site_name)s.\n"
-"Vous pouvez ignorer ce couriel si vous ne voulez pas changer votre mot de "
-"passe. Sinon, cliquez sur le lien suivant pour réinitialiser votre mot de "
-"passe.\n"
+"\n"
+"Vous pouvez ignorer ce couriel si vous ne voulez pas changer votre mot de\n"
+"passe. Sinon, cliquez sur le lien suivant.\n"
 "\n"
 "%(password_reset_url)s\n"
 

@@ -4,7 +4,7 @@
 {% load i18n %}
 {% load bootstrap %}
 
-{% block head_title %}{% trans "Users" %}{% endblock %}
+{% block head_title %}{% trans "Contestants" %}{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -24,7 +24,7 @@
 	  </tr>
 	  {% endif %}
 	  {% empty %}
-	  <tr><td>{% trans "No user registered yet" %}.</td></tr>
+	  <tr><td>{% trans "No contestant registered yet" %}.</td></tr>
 	  {% endfor %}
 	</table>
       </div>
