@@ -25,3 +25,6 @@ class SettingsForm(account.forms.SettingsForm):
     real_name   = forms.CharField(label=_("Real Name"), max_length=128)
     school      = forms.CharField(label=_("School"), max_length=128)
     study_level = forms.ChoiceField(label=_("Study Level"), choices=LEVEL_CHOICES)
+
+class TeamForm(forms.Form):
+    name = forms.CharField(max_length=128)
