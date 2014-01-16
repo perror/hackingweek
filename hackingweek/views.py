@@ -1,17 +1,17 @@
 import account.views
-import hackingweek.forms
-
-from django.contrib.auth.models import User
-from django.views.generic.list import ListView
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
 
+from hackingweek.forms import SettingsForm, SignupForm
 from hackingweek.models import UserProfile, Team
 
 
 class SignupView(account.views.SignupView):
-
-   form_class = hackingweek.forms.SignupForm
+   form_class = SignupForm
 
    def after_signup(self, form):
       self.create_profile(form)
@@ -28,8 +28,7 @@ class SignupView(account.views.SignupView):
 
 
 class SettingsView(account.views.SettingsView):
-
-   form_class = hackingweek.forms.SettingsForm
+   form_class = SettingsForm
 
    def get_initial(self):
       initial = super(SettingsView, self).get_initial()
@@ -54,7 +53,6 @@ class SettingsView(account.views.SettingsView):
 
 
 class TeamListView(ListView):
-
    model = Team
 
    def get_context_data(self, **kwargs):
@@ -63,9 +61,13 @@ class TeamListView(ListView):
 
 
 class UserListView(ListView):
-
    model = UserProfile
 
    def get_context_data(self, **kwargs):
       context = super(UserListView, self).get_context_data(**kwargs)
       return context
+
+
+class TeamCreate(CreateView):
+    model = Team
+    fields = ['name']

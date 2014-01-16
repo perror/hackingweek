@@ -4,8 +4,8 @@ from django.contrib import admin
 
 
 class ChallengeAdmin(admin.ModelAdmin):
-     list_display = ['name', 'author', 'description', 'password']
-     list_filter = ('name',)
+     list_display = ['category', 'name', 'author', 'summary', 'key']
+     list_filter = ('category', 'name')
 
 admin.site.register(models.Challenge, ChallengeAdmin)
 

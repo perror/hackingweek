@@ -19,9 +19,9 @@
 
 {% block nav %}
     <ul class="nav navbar-nav">
-      <li><a href="{{ SITEURL }}/teams/"{% if request.path == "/teams/" %} class="active"{% endif %}>{% trans "Teams" %}&nbsp;<span class="badge">{% count_teams %}</span></a></li>
-      <li><a href="{{ SITEURL }}/contestants/"{% if request.path == "/contestants/" %} class="active"{% endif %}>{% trans "Contestants" %}&nbsp;<span class="badge">{% count_users %}</span></a></li>
-      <li><a href="{{ SITEURL }}/about/"{% if request.path == "/about/" %} class="active"{% endif %}>{% trans "About" %}</a></li>
+      <li><a href="{% url 'teams_list' %}"{% active request "/teams/list" %}>{% trans "Teams" %}&nbsp;<span class="badge">{% team_count %}</span></a></li>
+      <li><a href="{% url 'contestants_list' %}"{% active request "/contestants/list/" %}>{% trans "Contestants" %}&nbsp;<span class="badge">{% user_count %}</span></a></li>
+      <li><a href="{% url 'about' %}"{% active request "/about/" %}>{% trans "About" %}</a></li>
     </ul>
 {% endblock %}
 

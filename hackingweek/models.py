@@ -1,7 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
-
-from django.forms import ModelForm
+from django.core.urlresolvers import reverse
+from django.db import models
 
 
 class Contest(models.Model):
@@ -9,11 +8,14 @@ class Contest(models.Model):
     begin_date = ''
     end_date = ''
 
+
 class Challenge(models.Model):
-    name   = models.CharField(max_length=128)
-    author = models.CharField(max_length=128)
-    description = models.CharField(max_length=2048)
-    password = models.CharField(max_length=128)
+    category = models.CharField(max_length=128)
+    name     = models.CharField(max_length=128)
+    author   = models.CharField(max_length=128)
+    summary  = models.CharField(max_length=2048)
+    key      = models.CharField(max_length=128)
+
 
 class Team(models.Model):
     max_members = 5
@@ -22,10 +24,9 @@ class Team(models.Model):
                                      related_name='team_list',
                                      null=True, blank=True)
 
-class TeamForm(ModelForm):
-    class Meta:
-        model = Team
-        fields = ['name']
+    def get_absolute_url(self):
+        return reverse('team-detail', kwargs={'pk': self.pk})
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

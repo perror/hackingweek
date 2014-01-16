@@ -16,10 +16,10 @@
     </p>
     
     {% if user.is_authenticated %}
-        <p>Créez ou rejoignez une <a href="{{ SITEURL }}/teams/" class="btn btn-primary large">équipe</a> !</p>
+        <p>Créez ou rejoignez une <a href="{{ SITEURL }}/teams/list/" class="btn btn-primary large">équipe</a> !</p>
     {% else %}
-        {% url "account_login" as login_url %}
-        {% url "account_signup" as signup_url %}
+        {% url 'account_login' as login_url %}
+        {% url 'account_signup' as signup_url %}
         <p>Vous pouvez <a href="{{ login_url }}" class="btn btn-default">vous loger</a> ou bien <a href="{{ signup_url }}" class="btn btn-primary">créer un compte</a> pour participer au concours.</p>
     {% endif %}
 
