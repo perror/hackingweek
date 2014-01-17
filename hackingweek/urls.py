@@ -2,10 +2,11 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 
+from django.contrib.auth.decorators import login_required
+from django.contrib import admin
+
 from django.views.generic import ListView
 from django.views.generic import TemplateView
-
-from django.contrib import admin
 
 import hackingweek.views
 
@@ -21,7 +22,7 @@ urlpatterns = patterns("",
     url(r"^account/", include("account.urls")),
     url(r"^contestants/list/$", UserListView.as_view(template_name="contestants-list.html"), name="contestants_list"),
     url(r"^teams/list/$", TeamListView.as_view(template_name="teams-list.html"), name="teams_list"),
-    url(r"^teams/create/$", TeamCreate.as_view(template_name="teams-create.html"), name="teams_create"),
+    url(r"^teams/create/$", login_required(TeamCreate.as_view(template_name="teams-create.html")), name="teams_create"),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

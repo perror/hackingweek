@@ -21,11 +21,12 @@ class Team(models.Model):
     max_members = 5
     name = models.CharField(max_length=128)
     members = models.ManyToManyField(User,
-                                     related_name='team_list',
+                                     related_name='teams_list',
                                      null=True, blank=True)
 
+    # There is not canonical URL for teams. It just go to the list of teams.
     def get_absolute_url(self):
-        return reverse('team-detail', kwargs={'pk': self.pk})
+        return reverse('teams_list')
 
 
 class UserProfile(models.Model):

@@ -1,6 +1,7 @@
 from django import template
-
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
 from hackingweek.models import UserProfile, Team
 
 
@@ -17,7 +18,7 @@ def team_count():
 @register.simple_tag
 def active(request, pattern):
     import re
-    if re.search(pattern, request.path):
+    if re.search(reverse(pattern), request.path):
         return ' class="active"'
     else:
         return ''
