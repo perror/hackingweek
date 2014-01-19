@@ -2,6 +2,8 @@ import account.views
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
@@ -69,5 +71,17 @@ class UserListView(ListView):
 
 
 class TeamCreate(CreateView):
-    model = Team
-    fields = ['name']
+   model = Team
+   fields = ['name']
+
+   def form_valid(self, form):
+      self.object = form.save(commit=False)
+      self.object.save()
+
+      # Adding the creator to team members
+      self.object.members.add(self.request.user)
+
+      return HttpResponseRedirect(self.get_success_url())
+
+   def get_success_url(self):
+      return reverse('teams_list')

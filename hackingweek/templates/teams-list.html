@@ -11,19 +11,26 @@
       <div class="col-md-10 col-md-offset-1">
 	<table class="table table-striped">
 	  <tr>
-	    <th>{% trans "Name" %}</th><th>{% trans "Members" %}</th>{% if user.is_authenticated %}<th></th>{% endif %}
+	    <th>{% trans "Name" %}</th>
+	    <th>{% trans "Members" %}</th>
+	    {% if user.is_authenticated %}<th></th>{% endif %}
 	  </tr>
 	  {% for team in object_list %}
 	  <tr>
-	    <td>{{ team.name }}</td><td>{{ team.members.all|join:", " }}.</td>
-	    {% if user.is_authenticated %}<td>{% if team.members.all|length < team.max_members %}<a href="{{ join_team }}" class="btn btn-primary btn-xs pull-right">{% trans "Join" %}</a>{% endif %}</td>{% endif %}
+	    <td>{{ team.name }}</td>
+	    <td>{{ team.members.all|join:", " }}.</td>
+	    {% if user.is_authenticated %}<td>{% if team.members.all|length < team.max_members and user.team_set.all.count == 0 %}<a href="{% url 'teams_join' %}" class="btn btn-primary btn-xs pull-right">{% trans "Join Team" %}</a>{% endif %}{% if user in team.members.all %}<a href="{% url 'teams_quit' %}" class="btn btn-primary btn-xs pull-right">{% trans "Quit Team" %}</a>{% endif %}</td>{% endif %}
 	  </tr>
 	  {% empty %}
-	  <tr><td>{% trans "No team registered yet" %}.</td></tr>
+	  <tr>
+	    <td>{% trans "No team registered yet" %}.</td>
+	    <td></td>
+	    {% if user.is_authenticated %}<td></td>{% endif %}
+	  </tr>
 	  {% endfor %}
 	</table>
 
-	{% if user.is_authenticated %}
+	{% if user.is_authenticated and user.team_set.all.count == 0 %}
 	<div class="pull-right"><a href="{% url 'teams_create' %}" class="btn btn-primary btn-xs">{% trans "Create Team" %}</a></div>
 	{% endif %}
       </div>

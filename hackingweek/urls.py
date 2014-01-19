@@ -12,6 +12,7 @@ import hackingweek.views
 
 from hackingweek.models import Team
 from hackingweek.views import TeamCreate, TeamListView, UserListView
+from hackingweek.decorators import has_no_team_required, has_team_required
 
 urlpatterns = patterns("",
     url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
@@ -22,7 +23,9 @@ urlpatterns = patterns("",
     url(r"^account/", include("account.urls")),
     url(r"^contestants/list/$", UserListView.as_view(template_name="contestants-list.html"), name="contestants_list"),
     url(r"^teams/list/$", TeamListView.as_view(template_name="teams-list.html"), name="teams_list"),
-    url(r"^teams/create/$", login_required(TeamCreate.as_view(template_name="teams-create.html")), name="teams_create"),
+    url(r"^teams/create/$", has_no_team_required(TeamCreate.as_view(template_name="teams-create.html")), name="teams_create"),
+    url(r"^teams/join/$", has_no_team_required(TemplateView.as_view(template_name="teams-join.html")), name="teams_join"),
+    url(r"^teams/quit/$", has_team_required(TemplateView.as_view(template_name="teams-quit.html")), name="teams_quit"),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

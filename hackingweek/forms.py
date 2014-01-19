@@ -9,12 +9,12 @@ from hackingweek.models import Team
 
 # List of status.
 LEVEL_CHOICES = (
-    ('bac+0', 'Terminale'),
-    ('bac+1', 'Bac+1'),
-    ('bac+2', 'Bac+2'),
-    ('bac+3', 'Bac+3'),
-    ('bac+4', 'Bac+4'),
-    ('bac+5', 'Bac+5')
+    ('Terminale', 'Terminale'),
+    ('Bac+1', 'Bac+1'),
+    ('Bac+2', 'Bac+2'),
+    ('Bac+3', 'Bac+3'),
+    ('Bac+4', 'Bac+4'),
+    ('Bac+5', 'Bac+5')
     )
 
 class SignupForm(account.forms.SignupForm):

@@ -1,0 +1,20 @@
+{% extends "site_base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Quit Team" %}{% endblock %}
+{% block body_class %}teams_quit{% endblock %}
+
+{% block body %}
+    <h1>Quitter l'équipe</h1>
+    
+    <p>Si vous le confirmez, vous quitterez l'équipe dans laquelle
+      vous étiez. Si c'est effectivement ce que vous désirez, appuyez
+      sur le bouton ci-dessous.</p>
+    
+    <form method="post" action="{% url 'team_quit' %}" autocapitalize="off">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Quitter l'équipe</button>
+    </form>   
+{% endblock body%}

@@ -2,11 +2,10 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
-
 class Contest(models.Model):
     max_team_members = 5
-    begin_date = ''
-    end_date = ''
+    start_date = models.DateTimeField("Starting time")
+    end_date   = models.DateTimeField("Ending time")
 
 
 class Challenge(models.Model):
@@ -19,14 +18,8 @@ class Challenge(models.Model):
 
 class Team(models.Model):
     max_members = 5
-    name = models.CharField(max_length=128)
-    members = models.ManyToManyField(User,
-                                     related_name='teams_list',
-                                     null=True, blank=True)
-
-    # There is not canonical URL for teams. It just go to the list of teams.
-    def get_absolute_url(self):
-        return reverse('teams_list')
+    name = models.CharField(max_length=128, unique=True)
+    members = models.ManyToManyField(User, null=True, blank=True)
 
 
 class UserProfile(models.Model):
@@ -35,5 +28,3 @@ class UserProfile(models.Model):
     real_name   = models.CharField(max_length=128)
     school      = models.CharField(max_length=128)
     study_level = models.CharField(max_length=8)
-
-    team = models.ForeignKey(Team, null=True, blank=True)

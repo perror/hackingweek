@@ -15,6 +15,5 @@
     <form method="post" action="{% url "account_delete" %}" autocapitalize="off">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Delete My Account</button>
-    </form>
-    
+    </form>   
 {% endblock %}
