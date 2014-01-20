@@ -19,7 +19,7 @@
 	  <tr>
 	    <td>{{ team.name }}</td>
 	    <td>{{ team.members.all|join:", " }}.</td>
-	    {% if user.is_authenticated %}<td>{% if team.members.all|length < team.max_members and user.team_set.all.count == 0 %}<a href="{% url 'team_join' %}" class="btn btn-primary btn-xs pull-right">{% trans "Join Team" %}</a>{% endif %}{% if user in team.members.all %}<a href="{% url 'team_quit' %}" class="btn btn-primary btn-xs pull-right">{% trans "Quit Team" %}</a>{% endif %}</td>{% endif %}
+	    {% if user.is_authenticated %}<td>{% if team.members.all|length < team.max_members and user.team_set.all.count == 0 %}<a href="{% url 'team_join' %}" class="btn btn-primary btn-xs pull-right">{% trans "Join Team" %}</a>{% endif %}{% if user in team.members.all %}<a href="{% url 'team_quit' pk=team.pk %}" class="btn btn-primary btn-xs pull-right">{% trans "Quit Team" %}</a>{% endif %}</td>{% endif %}
 	  </tr>
 	  {% empty %}
 	  <tr>

@@ -2,7 +2,7 @@ import account.views
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -72,6 +72,7 @@ class ContestantListView(ListView):
 
 class TeamCreateView(CreateView):
    model = Team
+   success_url = reverse_lazy('team_list')
    fields = ['name']
 
    def form_valid(self, form):
@@ -83,5 +84,16 @@ class TeamCreateView(CreateView):
 
       return HttpResponseRedirect(self.get_success_url())
 
-   def get_success_url(self):
-      return reverse('teams_list')
+
+class TeamQuitView(DeleteView):
+   model = Team
+   success_url = reverse_lazy('team_list')
+
+   def delete(self, request, pk):
+      team = Team.objects.filter(pk=pk)[0]
+      team.members.remove(self.request.user)
+
+      if (team.members.count() == 0):
+         team.delete()
+
+      return HttpResponseRedirect(reverse_lazy('team_list'))
