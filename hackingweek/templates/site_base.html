@@ -19,8 +19,8 @@
 
 {% block nav %}
     <ul class="nav navbar-nav">
-      <li><a href="{% url 'teams_list' %}"{% active request "teams_list" %}>{% trans "Teams" %}&nbsp;<span class="badge">{% team_count %}</span></a></li>
-      <li><a href="{% url 'contestants_list' %}"{% active request "contestants_list" %}>{% trans "Contestants" %}&nbsp;<span class="badge">{% user_count %}</span></a></li>
+      <li><a href="{% url 'team_list' %}"{% active request "team_list" %}>{% trans "Teams" %}&nbsp;<span class="badge">{% team_count %}</span></a></li>
+      <li><a href="{% url 'contestant_list' %}"{% active request "contestant_list" %}>{% trans "Contestants" %}&nbsp;<span class="badge">{% user_count %}</span></a></li>
       <li><a href="{% url 'about' %}"{% active request "about" %}>{% trans "About" %}</a></li>
     </ul>
 {% endblock %}

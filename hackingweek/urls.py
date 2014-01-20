@@ -11,7 +11,8 @@ from django.views.generic import TemplateView
 import hackingweek.views
 
 from hackingweek.models import Team
-from hackingweek.views import TeamCreate, TeamListView, UserListView
+from hackingweek.views import TeamListView, TeamCreateView, ContestantListView
+
 from hackingweek.decorators import has_no_team_required, has_team_required
 
 urlpatterns = patterns("",
@@ -21,11 +22,11 @@ urlpatterns = patterns("",
     url(r"^account/settings/$", hackingweek.views.SettingsView.as_view(), name="account_settings"),
     url(r"^account/signup/$", hackingweek.views.SignupView.as_view(), name="account_signup"),
     url(r"^account/", include("account.urls")),
-    url(r"^contestants/list/$", UserListView.as_view(template_name="contestants-list.html"), name="contestants_list"),
-    url(r"^teams/list/$", TeamListView.as_view(template_name="teams-list.html"), name="teams_list"),
-    url(r"^teams/create/$", has_no_team_required(TeamCreate.as_view(template_name="teams-create.html")), name="teams_create"),
-    url(r"^teams/join/$", has_no_team_required(TemplateView.as_view(template_name="teams-join.html")), name="teams_join"),
-    url(r"^teams/quit/$", has_team_required(TemplateView.as_view(template_name="teams-quit.html")), name="teams_quit"),
+    url(r"^contestant/list/$", ContestantListView.as_view(template_name="contestant-list.html"), name="contestant_list"),
+    url(r"^team/list/$", TeamListView.as_view(template_name="team-list.html"), name="team_list"),
+    url(r"^team/create/$", has_no_team_required(TeamCreateView.as_view(template_name="team-create.html")), name="team_create"),
+    url(r"^team/join/$", has_no_team_required(TemplateView.as_view(template_name="team-join.html")), name="team_join"),
+    url(r"^team/quit/$", has_team_required(TemplateView.as_view(template_name="team-quit.html")), name="team_quit"),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

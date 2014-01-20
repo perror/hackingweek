@@ -62,15 +62,15 @@ class TeamListView(ListView):
       return context
 
 
-class UserListView(ListView):
+class ContestantListView(ListView):
    model = UserProfile
 
    def get_context_data(self, **kwargs):
-      context = super(UserListView, self).get_context_data(**kwargs)
+      context = super(ContestantListView, self).get_context_data(**kwargs)
       return context
 
 
-class TeamCreate(CreateView):
+class TeamCreateView(CreateView):
    model = Team
    fields = ['name']
 
