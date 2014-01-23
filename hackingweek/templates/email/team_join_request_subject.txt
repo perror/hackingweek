@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans with current_site=current_site.name user=username %}[{{ current_site }}] '{{ user }}' requested to join your team{% endblocktrans %}

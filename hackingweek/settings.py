@@ -174,6 +174,8 @@ FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]
 
+# Email settings
+################
 try:
     from private_settings import *  # noqa
 except ImportError:
@@ -181,6 +183,8 @@ except ImportError:
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+# User-account module settings
+##############################
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = True
@@ -194,6 +198,21 @@ AUTHENTICATION_BACKENDS = [
     "account.auth_backends.UsernameAuthenticationBackend",
 ]
 
+# HackingWeek specific settings
+###############################
 THEME_CONTACT_EMAIL = 'hackingweek@gmail.com'
-
 AUTH_PROFILE_MODULE = 'hackingweek.UserProfile'
+
+TEAM_MAX_MEMBERS = 5
+TEAM_JOIN_REQUEST_EXPIRE_DAYS = 2
+
+START_DATE = ''
+END_DATE = ''
+
+from django.contrib.messages import constants as message_constants
+
+MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
+                message_constants.INFO: 'info',
+                message_constants.SUCCESS: 'success',
+                message_constants.WARNING: 'warning',
+                message_constants.ERROR: 'danger',}

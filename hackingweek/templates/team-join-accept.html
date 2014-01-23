@@ -1,0 +1,24 @@
+{% extends "site_base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Join Team Accept" %}{% endblock %}
+
+{% block body_id %}team-join-accept{% endblock %}
+{% block body_class %}team-join-accept{% endblock %}
+
+{% block body %}
+    <h1>Accepter '?' dans votre équipe</h1>
+    
+    <p>L'utilisateur '?' désire rejoindre l'équipe '{{ object.name }}'
+      dans laquelle vous êtes inscrit.</p>
+
+    <p>Si vous acceptez sa demande, appuyez sur le bouton ci-dessous.
+      Sinon, ignorez simplement cette page.</p>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">{% trans "Accept User" %}</button>
+    </form>   
+{% endblock body%}

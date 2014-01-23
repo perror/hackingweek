@@ -11,7 +11,7 @@ from django.views.generic import TemplateView
 import hackingweek.views
 
 from hackingweek.models import Team
-from hackingweek.views import TeamListView, TeamCreateView, TeamQuitView, ContestantListView
+from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView, TeamJoinRequestView, TeamQuitView, ContestantListView
 
 from hackingweek.decorators import has_no_team_required, has_team_required
 
@@ -25,7 +25,8 @@ urlpatterns = patterns("",
     url(r"^contestant/list/$", ContestantListView.as_view(template_name="contestant-list.html"), name="contestant_list"),
     url(r"^team/list/$", TeamListView.as_view(template_name="team-list.html"), name="team_list"),
     url(r"^team/create/$", has_no_team_required(TeamCreateView.as_view(template_name="team-create.html")), name="team_create"),
-    url(r"^team/join/$", has_no_team_required(TemplateView.as_view(template_name="team-join.html")), name="team_join"),
+    url(r"^team/join/accept/(?P<pk>\d+)/(?P<key>\w+)/$", TeamJoinAcceptView.as_view(template_name="team-join-accept.html"), name="team_join_accept"),
+    url(r"^team/join/request/(?P<pk>\d+)/$", has_no_team_required(TeamJoinRequestView.as_view(template_name="team-join-request.html")), name="team_join_request"),
     url(r"^team/quit/(?P<pk>\d+)/$", has_team_required(TeamQuitView.as_view(template_name="team-quit.html")), name="team_quit"),
 )
 

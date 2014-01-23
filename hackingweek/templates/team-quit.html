@@ -4,16 +4,18 @@
 {% load i18n %}
 
 {% block head_title %}{% trans "Quit Team" %}{% endblock %}
-{% block body_class %}team_quit{% endblock %}
+
+{% block body_id %}team-quit{% endblock %}
+{% block body_class %}team-quit{% endblock %}
 
 {% block body %}
-    <h1>Quitter l'équipe</h1>
+    <h1>Quitter l'équipe '{{ object.name }}'</h1>
     
     <p>Si vous le confirmez, vous quitterez l'équipe dans laquelle
       vous étiez. Si c'est effectivement ce que vous désirez, appuyez
       sur le bouton ci-dessous.</p>
     
-    <form method="post" action="" autocapitalize="off">
+    <form method="post" action="{% url 'team_quit' pk=team.pk %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Quitter l'équipe</button>
     </form>   

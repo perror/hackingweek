@@ -1,0 +1,9 @@
+{% load i18n %}{% blocktrans with user=username team=team.name _accept_url=accept_url %}The user '{{ user }}' has requested to join your team ({{ team }}).
+
+To accept {{ user }} in {{ team }}, go to:
+
+  {{ accept_url }}
+
+If you do not want to accept this user in your team, you can safely
+ignore this message.
+{% endblocktrans %}
