@@ -78,7 +78,27 @@ class TeamJoinRequest(models.Model):
 
         subject = render_to_string("email/team_join_request_subject.txt", ctx)
         message = render_to_string("email/team_join_request_message.txt", ctx)
-        send_mail(subject.rstrip(), message, settings.DEFAULT_FROM_EMAIL, [self.responder.email])
+        send_mail(subject.rstrip(),
+                  message,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [self.responder.email])
+
+    def send_join_accept(self):
+        ctx = {
+            "team" : self.team.name,
+            "responder" : self.responder.username,
+            "requester" : self.requester.username,
+            "site": Site.objects.get_current().name,
+            }
+
+        subject = render_to_string("email/team_join_accept_subject.txt", ctx)
+        message = render_to_string("email/team_join_accept_message.txt", ctx)
+
+        for member in self.team.members.all():
+            send_mail(subject.rstrip(),
+                      message,
+                      settings.DEFAULT_FROM_EMAIL,
+                      [member.email])
 
     def key_expired(self):
         expiration_date = \
@@ -86,11 +106,3 @@ class TeamJoinRequest(models.Model):
         return expiration_date <= timezone.now()
 
     key_expired.boolean = True
-
-    def confirm(self):
-         # check if key hasn't expired and that user is not already in team
-        if not self.key_expired() and not self.team.contain(self.requester):
-            self.team.add(self.requester)
-            self.team.save()
-#            send_acceptation_email(self.team)
-#            signals.email_confirmed.send(sender=self.__class__, email_address=email_address)

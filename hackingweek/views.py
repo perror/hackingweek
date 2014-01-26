@@ -222,28 +222,9 @@ class TeamJoinAcceptView(UpdateView):
                )
          return HttpResponseRedirect(self.get_success_url())
 
-      requester = joinrequest.requester
-      responder = joinrequest.responder
-
-      team.members.add(requester)
+      joinrequest.team.members.add(joinrequest.requester)
+      joinrequest.send_join_accept()
       joinrequest.delete()
-
-      # TODO: Send e-mails announcing the arrival of the new user
-      # TODO: Remove the requests after 48 hours
-      current_site = Site.objects.get_current()
-
-      ctx = {
-         "team" : team.name,
-         "responder" : responder,
-         "requester" : requester,
-         "current_site": current_site,
-         }
-
-      subject = render_to_string("email/team_join_accept_subject.txt", ctx)
-      message = render_to_string("email/team_join_accept_message.txt", ctx)
-
-      for member in team.members.all():
-         send_mail(subject.rstrip(), message, settings.DEFAULT_FROM_EMAIL, [member.email])
 
       if self.messages.get("team_join_accept"):
          messages.add_message(
