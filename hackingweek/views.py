@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -196,6 +196,17 @@ class TeamJoinAcceptView(UpdateView):
          "text": _("User request cannot be completed ! This key does not match this team.")
          },
       }
+
+   def get_object(self, queryset=None):
+      if queryset is None:
+         queryset = self.get_queryset()
+      try:
+         return queryset.get(key=self.kwargs["key"])
+      except TeamJoinRequest.DoesNotExist:
+         raise Http404()
+
+   def get_queryset(self):
+      return TeamJoinRequest.objects.all()
 
    def form_valid(self, form):
       key  = self.kwargs['key']
