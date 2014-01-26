@@ -161,10 +161,11 @@ class TeamJoinRequestView(UpdateView):
 
       # Sending a request to join to each team member
       for member in self.object.members.all():
-         request = TeamJoinRequest.create(team=self.object,
-                                          requester=self.request.user,
-                                          responder=member)
-         request.send_join_request()
+         joinrequest = TeamJoinRequest.create(team=self.object,
+                                              requester=self.request.user,
+                                              responder=member)
+         if joinrequest <> None:
+            joinrequest.send_join_request()
 
       if self.messages.get("team_join_request"):
          messages.add_message(
@@ -175,9 +176,6 @@ class TeamJoinRequestView(UpdateView):
 
       return HttpResponseRedirect(self.get_success_url())
 
-
-from django.contrib.sites.models import Site
-from django.template.loader import render_to_string
 
 class TeamJoinAcceptView(UpdateView):
    template_name = 'team-join-accept.html'

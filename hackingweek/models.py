@@ -52,11 +52,18 @@ class TeamJoinRequest(models.Model):
 
     @classmethod
     def create(cls, request=None, **kwargs):
-        kwargs['key'] = random_token()
-        teamjoinrequest = cls(**kwargs)
-        teamjoinrequest.save()
+        # Check if a similar request already exists before proceeding
+        try:
+            cls.objects.get(requester=kwargs['requester'],
+                            responder=kwargs['responder'],
+                            team=kwargs['team'])
+            joinrequest = None
+        except cls.DoesNotExist:
+            kwargs['key'] = random_token()
+            joinrequest = cls(**kwargs)
+            joinrequest.save()
 
-        return teamjoinrequest
+        return joinrequest
 
     def send_join_request(self):
         protocol = getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http")
@@ -101,8 +108,9 @@ class TeamJoinRequest(models.Model):
                       [member.email])
 
     def key_expired(self):
-        expiration_date = \
-            self.sent + datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
+        expiration_date = self.sent + \
+            datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
+
         return expiration_date <= timezone.now()
 
     key_expired.boolean = True
