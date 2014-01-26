@@ -176,9 +176,12 @@ class TeamJoinRequestView(UpdateView):
       return HttpResponseRedirect(self.get_success_url())
 
 
+from django.contrib.sites.models import Site
+from django.template.loader import render_to_string
+
 class TeamJoinAcceptView(UpdateView):
    template_name = 'team-join-accept.html'
-   model = Team
+   model = TeamJoinRequest
    fields = []
    slug_field = 'key'
    success_url = reverse_lazy('team_list')
@@ -186,10 +189,6 @@ class TeamJoinAcceptView(UpdateView):
       "team_join_accept": {
          "level": messages.SUCCESS,
          "text": _("User has been accepted in the team.")
-         },
-      "request_not_found": {
-         "level": messages.ERROR,
-         "text": _("User request cannot be completed ! User may already have been added to the team, or the request has timed-out or the URL is wrong.")
          },
       "wrong_team": {
          "level": messages.ERROR,
@@ -209,26 +208,12 @@ class TeamJoinAcceptView(UpdateView):
       return TeamJoinRequest.objects.all()
 
    def form_valid(self, form):
-      key  = self.kwargs['key']
+      joinrequest = TeamJoinRequest.objects.get(key=self.kwargs['key'])
       team = Team.objects.get(pk=self.kwargs['pk'])
 
-      try:
-         request = TeamJoinRequest.objects.get(key=key)
-      except TeamJoinRequest.DoesNotExist:
-         request = None
-
-      # Check if the Request has been found
-      if request == None:
-         if self.messages.get("request_not_found"):
-            messages.add_message(
-               self.request,
-               self.messages["request_not_found"]["level"],
-               self.messages["request_not_found"]["text"]
-               )
-         return HttpResponseRedirect(self.get_success_url())
-
+      # FIXME: This should be checked in the get_object and NOT here!!!
       # Check if the Request is for the right team
-      if not team == request.team:
+      if not team == joinrequest.team:
          if self.messages.get("wrong_team"):
             messages.add_message(
                self.request,
@@ -237,11 +222,28 @@ class TeamJoinAcceptView(UpdateView):
                )
          return HttpResponseRedirect(self.get_success_url())
 
-      team.members.add(request.requester)
-      request.delete()
+      requester = joinrequest.requester
+      responder = joinrequest.responder
+
+      team.members.add(requester)
+      joinrequest.delete()
 
       # TODO: Send e-mails announcing the arrival of the new user
       # TODO: Remove the requests after 48 hours
+      current_site = Site.objects.get_current()
+
+      ctx = {
+         "team" : team.name,
+         "responder" : responder,
+         "requester" : requester,
+         "current_site": current_site,
+         }
+
+      subject = render_to_string("email/team_join_accept_subject.txt", ctx)
+      message = render_to_string("email/team_join_accept_message.txt", ctx)
+
+      for member in team.members.all():
+         send_mail(subject.rstrip(), message, settings.DEFAULT_FROM_EMAIL, [member.email])
 
       if self.messages.get("team_join_accept"):
          messages.add_message(

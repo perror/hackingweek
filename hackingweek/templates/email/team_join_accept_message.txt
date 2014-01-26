@@ -1,0 +1,2 @@
+{% load i18n %}{% blocktrans with _requester=requester _responder=responder _team=team %}The user '{{ _requester }}' has been accepted in the team '{{ _team }}' by '{{ _responder }}'.
+{% endblocktrans %}

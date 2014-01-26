@@ -9,9 +9,9 @@
 {% block body_class %}team-join-accept{% endblock %}
 
 {% block body %}
-    <h1>Accepter '?' dans votre équipe</h1>
+    <h1>Accepter '{{ object.requester }}' dans votre équipe&nbsp;?</h1>
     
-    <p>L'utilisateur '?' désire rejoindre l'équipe '{{ object.name }}'
+    <p>L'utilisateur '{{ object.requester }}' désire rejoindre l'équipe '{{ object.team.name }}'
       dans laquelle vous êtes inscrit.</p>
 
     <p>Si vous acceptez sa demande, appuyez sur le bouton ci-dessous.

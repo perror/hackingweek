@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans with current_site=current_site.name _requester=requester _team=team %}[{{ current_site }}] '{{ _requester }}' has been accepted in '{{ _team }}'{% endblocktrans %}

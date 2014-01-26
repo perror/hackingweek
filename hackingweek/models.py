@@ -78,9 +78,7 @@ class TeamJoinRequest(models.Model):
 
         subject = render_to_string("email/team_join_request_subject.txt", ctx)
         message = render_to_string("email/team_join_request_message.txt", ctx)
-        send_mail(subject.rstrip(), message,
-                  settings.DEFAULT_FROM_EMAIL,
-                  [self.responder.email])
+        send_mail(subject.rstrip(), message, settings.DEFAULT_FROM_EMAIL, [self.responder.email])
 
     def key_expired(self):
         expiration_date = \
