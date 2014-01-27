@@ -198,7 +198,10 @@ class TeamJoinAcceptView(UpdateView):
       if queryset is None:
          queryset = self.get_queryset()
       try:
-         return queryset.get(key=self.kwargs["key"])
+         _object = queryset.get(key=self.kwargs['key'])
+         if _object.key_expired():
+            raise Http404()
+         return _object
       except TeamJoinRequest.DoesNotExist:
          raise Http404()
 
@@ -215,8 +218,8 @@ class TeamJoinAcceptView(UpdateView):
          if self.messages.get("wrong_team"):
             messages.add_message(
                self.request,
-               self.messages["wrong_team"]["level"],
-               self.messages["wrong_team"]["text"]
+               self.messages['wrong_team']['level'],
+               self.messages['wrong_team']['text']
                )
          return HttpResponseRedirect(self.get_success_url())
 

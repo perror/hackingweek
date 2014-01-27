@@ -4,9 +4,12 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import models
 from django.template.loader import render_to_string
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from account.utils import random_token
 
+import datetime
 import urllib
 
 from hackingweek import settings
@@ -34,29 +37,25 @@ class UserProfile(models.Model):
     study_level = models.CharField(max_length=8)
 
 
-from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
-
-from hackingweek.managers import TeamJoinRequestManager
-
 class TeamJoinRequest(models.Model):
     team      = models.ForeignKey(Team)
     requester = models.ForeignKey(User, related_name='teamjoinrequest_requester')
     responder = models.ForeignKey(User, related_name='teamjoinrequest_responder')
 
     created = models.DateTimeField(default=timezone.now())
-    sent = models.DateTimeField(null=True)
     key = models.CharField(max_length=64, unique=True)
-
-    objects = TeamJoinRequestManager()
 
     @classmethod
     def create(cls, request=None, **kwargs):
         # Check if a similar request already exists before proceeding
         try:
-            cls.objects.get(requester=kwargs['requester'],
-                            responder=kwargs['responder'],
-                            team=kwargs['team'])
+            _object = cls.objects.get(requester=kwargs['requester'],
+                                      responder=kwargs['responder'],
+                                      team=kwargs['team'])
+            # If the request has expired keep going
+            if _object.key_expired():
+                raise cls.DoesNotExist
+            # If not, return None
             joinrequest = None
         except cls.DoesNotExist:
             kwargs['key'] = random_token()
@@ -108,9 +107,10 @@ class TeamJoinRequest(models.Model):
                       [member.email])
 
     def key_expired(self):
-        expiration_date = self.sent + \
+        expiration_date = self.created + \
             datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
 
-        return expiration_date <= timezone.now()
+        if expiration_date <= timezone.now():
+            self.delete()
 
-    key_expired.boolean = True
+        return expiration_date <= timezone.now()
