@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-12 20:31+0100\n"
+"POT-Creation-Date: 2014-01-27 18:44+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:20 forms.py:25
+#: forms.py:21 forms.py:26
 msgid "Real Name"
 msgstr "Nom Réel"
 
-#: forms.py:21 forms.py:26 templates/contestants.html:15
+#: forms.py:22 forms.py:27 templates/contestant-list.html:18
 msgid "School"
 msgstr "Établissement"
 
-#: forms.py:22 forms.py:27 templates/contestants.html:16
+#: forms.py:23 forms.py:28 templates/contestant-list.html:19
 msgid "Study Level"
 msgstr "Diplôme en cours"
+
+#: views.py:83
+msgid "Team has been created."
+msgstr "L'équipe a été créée."
+
+#: views.py:109
+msgid "User has been removed from team."
+msgstr "L'utilisateur a été retiré de l'équipe."
+
+#: views.py:113
+msgid "Team has been supressed (empty team)."
+msgstr "L'équie a été supprimée (équipe vide)."
+
+#: views.py:151
+msgid "A request to join the team have been sent to all members."
+msgstr "Une requête pour rejoindre l'équipe a été envoyée à tous ses membres."
+
+#: views.py:189
+msgid "User has been accepted in the team."
+msgstr "L'utilisateur a été accepté dans l'équipe."
+
+#: views.py:193
+msgid "User request cannot be completed ! This key does not match this team."
+msgstr ""
+"La requête n'a pu être complétée ! Cette clef ne correspond pas à la bonne "
+"équipe."
 
 #: templates/_account_bar.html:12 templates/account/base.html:10
 #: templates/account/settings.html:9 templates/account/settings.html.py:15
@@ -55,37 +81,58 @@ msgstr "Créer un compte"
 msgid "About"
 msgstr "À propos"
 
-#: templates/contestants.html:7 templates/site_base.html:23
+#: templates/contestant-list.html:7 templates/site_base.html:23
 msgid "Contestants"
 msgstr "Candidats"
 
-#: templates/contestants.html:14 templates/teams.html:14
+#: templates/contestant-list.html:17 templates/team-list.html:18
 msgid "Name"
 msgstr "Nom"
 
-#: templates/contestants.html:27
+#: templates/contestant-list.html:30
 msgid "No contestant registered yet"
 msgstr "Aucun candidat n'est encore inscrite"
 
-#: templates/site_base.html:22 templates/teams.html:7
+#: templates/site_base.html:22 templates/team-list.html:8
 msgid "Teams"
 msgstr "Équipes"
 
-#: templates/teams.html:14
+#: templates/team-create.html:7 templates/team-create.html.py:16
+#: templates/team-create.html:22 templates/team-list.html:38
+msgid "Create Team"
+msgstr "Créer un équipe"
+
+#: templates/team-join-accept.html:6
+msgid "Join Team Accept"
+msgstr "Accepter un membre dans l'équipe"
+
+#: templates/team-join-accept.html:22
+msgid "Accept User"
+msgstr "Accepter l'utilisateur"
+
+#: templates/team-join-request.html:6
+msgid "Join Team Request"
+msgstr "Envoi d'une requête pour rejoindre l'équipe"
+
+#: templates/team-join-request.html:20
+msgid "Request to join"
+msgstr "Envoi de la requête"
+
+#: templates/team-list.html:19
 msgid "Members"
 msgstr "Membres"
 
-#: templates/teams.html:19
-msgid "Join"
-msgstr "Rejoindre"
+#: templates/team-list.html:26
+msgid "Join Team"
+msgstr "Rejoindre l'équipe"
 
-#: templates/teams.html:22
+#: templates/team-list.html:26 templates/team-quit.html:6
+msgid "Quit Team"
+msgstr "Créer l'équipe"
+
+#: templates/team-list.html:30
 msgid "No team registered yet"
 msgstr "Aucune équipe n'est encore inscrite"
-
-#: templates/teams.html:27
-msgid "Create Team"
-msgstr "Créer un équipe"
 
 #: templates/account/base.html:13
 msgid "Settings"
@@ -265,7 +312,9 @@ msgstr ""
 msgid ""
 "A user on %(site_name)s has created an account using this email address.\n"
 "\n"
-"To confirm this email address, go to %(activate_url)s\n"
+"To confirm this email address, go to\n"
+"\n"
+"  %(activate_url)s\n"
 "\n"
 "If you did not sign up for this site, you can ignore this message.\n"
 msgstr ""
@@ -278,8 +327,18 @@ msgstr ""
 
 #: templates/account/email/email_confirmation_subject.txt:1
 #, python-format
-msgid "Confirm email address for %(site_name)s"
-msgstr "Confirmation d'inscription à la %(site_name)s"
+msgid "[%(site_name)s] Confirm your email address"
+msgstr "[%(site_name)s] Confirmez votre adresse courriel"
+
+#: templates/account/email/invite_user_subject.txt:1
+#, python-format
+msgid "[%(site_name)s] Create an account on %(current_site.name)s"
+msgstr "[%(site_name)s] Créer un compte pour la %(current_site.name)s"
+
+#: templates/account/email/password_change_subject.txt:1
+#, python-format
+msgid "[%(site_name)s] Change password email notification"
+msgstr "[%(site_name)s] Réinitialisation du mot de passe"
 
 #: templates/account/email/password_reset.txt:1
 #, python-format
@@ -305,3 +364,42 @@ msgstr ""
 #, python-format
 msgid "[%(site_name)s] Password reset"
 msgstr "[%(site_name)s] Réinitialisation du mot de passe"
+
+#: templates/email/team_join_accept_message.txt:1
+#, python-format
+msgid ""
+"The user '%(_requester)s' has been accepted in the team '%(_team)s' by "
+"'%(_responder)s'.\n"
+msgstr ""
+"L'utilisateur '%(_requester)s' a été accepté dans l'équipe '%(_team)s' par "
+"'%(_responder)s'.\n"
+
+#: templates/email/team_join_accept_subject.txt:1
+#, python-format
+msgid "[%(_site)s] '%(_requester)s' has been accepted in '%(_team)s'"
+msgstr "[%(_site)s] '%(_requester)s' a été accepté dans '%(_team)s'"
+
+#: templates/email/team_join_request_message.txt:1
+#, python-format
+msgid ""
+"The user '%(user)s' has requested to join your team (%(team)s).\n"
+"\n"
+"To accept %(user)s in %(team)s, go to:\n"
+"\n"
+"  %(accept_url)s\n"
+"\n"
+"If you do not want to accept this user in your team, you can safely\n"
+"ignore this message.\n"
+msgstr ""
+"L'utilisateur  '%(user)s' désire rejoindre votre équipe (%(team)s).\n"
+"\n"
+"Pour confirmer son entrée dans votre équipe, allez sur\n"
+"\n"
+"  %(accept_url)s\n"
+"\n"
+"Si vous ne désirez pas l'accepter, vous pouvez ignorer ce courrier.\n"
+
+#: templates/email/team_join_request_subject.txt:1
+#, python-format
+msgid "[%(current_site)s] '%(user)s' requested to join your team"
+msgstr "[%(current_site)s] '%(user)s' souhaite rejoindre votre équipe"
