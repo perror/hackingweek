@@ -21,7 +21,7 @@ def team_count():
 @register.simple_tag
 def active(request, pattern):
     import re
-    if re.search(reverse(pattern), request.path):
+    if re.search(reverse(pattern), request):
         return ' class="active"'
     else:
         return ''
