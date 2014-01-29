@@ -1,5 +1,6 @@
 *~
 *.pyc
 dev.db
-hackingweek/private_settings.py
 hackingweek/locale/fr/LC_MESSAGES/django.mo
+hackingweek/private_settings.py
+hackingweek/site_media/
