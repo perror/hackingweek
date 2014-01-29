@@ -128,7 +128,7 @@ msgstr "Rejoindre l'équipe"
 
 #: templates/team-list.html:26 templates/team-quit.html:6
 msgid "Quit Team"
-msgstr "Créer l'équipe"
+msgstr "Quitter l'équipe"
 
 #: templates/team-list.html:30
 msgid "No team registered yet"
