@@ -67,11 +67,11 @@ msgstr "Admin"
 
 #: templates/_account_bar.html:17
 msgid "Logout"
-msgstr "Se déloger"
+msgstr "Se déconnecter"
 
 #: templates/_account_bar.html:21
 msgid "Login"
-msgstr "Se loger"
+msgstr "Se connecter"
 
 #: templates/_account_bar.html:23
 msgid "Signup"
@@ -191,11 +191,11 @@ msgstr "Vous avez confirmé le couriel <b>%(email)s</b>"
 
 #: templates/account/login.html:7 templates/account/login.html.py:20
 msgid "Log in"
-msgstr "Se loger"
+msgstr "Se connecter"
 
 #: templates/account/login.html:13
 msgid "Log in to an existing account"
-msgstr "Se loger sur un compte existant"
+msgstr "Se connecter sur un compte existant"
 
 #: templates/account/login.html:19
 msgid "Forgot your password?"
@@ -204,7 +204,7 @@ msgstr "Oubli du mot de passe&nbsp;?"
 #: templates/account/logout.html:6 templates/account/logout.html.py:12
 #: templates/account/logout.html:16
 msgid "Log out"
-msgstr "Se déloger"
+msgstr "Se déconnecter"
 
 #: templates/account/logout.html:15
 msgid "Are you sure you want to log out?"
