@@ -22,7 +22,7 @@
     {% else %}
         {% url 'account_login' as login_url %}
         {% url 'account_signup' as signup_url %}
-        <p>Vous pouvez <a href="{{ login_url }}" class="btn btn-default">vous loger</a> ou bien <a href="{{ signup_url }}" class="btn btn-primary">créer un compte</a> pour participer au concours.</p>
+        <p>Vous pouvez <a href="{{ login_url }}" class="btn btn-default">vous connecter</a> ou bien <a href="{{ signup_url }}" class="btn btn-primary">créer un compte</a> pour participer au concours.</p>
     {% endif %}
 
     <div class="message" style="text-align:center;margin-top:15px"></div>
