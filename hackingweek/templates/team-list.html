@@ -35,7 +35,7 @@
 	</table>
 
 	{% if user.is_authenticated and user.team_set.all.count == 0 %}
-	<div class="pull-right"><a href="{% url 'team_create' %}" class="btn btn-primary btn-xs">{% trans "Create Team" %}</a></div>
+	<div class="pull-left"><a href="{% url 'team_create' %}" class="btn btn-primary btn-xs">{% trans "Create Team" %}</a></div>
 	{% endif %}
       </div>
     </div>
