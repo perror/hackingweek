@@ -19,7 +19,7 @@
 	    <th>{% trans "Members" %}</th>
 	    {% if user.is_authenticated %}<th></th>{% endif %}
 	  </tr>
-	  {% for team in object_list %}
+	  {% for team in object_list|dictsort:"name" %}
 	  <tr>
 	    <td>{{ team.name }}</td>
 	    <td>{{ team.members.all|join:", " }}.</td>
