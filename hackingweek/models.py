@@ -34,7 +34,7 @@ class UserProfile(models.Model):
 
     real_name   = models.CharField(max_length=128)
     school      = models.CharField(max_length=128)
-    study_level = models.CharField(max_length=8)
+    study_level = models.CharField(max_length=32)
 
 
 class TeamJoinRequest(models.Model):
