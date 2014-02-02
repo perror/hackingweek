@@ -25,7 +25,7 @@ def active(request, pattern):
         return ''
 
 @register.filter
-def sort(value, arg):
+def sort_lower(value, arg):
     try:
         return sorted(value,
                       key=Variable(arg).resolve,
