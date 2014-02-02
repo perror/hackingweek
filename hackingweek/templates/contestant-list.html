@@ -3,6 +3,7 @@
 {% load url from future %}
 {% load i18n %}
 {% load bootstrap %}
+{% load hackingweek_tags %}
 
 {% block head_title %}{% trans "Contestants" %}{% endblock %}
 
@@ -18,7 +19,7 @@
 	    <th>{% trans "School" %}</th>
 	    <th>{% trans "Study Level" %}</th>
 	  </tr>
-	  {% for profile in object_list|dictsort:"user.username" %}
+	  {% for profile in object_list|sort:"user.username" %}
 	  {% if not profile.user.is_staff %}
 	  <tr>
 	    <td>{{ profile.user }}</td>
