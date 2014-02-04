@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-27 18:44+0100\n"
+"POT-Creation-Date: 2014-02-04 22:45+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "Real Name"
 msgstr "Nom Réel"
 
-#: forms.py:22 forms.py:27 templates/contestant-list.html:18
+#: forms.py:22 forms.py:27 templates/contestant-list.html:19
 msgid "School"
 msgstr "Établissement"
 
-#: forms.py:23 forms.py:28 templates/contestant-list.html:19
+#: forms.py:23 forms.py:28 templates/contestant-list.html:20
 msgid "Study Level"
 msgstr "Diplôme en cours"
 
@@ -57,7 +57,7 @@ msgstr ""
 "équipe."
 
 #: templates/_account_bar.html:12 templates/account/base.html:10
-#: templates/account/settings.html:9 templates/account/settings.html.py:15
+#: templates/account/settings.html:7 templates/account/settings.html.py:16
 msgid "Account"
 msgstr "Votre compte"
 
@@ -77,21 +77,25 @@ msgstr "Se connecter"
 msgid "Signup"
 msgstr "Créer un compte"
 
-#: templates/about.html:6 templates/site_base.html:24
+#: templates/about.html:6 templates/site_base.html:25
 msgid "About"
 msgstr "À propos"
 
-#: templates/contestant-list.html:7 templates/site_base.html:23
+#: templates/contestant-list.html:8 templates/site_base.html:23
 msgid "Contestants"
 msgstr "Candidats"
 
-#: templates/contestant-list.html:17 templates/team-list.html:18
+#: templates/contestant-list.html:18 templates/team-list.html:18
 msgid "Name"
 msgstr "Nom"
 
-#: templates/contestant-list.html:30
+#: templates/contestant-list.html:31
 msgid "No contestant registered yet"
 msgstr "Aucun candidat n'est encore inscrite"
+
+#: templates/rules.html:6 templates/site_base.html:24
+msgid "Contest Rules"
+msgstr "Règlement"
 
 #: templates/site_base.html:22 templates/team-list.html:8
 msgid "Teams"
@@ -138,8 +142,8 @@ msgstr "Aucune équipe n'est encore inscrite"
 msgid "Settings"
 msgstr "Paramètres du compte"
 
-#: templates/account/base.html:16 templates/account/password_change.html:9
-#: templates/account/password_change.html:15
+#: templates/account/base.html:16 templates/account/password_change.html:7
+#: templates/account/password_change.html:16
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
@@ -148,25 +152,25 @@ msgid "Delete account"
 msgstr "Supprimer le compte"
 
 #: templates/account/email_confirm.html:6
-#: templates/account/email_confirm.html:12
+#: templates/account/email_confirm.html:15
 msgid "Confirm Email"
 msgstr "Courriel de confirmation"
 
-#: templates/account/email_confirm.html:15
+#: templates/account/email_confirm.html:18
 #, python-format
 msgid "Confirm email address <b>%(email)s</b>?"
 msgstr "Confirmez-vous le couriel <b>%(email)s</b>?"
 
-#: templates/account/email_confirm.html:16
+#: templates/account/email_confirm.html:19
 msgid "Confirm"
 msgstr "Confirmer"
 
 #: templates/account/email_confirmation_sent.html:6
-#: templates/account/email_confirmation_sent.html:9
+#: templates/account/email_confirmation_sent.html:12
 msgid "Confirm your email address"
 msgstr "Confirmez votre couriel"
 
-#: templates/account/email_confirmation_sent.html:11
+#: templates/account/email_confirmation_sent.html:14
 #, python-format
 msgid ""
 "We have sent you an email to <b>%(email)s</b> for verification. Follow the "
@@ -180,48 +184,48 @@ msgstr ""
 "\"mailto:%(THEME_CONTACT_EMAIL)s\">%(THEME_CONTACT_EMAIL)s</a>."
 
 #: templates/account/email_confirmed.html:6
-#: templates/account/email_confirmed.html:9
+#: templates/account/email_confirmed.html:12
 msgid "Email confirmed"
 msgstr "Couriel confirmé"
 
-#: templates/account/email_confirmed.html:10
+#: templates/account/email_confirmed.html:13
 #, python-format
 msgid "You have confirmed <b>%(email)s</b>"
 msgstr "Vous avez confirmé le couriel <b>%(email)s</b>"
 
-#: templates/account/login.html:7 templates/account/login.html.py:20
+#: templates/account/login.html:7 templates/account/login.html.py:23
 msgid "Log in"
 msgstr "Se connecter"
 
-#: templates/account/login.html:13
+#: templates/account/login.html:16
 msgid "Log in to an existing account"
 msgstr "Se connecter sur un compte existant"
 
-#: templates/account/login.html:19
+#: templates/account/login.html:22
 msgid "Forgot your password?"
 msgstr "Oubli du mot de passe&nbsp;?"
 
-#: templates/account/logout.html:6 templates/account/logout.html.py:12
-#: templates/account/logout.html:16
+#: templates/account/logout.html:6 templates/account/logout.html.py:15
+#: templates/account/logout.html:19
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/account/logout.html:15
+#: templates/account/logout.html:18
 msgid "Are you sure you want to log out?"
 msgstr "Êtez-vous sûr de vouloir vous déloger&nbsp;?"
 
-#: templates/account/password_change.html:19
+#: templates/account/password_change.html:20
 #: templates/account/password_reset_token.html:17
-#: templates/account/settings.html:18
+#: templates/account/settings.html:19
 msgid "Save"
 msgstr "Enregistrer"
 
 #: templates/account/password_reset.html:8
-#: templates/account/password_reset.html:16
+#: templates/account/password_reset.html:19
 msgid "Password reset"
 msgstr "Réinitialisation du mot de passe"
 
-#: templates/account/password_reset.html:17
+#: templates/account/password_reset.html:20
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
@@ -229,11 +233,11 @@ msgstr ""
 "Vous avez oublié votre mot de passe&nbsp;? Entrez votre couriel ci-dessous,  "
 "et nous vous enverrons un couriel qui vous permettra de le réinitialiser."
 
-#: templates/account/password_reset.html:23
+#: templates/account/password_reset.html:26
 msgid "Reset my password"
 msgstr "Réinitialiser mon mot de passe"
 
-#: templates/account/password_reset.html:30
+#: templates/account/password_reset.html:33
 #, python-format
 msgid ""
 "If you have any trouble resetting your password, contact us at <a href="
@@ -293,16 +297,16 @@ msgstr ""
 "qu'il  a déjà été utilisé. Essayez à nouveau de <a href=\"%(url)s"
 "\">réinitialiser votre mot de passe</a>."
 
-#: templates/account/signup.html:7 templates/account/signup.html.py:13
-#: templates/account/signup.html:19 templates/account/signup_closed.html:6
+#: templates/account/signup.html:7 templates/account/signup.html.py:16
+#: templates/account/signup.html:22 templates/account/signup_closed.html:6
 msgid "Sign up"
 msgstr "Créer un compte"
 
-#: templates/account/signup_closed.html:9
+#: templates/account/signup_closed.html:12
 msgid "This site is in private beta"
 msgstr "Ce site est en béta privée"
 
-#: templates/account/signup_closed.html:10
+#: templates/account/signup_closed.html:13
 msgid "If you have signup code you can enter it below."
 msgstr ""
 "Si vous avez déjà un code d'inscription, vous pouvez l'entrer ci-dessous."
