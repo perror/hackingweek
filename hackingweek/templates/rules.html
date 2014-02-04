@@ -1,0 +1,113 @@
+{% extends "site_base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Contest Rules" %}{% endblock %}
+
+{% block body_id %}rules{% endblock %}
+{% block body_class %}rules{% endblock %}
+
+{% block body %}
+    <div class="row">
+      <h3>Les participants</h3>
+      <p>N'importe quel étudiant de n'importe quelle nationalité,
+	préparant un diplôme de niveau Bac+0 (Terminale) à Bac+5 peut
+	participer à ce concours.</p>
+
+      <h3>Les équipes</h3>
+      <p>Une équipe compte au plus 5 membres, elle n'est comptée comme
+	participante au concours qu'à partir du moment où elle a
+	validé au moins une épreuve pendant la période du
+	concours.</p>
+
+      <h3>Les épreuves</h3>
+      <p>La résolution de chaque épreuve mène à la découverte d'un mot
+	de passe caché. La validation de l'épreuve se fait en
+	reportant le mot de passe sur la page de l'épreuve en
+	question.</p>
+
+      <h3>Le score</h3>
+      <p>Le nombre de points que rapporte une épreuve dépend du nombre
+	d'équipes participantes (<code>#teams</code>) et du nombre
+	d'équipes qui n'ont pas validé cette épreuve
+	(<code>#p0wned_teams</code>). Notez aussi que la première
+	validation (ou "<em>percée</em>") bénéficie d'un bonus
+	supplémentaire sur le score. Les formules pour calculer les
+	scores sont les suivantes:</p>
+
+      <ul>
+	<li><strong>Percée</strong>: <code>#teams x (#p0wned_teams + 1)</code></li>
+	<li><strong>Normal</strong>: <code>#teams x #p0wned_teams</code></li>
+      </ul>
+
+      <p>Par exemple, si 30 équipes participent au concours, voici
+	quelques calculs de scores pour une épreuve:</p>
+
+      <div class="row">
+	<div class="col-md-6">
+      <ul>
+	<li><strong>1 validation</strong>:<br/>
+	  Percée: 30 x 30 = 900 pts
+	</li>
+
+	<li><strong>2 validations</strong>:<br/>
+	  Percée: 30 x 29 = 870 pts<br/>
+	  Normal: 30 x 28 = 840 pts
+	</li>
+
+	<li><strong>5 validations</strong>:<br/>
+	  Normal: 30 x 26 = 780 pts<br/>
+	  Percée: 30 x 25 = 750 pts
+	</li>
+      </ul>
+	</div>
+	<div class="col-md-6">
+      <ul>
+	<li><strong>10 validations</strong>:<br/>
+	  Normal: 30 x 21 = 630 pts<br/>
+	  Percée: 30 x 20 = 600 pts
+	</li>
+
+	<li><strong>20 validations</strong>:<br/>
+	  Normal: 30 x 11 = 330 pts<br/>
+	  Percée: 30 x 10 = 300 pts
+	</li>
+
+	<li><strong>30 validations</strong>:<br/>
+	  Normal: 30 x 1 = 30 pts<br/>
+	  Percée: 30 x 0 = 0 pts
+	</li>
+      </ul>
+	</div>
+      </div>
+
+      <h3>Départager le ex-æquos</h3>
+      <p>Le classement est effectué en applicant les critères suivants (classés
+	par ordre d'importance):</p>
+      <ol>
+	<li>Le plus grand score;</li>
+	<li>Le plus grand nombre d'épreuves validées;</li>
+	<li>Le plus grand nombre de percées effectuées.</li>
+      </ol>
+
+      <h3>Classement intermédiaire</h3>
+      <p>Un score intermédiaire correspond au nombre de points que va
+	rapporter une épreuve à un moment donné du concours, selon le
+	nombre d'équipes participantes et le nombre de celles qui
+	l'ont validé sur le moment. Ce nombre va évoluer au fur et à
+	mesure du temps et des validations jusqu'à la fin du
+	concours.</p>
+
+      <p>Le classement intermédiaire est un classement basé sur les
+	scores intermédiaires qui sera mis à jour régulièrement
+	pendant toute la durée du concours. Il s'agit d'un instantané
+	qui préfigure le classement final et qui permet de donner une
+	idée de la stratégie à appliquer pour optimiser votre
+	score.</p>
+
+      <p>À l'issue du concours, lors de la fermeture des validations,
+	le classement final sera calculé et déterminera les
+	gagnants du concours.</p>
+    </div>
+{% endblock body%}
