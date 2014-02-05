@@ -10,6 +10,10 @@
 
 {% block body %}
     <div class="row">
+      <h3>Le concours</h3>
+      <p>Le concours se déroule du vendredi 21 février 2014 (18h) au
+      dimanche 2 mars 2014 (minuit).</p>
+
       <h3>Les participants</h3>
       <p>N'importe quel étudiant de n'importe quelle nationalité,
 	préparant un diplôme de niveau Bac+0 (Terminale) à Bac+5 peut
@@ -36,48 +40,51 @@
 	scores sont les suivantes:</p>
 
       <ul>
-	<li><strong>Percée</strong>: <code>#teams x (#p0wned_teams + 1)</code></li>
-	<li><strong>Normal</strong>: <code>#teams x #p0wned_teams</code></li>
+	<li><strong>Percée</strong>: <code>#teams x (#p0wned_teams + 2)</code></li>
+	<li><strong>Normal</strong>: <code>#teams x (#p0wned_teams + 1)</code></li>
       </ul>
 
       <p>Par exemple, si 30 équipes participent au concours, voici
 	quelques calculs de scores pour une épreuve:</p>
 
       <div class="row">
-	<div class="col-md-6">
-      <ul>
-	<li><strong>1 validation</strong>:<br/>
-	  Percée: 30 x 30 = 900 pts
-	</li>
+	<div class="col-md-4">
+	  <ul>
+	    <li><strong>1 validation</strong>:<br/>
+	      Percée: 30 x (29 + 2) = 930 pts
+	    </li>
 
-	<li><strong>2 validations</strong>:<br/>
-	  Percée: 30 x 29 = 870 pts<br/>
-	  Normal: 30 x 28 = 840 pts
-	</li>
-
-	<li><strong>5 validations</strong>:<br/>
-	  Normal: 30 x 26 = 780 pts<br/>
-	  Percée: 30 x 25 = 750 pts
-	</li>
-      </ul>
+	    <li><strong>2 validations</strong>:<br/>
+	      Percée: 30 x (28 + 2) = 900 pts<br/>
+	      Normal: 30 x (28 + 1) = 870 pts
+	    </li>
+	  </ul>
 	</div>
-	<div class="col-md-6">
-      <ul>
-	<li><strong>10 validations</strong>:<br/>
-	  Normal: 30 x 21 = 630 pts<br/>
-	  Percée: 30 x 20 = 600 pts
-	</li>
+	<div class="col-md-4">
+	  <ul>
+	    <li><strong>5 validations</strong>:<br/>
+	      Percée: 30 x (25 + 2) = 810 pts<br/>
+	      Normal: 30 x (25 + 1) = 780 pts
+	    </li>
 
-	<li><strong>20 validations</strong>:<br/>
-	  Normal: 30 x 11 = 330 pts<br/>
-	  Percée: 30 x 10 = 300 pts
-	</li>
+	    <li><strong>10 validations</strong>:<br/>
+	      Percée: 30 x (20 + 2) = 660 pts<br/>
+	      Normal: 30 x (20 + 1) = 630 pts
+	    </li>
+	  </ul>
+	</div>
+	<div class="col-md-4">
+	  <ul>
+	    <li><strong>20 validations</strong>:<br/>
+	      Percée: 30 x (10 + 2) = 360 pts<br/>
+	      Normal: 30 x (10 + 1) = 330 pts
+	    </li>
 
-	<li><strong>30 validations</strong>:<br/>
-	  Normal: 30 x 1 = 30 pts<br/>
-	  Percée: 30 x 0 = 0 pts
-	</li>
-      </ul>
+	    <li><strong>30 validations</strong>:<br/>
+	      Percée: 30 x (0 + 2) = 60 pts<br/>
+	      Normal: 30 x (0 + 1) = 30 pts
+	    </li>
+	  </ul>
 	</div>
       </div>
 

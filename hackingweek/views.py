@@ -1,4 +1,4 @@
-import account.views
+import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -10,10 +10,169 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic.list import ListView
+from django.shortcuts import render
+
+import account.views
 
 from hackingweek.decorators import has_team_required
-from hackingweek.forms import SettingsForm, SignupForm
-from hackingweek.models import Challenge, Team, UserProfile
+from hackingweek.forms import SettingsForm, SignupForm, ChallengeValidationForm
+from hackingweek.models import Challenge, Team, UserProfile, Validation
+
+def validate(request, pk):
+   errors = []
+   _messages = {
+      "invalid_key": {
+         "level": messages.ERROR,
+         "text": _("Sorry, wrong key. Try again !")
+         },
+      "valid_key": {
+         "level": messages.SUCCESS,
+         "text": _("Congratulation, you found the key !")
+         },
+      "breakthrough": {
+         "level": messages.WARNING,
+         "text": _("Great, you just made a breakthrough !")
+         },
+      "already_done": {
+         "level": messages.INFO,
+         "text": _("This challenge was already done by your team !")
+         },
+      "before_start": {
+         "level": messages.INFO,
+         "text": _("The contest is not yet started !")
+         },
+      "after_end": {
+         "level": messages.INFO,
+         "text": _("The contest is finished !")
+         },
+      }
+
+   # Check if the contest is open
+   start_date = \
+       datetime.datetime.strptime(settings.CONTEST_START_DATE, "%Y-%m-%d %H:%M")
+
+   end_date = \
+       datetime.datetime.strptime(settings.CONTEST_END_DATE, "%Y-%m-%d %H:%M")
+
+   now = datetime.datetime.now()
+
+   if (now <= start_date):
+      messages.add_message(request,
+                           _messages['before_start']['level'],
+                           _messages['before_start']['text'])
+
+      return HttpResponseRedirect('/challenges/')
+
+   if (now >= end_date):
+      messages.add_message(request,
+                           _messages['after_end']['level'],
+                           _messages['after_end']['text'])
+      return HttpResponseRedirect('/challenges/')
+
+   if request.method == 'POST':
+      form = ChallengeValidationForm(request.POST)
+
+      if form.is_valid():
+         key = form.cleaned_data['key']
+
+         if key == Challenge.objects.get(pk=pk).key:
+            # Key is valid
+            messages.add_message(request,
+                                 _messages['valid_key']['level'],
+                                 _messages['valid_key']['text'])
+
+            team = request.user.team_set.filter()[:1].get()
+            challenge = Challenge.objects.get(pk=pk)
+            try:
+               Validation.objects.filter(challenge=challenge)[:1].get()
+               # Not a breakthrough
+               try:
+                  Validation.objects.get(challenge=challenge, team=team)
+                  # Team has already validated this challenge
+                  messages.add_message(request,
+                                       _messages['already_done']['level'],
+                                       _messages['already_done']['text'])
+               except Validation.DoesNotExist:
+                  # Validation was not already registered, creating it
+                  validation = Validation(team=team,
+                                          user=request.user,
+                                          challenge=challenge)
+                  validation.save()
+                  team.is_active = True
+
+            except Validation.DoesNotExist:
+               # Breakthrough !
+               messages.add_message(request,
+                                    _messages['breakthrough']['level'],
+                                    _messages['breakthrough']['text'])
+               validation = Validation(team=team,
+                                       user=request.user,
+                                       challenge=challenge)
+               validation.save()
+               team.is_active = True
+
+         else:
+            # Key is not valid
+            messages.add_message(request,
+                                 _messages['invalid_key']['level'],
+                                 _messages['invalid_key']['text'])
+
+   else:
+      form = ChallengeValidationForm()
+      messages.add_message(request,
+                           _messages['invalid_key']['level'],
+                           _messages['invalid_key']['text'])
+
+   return HttpResponseRedirect('/challenges/')
+
+
+class ChallengeListView(ListView):
+   model = Challenge
+   success_url = reverse_lazy('challenges')
+
+   def get_context_data(self, **kwargs):
+      context = super(ChallengeListView, self).get_context_data(**kwargs)
+
+      # Check if the contest is open
+      start_date = \
+          datetime.datetime.strptime(settings.CONTEST_START_DATE, "%Y-%m-%d %H:%M")
+
+      if (datetime.datetime.now() >= start_date):
+         context['is_contest_open'] = True
+      else:
+         context['is_contest_open'] = False
+
+      context['active_teams'] = Team.objects.filter(is_active=True).count()
+
+      challenge_status = {}
+      team  = self.request.user.team_set.filter()[:1].get()
+
+      for challenge in Challenge.objects.all():
+         validations = Validation.objects.filter(challenge=challenge)
+
+         try:
+            validations.filter(team=team).get()
+            is_done = True
+
+            try:
+               is_breakthrough = (team == validations[:1].get().team)
+            except Validation.DoesNotExist:
+               is_breakthrough = False
+
+         except Validation.DoesNotExist:
+            is_done = False
+            is_breakthrough = False
+
+         # challenge_status contains the number of validations of this
+         # challenge, if the current team has validated it or not and
+         # if it is a breakthrough.
+         challenge_status[challenge.pk] = \
+             (validations.count(), is_done, is_breakthrough)
+
+         context['challenge_status'] = challenge_status
+
+      return context
+
 
 class SignupView(account.views.SignupView):
    form_class = SignupForm
@@ -57,14 +216,6 @@ class SettingsView(account.views.SettingsView):
       profile.save()
 
 
-class ChallengeListView(ListView):
-   model = Challenge
-
-   def get_context_data(self, **kwargs):
-      context = super(ChallengeListView, self).get_context_data(**kwargs)
-      return context
-
-
 class TeamListView(ListView):
    model = Team
 
@@ -73,8 +224,66 @@ class TeamListView(ListView):
       return context
 
 
+class RankingView(ListView):
+   model = Team
+
+   def get_context_data(self, **kwargs):
+      context = super(RankingView, self).get_context_data(**kwargs)
+
+      teams =  Team.objects.filter(is_active=True).all()
+      teams_count = teams.count()
+
+      # Compute the score for each challenge and the first team
+      challenge_scores = {}
+      for challenge in Challenge.objects.all():
+         validations = Validation.objects.filter(challenge=challenge)
+
+         try:
+            first_team = validations[:1].get().team
+         except Validation.DoesNotExist:
+            first_team = None
+
+         count = validations.count()
+
+         # challenge_score contains the score for a challenge and the
+         # team which make de the breakthrough (None otherwise).
+         challenge_scores[challenge.pk] = \
+             (teams_count * (teams_count - count + 1), first_team)
+
+      # Compute the score for each team
+      ranking = []
+      for team  in teams:
+         score = 0
+         breakthroughs = 0
+         validations = Validation.objects.filter(team=team)
+         for validation in validations:
+            score_challenge, first_team = challenge_scores[validation.challenge.pk]
+            if (team == first_team):
+               score += score_challenge + teams_count
+               breakthroughs += 1
+            else:
+               score += score_challenge
+
+         ranking.append({'name': team.name,
+                         'score': score,
+                         'validations': validations.count(),
+                         'breakthroughs': breakthroughs
+                         })
+
+      import operator
+      context['ranking'] = \
+          sorted(ranking,
+                 key=operator.itemgetter('score','validations','breakthroughs'),
+                 reverse=True)
+
+      return context
+
+
 class ContestantListView(ListView):
-   model = UserProfile
+   model = User
+
+   def get_queryset(self):
+      return User.objects.filter(is_active=True).exclude(is_staff=True)
 
    def get_context_data(self, **kwargs):
       context = super(ContestantListView, self).get_context_data(**kwargs)

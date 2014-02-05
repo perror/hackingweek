@@ -199,8 +199,8 @@ AUTH_PROFILE_MODULE = 'hackingweek.UserProfile'
 TEAM_MAX_MEMBERS = 5
 TEAM_JOIN_REQUEST_EXPIRE_DAYS = 2
 
-START_DATE = ''
-END_DATE = ''
+CONTEST_START_DATE = '2014-02-21 18:00'
+CONTEST_END_DATE   = '2014-03-03 00:01'
 
 from django.contrib.messages import constants as message_constants
 

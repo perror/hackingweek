@@ -19,14 +19,12 @@
 	    <th>{% trans "School" %}</th>
 	    <th>{% trans "Study Level" %}</th>
 	  </tr>
-	  {% for profile in object_list|sort_lower:"user.username" %}
-	  {% if profile.user.is_active and not profile.user.is_staff %}
+	  {% for user in object_list|sort_lower:"username" %}
 	  <tr>
-	    <td>{{ profile.user }}</td>
-	    <td>{{ profile.school }}</td>
-	    <td>{{ profile.study_level }}</td>
+	    <td>{{ user.get_profile.user }}</td>
+	    <td>{{ user.get_profile.school }}</td>
+	    <td>{{ user.get_profile.study_level }}</td>
 	  </tr>
-	  {% endif %}
 	  {% empty %}
 	  <tr><td>{% trans "No contestant registered yet" %}.</td></tr>
 	  {% endfor %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-05 19:12+0100\n"
+"POT-Creation-Date: 2014-02-16 18:51+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,39 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:21 forms.py:26
+#: forms.py:33 forms.py:39
 msgid "Real Name"
 msgstr "Nom Réel"
 
-#: forms.py:22 forms.py:27 templates/contestant-list.html:19
+#: forms.py:34 forms.py:40 templates/contestant-list.html:19
 msgid "School"
 msgstr "Établissement"
 
-#: forms.py:23 forms.py:28 templates/contestant-list.html:20
+#: forms.py:35 forms.py:41 templates/contestant-list.html:20
 msgid "Study Level"
 msgstr "Diplôme en cours"
 
-#: views.py:91
+#: views.py:26
+msgid "Sorry, wrong key. Try again !"
+msgstr "Désolé, mauvaise clef. Essayez à nouveau !"
+
+#: views.py:30
+msgid "Congratulation, you found the key !"
+msgstr "Excellent, vous avez trouvé la clef !"
+
+#: views.py:34
+msgid "Great, you just made a breakthrough !"
+msgstr "Félicitation, vous venez de faire une percée !"
+
+#: views.py:38
+msgid "This challenge was already done by your team !"
+msgstr "Cette épreuve a déjà été validée par votre équipe !"
+
+#: views.py:42
+msgid "The contest is not yet started !"
+msgstr "Le concours n'a pas encore commencé !"
+
+#: views.py:46
+msgid "The contest is finished !"
+msgstr "Le concours est fini !"
+
+#: views.py:300
 msgid "Team has been created."
 msgstr "L'équipe a été créée."
 
-#: views.py:117
+#: views.py:326
 msgid "User has been removed from team."
 msgstr "L'utilisateur a été retiré de l'équipe."
 
-#: views.py:121
+#: views.py:330
 msgid "Team has been supressed (empty team)."
-msgstr "L'équie a été supprimée (équipe vide)."
+msgstr "L'équipe a été supprimée (équipe vide)."
 
-#: views.py:159
+#: views.py:368
 msgid "A request to join the team have been sent to all members."
 msgstr "Une requête pour rejoindre l'équipe a été envoyée à tous ses membres."
 
-#: views.py:197
+#: views.py:406
 msgid "User has been accepted in the team."
 msgstr "L'utilisateur a été accepté dans l'équipe."
 
-#: views.py:201
+#: views.py:410
 msgid "User request cannot be completed ! This key does not match this team."
 msgstr ""
 "La requête n'a pu être complétée ! Cette clef ne correspond pas à la bonne "
@@ -77,7 +101,7 @@ msgstr "Se connecter"
 msgid "Signup"
 msgstr "Créer un compte"
 
-#: templates/about.html:6 templates/site_base.html:28
+#: templates/about.html:6 templates/site_base.html:29
 msgid "About"
 msgstr "À propos"
 
@@ -85,52 +109,76 @@ msgstr "À propos"
 msgid "Challenges"
 msgstr "Épreuves"
 
-#: templates/challenges.html:34
-msgid "Submit key"
-msgstr "Envoyer la clef"
-
-#: templates/challenges.html:35
-msgid "Close"
-msgstr "Fermer"
-
-#: templates/challenges.html:49
+#: templates/challenges.html:20
 msgid "No challenge available yet"
-msgstr "Pas d'épreuve disponible pour l'instant"
+msgstr "Pas d'épreuve accessible pour l'instant"
 
-#: templates/challenges.html:56 templates/contestant-list.html:18
+#: templates/challenges.html:27 templates/contestant-list.html:18
 #: templates/team-list.html:18
 msgid "Name"
 msgstr "Nom"
 
-#: templates/challenges.html:57
+#: templates/challenges.html:28
 msgid "Author"
 msgstr "Auteur"
 
-#: templates/challenges.html:58
+#: templates/challenges.html:29
 msgid "Value"
 msgstr "Valeur"
 
-#: templates/challenges.html:59 templates/challenges.html.py:73
+#: templates/challenges.html:30 templates/challenges.html.py:49
 msgid "Status"
 msgstr "Statut"
 
-#: templates/challenges.html:66
-msgid "Unsolved"
-msgstr "À valider"
+#: templates/challenges.html:77
+msgid "Key"
+msgstr "Clef"
 
-#: templates/challenges.html:66
-msgid "Solved"
-msgstr "Validée"
+#: templates/challenges.html:80
+msgid "Submit"
+msgstr "Valider"
+
+#: templates/challenges.html:81
+msgid "Close"
+msgstr "Fermer"
 
 #: templates/contestant-list.html:8 templates/site_base.html:23
 msgid "Contestants"
 msgstr "Candidats"
 
-#: templates/contestant-list.html:31
+#: templates/contestant-list.html:29
 msgid "No contestant registered yet"
-msgstr "Aucun candidat n'est encore inscrite"
+msgstr "Aucun candidat n'est encore inscrit"
 
-#: templates/rules.html:6 templates/site_base.html:27
+#: templates/ranking.html:8 templates/site_base.html:27
+msgid "Ranking"
+msgstr "Classement"
+
+#: templates/ranking.html:18
+msgid "Rank"
+msgstr "Rang"
+
+#: templates/ranking.html:19
+msgid "Team"
+msgstr "Équipe"
+
+#: templates/ranking.html:20
+msgid "Score"
+msgstr "Score"
+
+#: templates/ranking.html:21
+msgid "Validations"
+msgstr "Validations"
+
+#: templates/ranking.html:22
+msgid "Breakthroughs"
+msgstr "Percées"
+
+#: templates/ranking.html:38
+msgid "No challenge has been solved yet"
+msgstr "Aucune épreuve n'a encore été résolue"
+
+#: templates/rules.html:6 templates/site_base.html:28
 msgid "Contest Rules"
 msgstr "Règlement"
 
@@ -249,7 +297,7 @@ msgstr "Se déconnecter"
 
 #: templates/account/logout.html:18
 msgid "Are you sure you want to log out?"
-msgstr "Êtez-vous sûr de vouloir vous déloger&nbsp;?"
+msgstr "Êtez-vous sûr de vouloir vous déconnecter&nbsp;?"
 
 #: templates/account/password_change.html:20
 #: templates/account/password_reset_token.html:17
@@ -444,3 +492,15 @@ msgstr ""
 #, python-format
 msgid "[%(current_site)s] '%(user)s' requested to join your team"
 msgstr "[%(current_site)s] '%(user)s' souhaite rejoindre votre équipe"
+
+#: templatetags/hackingweek_tags.py:56 templatetags/hackingweek_tags.py:62
+msgid "Breakthrough"
+msgstr "Percée"
+
+#: templatetags/hackingweek_tags.py:58
+msgid "Done"
+msgstr "Fait"
+
+#: templatetags/hackingweek_tags.py:60
+msgid "To Do"
+msgstr "À Faire"

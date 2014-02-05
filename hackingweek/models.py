@@ -15,34 +15,62 @@ import urllib
 from hackingweek import settings
 
 
-class Challenge(models.Model):
-    name     = models.CharField(max_length=128)
-    author   = models.CharField(max_length=128)
-    category = models.CharField(max_length=128)
-    summary  = models.CharField(max_length=2048)
-    key      = models.CharField(max_length=128)
-
-
-#class Validation(models.Model):
-#    challenge = models.ForeignKey(Challenge)
-#    user = models.ForeignKey(User)
-#    team = models.ForeignKey(Team)
-#    date = date
-#
-#
-#class Score(models.Model):
-#    team = models.ForeignKey(Team)
-#    challenges = models.ManyToManyField(Challenge, null=True, blank=True)
-#    score = int
-
-
 class Team(models.Model):
     # FIXME: should be removed, but see in templates/team-list.html
     max_members = settings.TEAM_MAX_MEMBERS
     name = models.CharField(max_length=128, unique=True)
     members = models.ManyToManyField(User, null=True, blank=True)
 
+    # The 'is_active' field denotes if the team has validated at least
+    # one challenge in order to know if it has to be considered as
+    # active in the contest.
+    is_active = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=128)
+
+    class Meta:
+        verbose_name_plural = "categories"
+
+    def __unicode__(self):
+        return self.name
+
+
+class Challenge(models.Model):
+    category = models.ForeignKey(Category)
+    name     = models.CharField(max_length=128)
+    author   = models.CharField(max_length=128)
+    body     = models.CharField(max_length=2048)
+    # TODO: Keys should be stored hashed in case somebody manage to dump the db
+    key      = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Validation(models.Model):
+    date = models.DateTimeField(default=timezone.now())
+    user = models.ForeignKey(User, related_name='validation_user')
+    team = models.ForeignKey(Team, related_name='validation_team')
+    challenge = models.ForeignKey(Challenge, related_name='validation_challenge')
+
+
+class Score(models.Model):
+    score         = models.IntegerField(default=0)
+    team          = models.ForeignKey(Team)
+    challenges    = models.ManyToManyField(Challenge,
+                                           related_name='score_challenges',
+                                           null=True, blank=True)
+    breakthroughs = models.ManyToManyField(Challenge,
+                                           related_name='score_breakthroughs',
+                                           null=True, blank=True)
+
+
+# TODO: Remove empty team when the last user destroy his account
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
@@ -56,8 +84,8 @@ class TeamJoinRequest(models.Model):
     requester = models.ForeignKey(User, related_name='teamjoinrequest_requester')
     responder = models.ForeignKey(User, related_name='teamjoinrequest_responder')
 
-    created = models.DateTimeField(default=timezone.now())
-    key = models.CharField(max_length=64, unique=True)
+    created = models.DateTimeField(default=datetime.datetime.now())
+    key     = models.CharField(max_length=64, unique=True)
 
     @classmethod
     def create(cls, request=None, **kwargs):
@@ -124,7 +152,7 @@ class TeamJoinRequest(models.Model):
         expiration_date = self.created + \
             datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
 
-#        if expiration_date <= timezone.now():
-#            self.delete()
+        #   if expiration_date <= timezone.now():
+        #       self.delete()
 
         return expiration_date <= timezone.now()
