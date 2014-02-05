@@ -11,7 +11,7 @@ from django.views.generic import TemplateView
 import hackingweek.views
 
 from hackingweek.models import Team
-from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView, TeamJoinRequestView, TeamQuitView, ContestantListView
+from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView, TeamJoinRequestView, TeamQuitView, ContestantListView, ChallengeListView
 
 from hackingweek.decorators import has_no_team_required, has_team_required
 
@@ -29,6 +29,7 @@ urlpatterns = patterns("",
     url(r"^team/join/accept/(?P<pk>\d+)/(?P<key>\w+)/$", TeamJoinAcceptView.as_view(template_name="team-join-accept.html"), name="team_join_accept"),
     url(r"^team/join/request/(?P<pk>\d+)/$", has_no_team_required(TeamJoinRequestView.as_view(template_name="team-join-request.html")), name="team_join_request"),
     url(r"^team/quit/(?P<pk>\d+)/$", has_team_required(TeamQuitView.as_view(template_name="team-quit.html")), name="team_quit"),
+    url(r"^challenges/$", has_team_required(ChallengeListView.as_view(template_name="challenges.html")), name="challenges"),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

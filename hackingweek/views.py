@@ -11,9 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic.list import ListView
 
+from hackingweek.decorators import has_team_required
 from hackingweek.forms import SettingsForm, SignupForm
-from hackingweek.models import UserProfile, Team
-
+from hackingweek.models import Challenge, Team, UserProfile
 
 class SignupView(account.views.SignupView):
    form_class = SignupForm
@@ -55,6 +55,14 @@ class SettingsView(account.views.SettingsView):
       profile.study_level = form.cleaned_data['study_level']
       
       profile.save()
+
+
+class ChallengeListView(ListView):
+   model = Challenge
+
+   def get_context_data(self, **kwargs):
+      context = super(ChallengeListView, self).get_context_data(**kwargs)
+      return context
 
 
 class TeamListView(ListView):

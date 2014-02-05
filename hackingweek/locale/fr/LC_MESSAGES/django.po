@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-04 22:45+0100\n"
+"POT-Creation-Date: 2014-02-05 19:12+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,27 +30,27 @@ msgstr "Établissement"
 msgid "Study Level"
 msgstr "Diplôme en cours"
 
-#: views.py:83
+#: views.py:91
 msgid "Team has been created."
 msgstr "L'équipe a été créée."
 
-#: views.py:109
+#: views.py:117
 msgid "User has been removed from team."
 msgstr "L'utilisateur a été retiré de l'équipe."
 
-#: views.py:113
+#: views.py:121
 msgid "Team has been supressed (empty team)."
 msgstr "L'équie a été supprimée (équipe vide)."
 
-#: views.py:151
+#: views.py:159
 msgid "A request to join the team have been sent to all members."
 msgstr "Une requête pour rejoindre l'équipe a été envoyée à tous ses membres."
 
-#: views.py:189
+#: views.py:197
 msgid "User has been accepted in the team."
 msgstr "L'utilisateur a été accepté dans l'équipe."
 
-#: views.py:193
+#: views.py:201
 msgid "User request cannot be completed ! This key does not match this team."
 msgstr ""
 "La requête n'a pu être complétée ! Cette clef ne correspond pas à la bonne "
@@ -77,23 +77,60 @@ msgstr "Se connecter"
 msgid "Signup"
 msgstr "Créer un compte"
 
-#: templates/about.html:6 templates/site_base.html:25
+#: templates/about.html:6 templates/site_base.html:28
 msgid "About"
 msgstr "À propos"
+
+#: templates/challenges.html:8 templates/site_base.html:25
+msgid "Challenges"
+msgstr "Épreuves"
+
+#: templates/challenges.html:34
+msgid "Submit key"
+msgstr "Envoyer la clef"
+
+#: templates/challenges.html:35
+msgid "Close"
+msgstr "Fermer"
+
+#: templates/challenges.html:49
+msgid "No challenge available yet"
+msgstr "Pas d'épreuve disponible pour l'instant"
+
+#: templates/challenges.html:56 templates/contestant-list.html:18
+#: templates/team-list.html:18
+msgid "Name"
+msgstr "Nom"
+
+#: templates/challenges.html:57
+msgid "Author"
+msgstr "Auteur"
+
+#: templates/challenges.html:58
+msgid "Value"
+msgstr "Valeur"
+
+#: templates/challenges.html:59 templates/challenges.html.py:73
+msgid "Status"
+msgstr "Statut"
+
+#: templates/challenges.html:66
+msgid "Unsolved"
+msgstr "À valider"
+
+#: templates/challenges.html:66
+msgid "Solved"
+msgstr "Validée"
 
 #: templates/contestant-list.html:8 templates/site_base.html:23
 msgid "Contestants"
 msgstr "Candidats"
 
-#: templates/contestant-list.html:18 templates/team-list.html:18
-msgid "Name"
-msgstr "Nom"
-
 #: templates/contestant-list.html:31
 msgid "No contestant registered yet"
 msgstr "Aucun candidat n'est encore inscrite"
 
-#: templates/rules.html:6 templates/site_base.html:24
+#: templates/rules.html:6 templates/site_base.html:27
 msgid "Contest Rules"
 msgstr "Règlement"
 

@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from hackingweek.models import Team
 
-# List of status.
+# List of study levels.
 LEVEL_CHOICES = (
     ('Terminale', 'Terminale'),
     ('Bac+1', 'Bac+1'),

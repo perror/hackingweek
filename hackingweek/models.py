@@ -14,12 +14,26 @@ import urllib
 
 from hackingweek import settings
 
+
 class Challenge(models.Model):
-    category = models.CharField(max_length=128)
     name     = models.CharField(max_length=128)
     author   = models.CharField(max_length=128)
+    category = models.CharField(max_length=128)
     summary  = models.CharField(max_length=2048)
     key      = models.CharField(max_length=128)
+
+
+#class Validation(models.Model):
+#    challenge = models.ForeignKey(Challenge)
+#    user = models.ForeignKey(User)
+#    team = models.ForeignKey(Team)
+#    date = date
+#
+#
+#class Score(models.Model):
+#    team = models.ForeignKey(Team)
+#    challenges = models.ManyToManyField(Challenge, null=True, blank=True)
+#    score = int
 
 
 class Team(models.Model):

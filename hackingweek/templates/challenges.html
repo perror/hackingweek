@@ -1,0 +1,76 @@
+{% extends "site_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap %}
+{% load hackingweek_tags %}
+
+{% block head_title %}{% trans "Challenges" %}{% endblock %}
+
+{% block body_id %}challenges{% endblock %}
+{% block body_class %}challenges{% endblock %}
+
+{% block body %}
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+	{% regroup object_list|sort_lower:"category" by category as challenges %}
+
+	{% if challenges|length == 0 %}
+	<h3>{% trans "No challenge available yet"%}.</h3>
+	{% else %}
+	  {% for category in challenges %}
+	<h3>{{ category.grouper|title }}</h3>
+	
+	<table class="table table-striped table-hover">
+	  <tr>
+	    <th>{% trans "Name" %}</th>
+	    <th>{% trans "Author" %}</th>
+	    <th>{% trans "Value" %}</th>
+	    <th>{% trans "Status" %}</th>
+	  </tr>
+	    {% for item in category.list|sort_lower:"name" %}
+	  <tr>
+	    <td>{{ item.name }}</td>
+	    <td>{{ item.author }}</td>
+	    <td>100 points</td>
+	    <td>{% if not request.user.team_set.validated_challenges %}<a href="" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#id-{{ item.pk }}">{% trans "Unsolved" %}</a>{% else %}<a href="" class="btn btn-success btn-xs" data-toggle="modal" data-target="#label-{{ item.pk }}">{% trans "Solved" %}</a>{% endif %}</td>
+	  </tr>
+	    {% endfor %}
+	</table>
+	  {% endfor %}
+	{% endif %}
+
+	<p>Cliquez sur le bouton de la colonne '{% trans "Status" %}'
+	  pour accéder à l'épreuve.</p>	
+      </div>
+    </div>
+
+    {% for challenge in object_list %}
+    <div class="modal fade" id="id-{{ challenge.pk }}" tabindex="-1" role="dialog" aria-labelledby="label-{{ challenge.pk }}" aria-hidden="true">
+      <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="label-{{ challenge.pk }}">{{ challenge.name }}</h4>
+	  </div>
+
+	  <div class="modal-body">
+            {{challenge.summary }}
+	  </div>
+
+	  <div class="modal-footer">
+	    <form id="form-{{ challenge.pk }}" method="post" action="">
+	      <div class="form-group">
+		<input id="input-{{ challenge.pk }}" type="password" class="form-control" placeholder="Key">
+	      </div>
+	      <div class="form-group">
+		<button type="submit" class="btn btn-primary">{% trans "Submit key" %}</button>
+		<button type="button" class="btn btn-default"	data-dismiss="modal">{% trans "Close" %}</button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+      </div>
+    </div>
+    {% endfor %}
+ {% endblock %}

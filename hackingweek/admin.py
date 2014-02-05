@@ -4,21 +4,21 @@ from django.contrib import admin
 
 
 class ChallengeAdmin(admin.ModelAdmin):
-     list_display = ['category', 'name', 'author', 'summary', 'key']
-     list_filter = ('category', 'name')
+     list_display = ['name', 'category', 'author', 'summary', 'key']
+     list_filter  = ('name', 'category')
 
 admin.site.register(models.Challenge, ChallengeAdmin)
 
 
 class TeamAdmin(admin.ModelAdmin):
      list_display = ['name']
-     list_filter = ('name',)
+     list_filter  = ('name',)
 
 admin.site.register(models.Team, TeamAdmin)
 
 
 class UserProfileAdmin(admin.ModelAdmin):
      list_display = ['user', 'real_name', 'school', 'study_level']
-     list_filter = ('user',)
+     list_filter  = ('user',)
 
 admin.site.register(models.UserProfile, UserProfileAdmin)
