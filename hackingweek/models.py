@@ -53,8 +53,8 @@ class TeamJoinRequest(models.Model):
                                       responder=kwargs['responder'],
                                       team=kwargs['team'])
             # If the request has expired keep going
-            if _object.key_expired():
-                raise cls.DoesNotExist
+            #if _object.key_expired():
+            #    raise cls.DoesNotExist
             # If not, return None
             joinrequest = None
         except cls.DoesNotExist:
@@ -110,7 +110,7 @@ class TeamJoinRequest(models.Model):
         expiration_date = self.created + \
             datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
 
-        if expiration_date <= timezone.now():
-            self.delete()
+#        if expiration_date <= timezone.now():
+#            self.delete()
 
         return expiration_date <= timezone.now()
