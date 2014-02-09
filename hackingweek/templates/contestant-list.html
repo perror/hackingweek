@@ -20,7 +20,7 @@
 	    <th>{% trans "Study Level" %}</th>
 	  </tr>
 	  {% for profile in object_list|sort_lower:"user.username" %}
-	  {% if not profile.user.is_staff %}
+	  {% if profile.user.is_active and not profile.user.is_staff %}
 	  <tr>
 	    <td>{{ profile.user }}</td>
 	    <td>{{ profile.school }}</td>
