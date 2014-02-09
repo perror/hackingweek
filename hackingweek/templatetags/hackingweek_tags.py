@@ -10,7 +10,7 @@ register = template.Library()
 
 @register.simple_tag
 def user_count():
-    return User.objects.exclude(is_staff=True).count()
+    return User.objects.filter(is_active=True).exclude(is_staff=True).count()
 
 @register.simple_tag
 def team_count():
