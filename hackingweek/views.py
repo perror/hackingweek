@@ -99,6 +99,7 @@ def validate(request, pk):
                                           challenge=challenge)
                   validation.save()
                   team.is_active = True
+                  team.save()
 
             except Validation.DoesNotExist:
                # Breakthrough !
@@ -110,6 +111,7 @@ def validate(request, pk):
                                        challenge=challenge)
                validation.save()
                team.is_active = True
+               team.save()
 
          else:
             # Key is not valid
