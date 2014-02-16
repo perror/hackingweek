@@ -79,5 +79,5 @@ def sort_lower(value, arg):
         return ''
 
 @register.filter
-def iterations(number):
+def repeat(number):
     return range(number)
