@@ -28,7 +28,7 @@
 	    <td>{{ team.score }} points</td>
 	    <td>{{ team.validations }}</td>
 	    <td>
-	      {% for n in forloop.counter|iterations %}
+	      {% for n in team.breakthroughs %}
 	      <span class="glyphicon fa-star"></span>
 	      {% endfor %}
 	    </td>
