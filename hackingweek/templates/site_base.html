@@ -22,7 +22,7 @@
       <li><a href="{% url 'team_list' %}"{% active request.path "team_list" %}>{% trans "Teams" %}&nbsp;<span class="badge">{% team_count %}</span></a></li>
       <li><a href="{% url 'contestant_list' %}"{% active request.path "contestant_list" %}>{% trans "Contestants" %}&nbsp;<span class="badge">{% user_count %}</span></a></li>
       {% if request.user.team_set.count > 0 or user.is_staff %}
-      <li><a href="{% url 'challenges' %}"{% active request.path "challenges" %}>{% trans "Challenges" %}&nbsp;<span class="badge">{% challenge_count %}</span></a></li>
+      <li><a href="{% url 'challenges' %}"{% active request.path "challenges" %}>{% trans "Challenges" %}&nbsp;<span class="badge">{% challenge_count request %}</span></a></li>
       {% endif %}
       <li><a href="{% url 'ranking' %}"{% active request.path "ranking" %}>{% trans "Ranking" %}</a></li>
       <li><a href="{% url 'rules' %}"{% active request.path "rules" %}>{% trans "Contest Rules" %}</a></li>

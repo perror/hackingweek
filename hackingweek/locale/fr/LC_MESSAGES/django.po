@@ -189,7 +189,7 @@ msgstr "Équipes"
 #: templates/team-create.html:7 templates/team-create.html.py:16
 #: templates/team-create.html:22 templates/team-list.html:38
 msgid "Create Team"
-msgstr "Créer un équipe"
+msgstr "Créer une équipe"
 
 #: templates/team-join-accept.html:6
 msgid "Join Team Accept"

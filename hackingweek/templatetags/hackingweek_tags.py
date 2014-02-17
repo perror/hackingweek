@@ -22,14 +22,25 @@ def team_count():
     return Team.objects.all().count()
 
 @register.simple_tag
-def challenge_count():
+def challenge_count(request):
     start = \
         datetime.datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
 
     if (datetime.datetime.now() <= start):
         return 0
     else:
-        return Challenge.objects.all().count()
+        challenge_count = Challenge.objects.all().count()
+
+        if request.user.is_anonymous():
+            return challenge_count
+        else:
+            try:
+                user_team  = request.user.team_set.filter()[:1].get()
+            except Team.DoesNotExist:
+                return challenge_count
+
+        validation_count = Validation.objects.filter(team=user_team).count()
+        return challenge_count - validation_count
 
 @register.simple_tag
 def challenge_button_color(challenge_status, pk):
@@ -87,6 +98,10 @@ def sort_lower(value, arg):
                       cmp=lambda x,y: cmp(x.lower(), y.lower()))
     except (TypeError, VariableDoesNotExist):
         return ''
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 @register.filter
 def repeat(number):

@@ -36,8 +36,8 @@
 	    <td>
 	      {% challenge_score challenge_status active_teams item.pk %} points
 	    </td>
-	    <td>
-	      <button class="btn btn-{% challenge_button_color challenge_status item.pk %} btn-xs" data-toggle="modal" data-target="#id-{{ item.pk }}">&nbsp;{% challenge_button_text challenge_status item.pk %}&nbsp;</button>
+	    <td>{% with status=challenge_status|get_item:item.pk %}
+	      <button class="btn btn-{% challenge_button_color challenge_status item.pk %} btn-xs" {% if not status.1 %}data-toggle="modal" data-target="#id-{{ item.pk }}"{% endif %}>&nbsp;{% challenge_button_text challenge_status item.pk %}&nbsp;</button>{% endwith %}
 	    </td>
 	  </tr>
 	    {% endfor %}
@@ -58,6 +58,8 @@
 
     {% if is_contest_open %}
     {% for challenge in object_list %}
+    {% with status=challenge_status|get_item:challenge.pk %}
+    {% if not status.1 %}
     <div class="modal fade" id="id-{{ challenge.pk }}" tabindex="-1" role="dialog" aria-labelledby="label-{{ challenge.pk }}" aria-hidden="true">
       <div class="modal-dialog">
 	<div class="modal-content">
@@ -84,7 +86,7 @@
 	  </div>
 	</div>
       </div>
-    </div>
+    </div>{% endif %}{% endwith %}
     {% endfor %}
     {% endif %}
  {% endblock %}
