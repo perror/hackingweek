@@ -1,11 +1,15 @@
+import datetime
+
 from django import template
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.template.base import Variable, VariableDoesNotExist
 from django.utils.translation import ugettext_lazy as _
+
+from hackingweek.settings import CONTEST_START_DATE
 
 from hackingweek.models import Challenge, Team, UserProfile, Validation
 
-from django.template.base import Variable, VariableDoesNotExist
 
 register = template.Library()
 
@@ -19,7 +23,13 @@ def team_count():
 
 @register.simple_tag
 def challenge_count():
-    return Challenge.objects.all().count()
+    start = \
+        datetime.datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
+
+    if (datetime.datetime.now() <= start):
+        return 0
+    else:
+        return Challenge.objects.all().count()
 
 @register.simple_tag
 def challenge_button_color(challenge_status, pk):
