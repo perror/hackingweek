@@ -37,7 +37,7 @@
 	      {% challenge_score challenge_status active_teams item.pk %} points
 	    </td>
 	    <td>{% with status=challenge_status|get_item:item.pk %}
-	      <button class="btn btn-{% challenge_button_color challenge_status item.pk %} btn-xs" {% if not status.1 %}data-toggle="modal" data-target="#id-{{ item.pk }}"{% endif %}>&nbsp;{% challenge_button_text challenge_status item.pk %}&nbsp;</button>{% endwith %}
+	      <button class="btn btn-{% challenge_button_color challenge_status item.pk %} btn-xs" {% if not status.1 %}data-toggle="modal" data-target="#id-{{ item.pk }}"{% else %}disabled="disabled"{% endif %}>&nbsp;{% challenge_button_text challenge_status item.pk %}&nbsp;</button>{% endwith %}
 	    </td>
 	  </tr>
 	    {% endfor %}
