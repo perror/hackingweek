@@ -147,7 +147,11 @@ class ChallengeListView(ListView):
       context['active_teams'] = Team.objects.filter(is_active=True).count()
 
       challenge_status = {}
-      team  = self.request.user.team_set.filter()[:1].get()
+
+      try:
+         team  = self.request.user.team_set.filter()[:1].get()
+      except Team.DoesNotExist:
+         team = None
 
       for challenge in Challenge.objects.all():
          validations = Validation.objects.filter(challenge=challenge)
@@ -235,6 +239,14 @@ class RankingView(ListView):
       teams =  Team.objects.filter(is_active=True).all()
       teams_count = teams.count()
 
+      if self.request.user.is_anonymous():
+         user_team = None
+      else:
+         try:
+            user_team  = self.request.user.team_set.filter()[:1].get()
+         except Team.DoesNotExist:
+            user_team = None
+
       # Compute the score for each challenge and the first team
       challenge_scores = {}
       for challenge in Challenge.objects.all():
@@ -269,7 +281,8 @@ class RankingView(ListView):
          ranking.append({'name': team.name,
                          'score': score,
                          'validations': validations.count(),
-                         'breakthroughs': breakthroughs
+                         'breakthroughs': breakthroughs,
+                         'user_team': (team == user_team),
                          })
 
       import operator

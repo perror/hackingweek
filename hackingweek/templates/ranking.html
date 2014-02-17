@@ -24,14 +24,12 @@
 	  {% for team in ranking %}
 	  <tr>
 	    <td>{{ forloop.counter }}.</td>
-	    <td>{{ team.name }}</td>
+	    <td>
+	      {% if team.user_team %}<strong>{{ team.name }}</strong>{% else %}{{ team.name }}{% endif %}
+	    </td>
 	    <td>{{ team.score }} points</td>
 	    <td>{{ team.validations }}</td>
-	    <td>
-	      {% for n in team.breakthroughs|repeat %}
-	      <span class="fa fa-star"></span>
-	      {% endfor %}
-	    </td>
+	    <td>{% for n in team.breakthroughs|repeat %}<span class="fa fa-star"></span> {% endfor %}</td>
 	  </tr>
 	  {% empty %}
 	  <tr>
