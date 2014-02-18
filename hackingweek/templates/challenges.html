@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    {% if is_contest_open %}
+    {% if is_contest_open or request.user.is_staff %}
     {% for challenge in object_list %}
     {% with status=challenge_status|get_item:challenge.pk %}
     {% if not status.1 %}
