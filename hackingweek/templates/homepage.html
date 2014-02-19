@@ -8,7 +8,7 @@
 {% block body_id %}home{% endblock %}
 {% block body_class %}home{% endblock %}
 
-{% block banner %}    
+{% block banner %}
     <h1>Bienvenue à la HackingWeek&nbsp;!</h1>
     <p>
       La HackingWeek est un concours de sécurité en ligne destiné aux
@@ -16,7 +16,7 @@
       Elle se déroulera du Vendredi 21 Février 2014 (18h) au Dimanche
       2 Mars 2014 (minuit).
     </p>
-    
+
     {% if user.is_authenticated %}
         <p>Créez ou rejoignez une <a href="{% url 'team_list' %}" class="btn btn-primary large">équipe</a> !</p>
     {% else %}
@@ -34,7 +34,7 @@
 
     <p>La HackingWeek est un <strong>concours de sécurité
       informatique</strong> ouvert à toute personne ayant <strong>le
-      status d'étudiant</strong> quelle que soit sa nationalité et son
+      statut d'étudiant</strong> quelle que soit sa nationalité et son
       pays de résidence. Cependant, les épreuves étant en français, il
       faut pouvoir comprendre cette langue.</p>
 
@@ -127,12 +127,12 @@
         var endDate = new Date("2014 March 2 24:00:00");
 
       if (currentDate < startDate)
-      {		      
+      {
         // Calculate the difference in seconds between start and current date
         var diff = startDate.getTime() / 1000 - currentDate.getTime() / 1000;
         var msg = 'La HackingWeek commence dans:';
       }
-      else if (currentDate < endDate) 
+      else if (currentDate < endDate)
       {
         // Calculate the difference in seconds between current and end date
         var diff = endDate.getTime() / 1000 - currentDate.getTime() / 1000;
@@ -143,7 +143,7 @@
         // Game is over
         var diff = 0;
         var msg = 'Le concours est termin&eacute;.';
-      }			       
+      }
         // Instantiate a coutdown FlipClock
         clock = $('.clock').FlipClock(diff, {
           countdown: true,
@@ -157,5 +157,5 @@
 	  }
         });
       });
-    </script>		
+    </script>
 {% endblock %}
