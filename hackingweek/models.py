@@ -44,9 +44,9 @@ class Challenge(models.Model):
     category = models.ForeignKey(Category)
     name     = models.CharField(max_length=128)
     author   = models.CharField(max_length=128)
-    body     = models.CharField(max_length=2048)
+    body     = models.CharField(max_length=4096)
     # TODO: Keys should be stored hashed in case somebody manage to dump the db
-    key      = models.CharField(max_length=128)
+    key      = models.CharField(max_length=512)
 
     def __unicode__(self):
         return self.name
