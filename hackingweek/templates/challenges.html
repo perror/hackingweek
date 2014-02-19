@@ -17,7 +17,7 @@
 	{% regroup object_list|sort_lower:"category.name" by category as challenges %}
 
 	{% if challenges|length == 0 %}
-	<h4>{% trans "No challenge available yet"%}.</h4>
+	<p>{% trans "No challenge available yet"%}.</p>
 	{% else %}
 	  {% for category in challenges %}
 	<h3>{{ category.grouper|title }}</h3>
