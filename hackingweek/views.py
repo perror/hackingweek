@@ -94,9 +94,9 @@ def validate(request, pk):
                                        _messages['already_done']['text'])
                except Validation.DoesNotExist:
                   # Validation was not already registered, creating it
-                  validation = Validation(team=team,
+                  validation = Validation(date=now,
+                                          team=team,
                                           user=request.user,
-                                          date=timezone.now(),
                                           challenge=challenge)
                   validation.save()
                   team.is_active = True
@@ -107,9 +107,9 @@ def validate(request, pk):
                messages.add_message(request,
                                     _messages['breakthrough']['level'],
                                     _messages['breakthrough']['text'])
-               validation = Validation(team=team,
+               validation = Validation(date=now,
+                                       team=team,
                                        user=request.user,
-                                       date=timezone.now(),
                                        challenge=challenge)
                validation.save()
                team.is_active = True
@@ -395,7 +395,8 @@ class TeamJoinRequestView(UpdateView):
 
       # Sending a request to join to each team member
       for member in self.object.members.all():
-         joinrequest = TeamJoinRequest.create(team=self.object,
+         joinrequest = TeamJoinRequest.create(created=datetime.now(),
+                                              team=self.object,
                                               requester=self.request.user,
                                               responder=member)
          if joinrequest <> None:
