@@ -96,6 +96,7 @@ def validate(request, pk):
                   # Validation was not already registered, creating it
                   validation = Validation(team=team,
                                           user=request.user,
+                                          date=timezone.now(),
                                           challenge=challenge)
                   validation.save()
                   team.is_active = True
@@ -108,6 +109,7 @@ def validate(request, pk):
                                     _messages['breakthrough']['text'])
                validation = Validation(team=team,
                                        user=request.user,
+                                       date=timezone.now(),
                                        challenge=challenge)
                validation.save()
                team.is_active = True
