@@ -17,13 +17,17 @@
 	{% regroup object_list|sort_lower:"category.name" by category as challenges %}
 
 	{% if challenges|length == 0 %}
-	<h4>{% trans "No challenge available yet"%}.</h4>
+	<p>{% trans "No challenge available yet"%}.</p>
 	{% else %}
+	<table class="table table-hover">
 	  {% for category in challenges %}
-	<h3>{{ category.grouper|title }}</h3>
-
-	<table class="table table-striped table-hover">
 	  <tr>
+	    <th class="lead">{{ category.grouper|title }}</th>
+	    <td></td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  <tr class="active">
 	    <th>{% trans "Name" %}</th>
 	    <th>{% trans "Author" %}</th>
 	    <th>{% trans "Value" %}</th>
@@ -41,8 +45,8 @@
 	    </td>
 	  </tr>
 	    {% endfor %}
-	</table>
 	  {% endfor %}
+	</table>
 	{% endif %}
 
 	{% if object_list|length > 0 %}

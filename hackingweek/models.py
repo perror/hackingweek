@@ -44,16 +44,16 @@ class Challenge(models.Model):
     category = models.ForeignKey(Category)
     name     = models.CharField(max_length=128)
     author   = models.CharField(max_length=128)
-    body     = models.CharField(max_length=2048)
+    body     = models.CharField(max_length=4096)
     # TODO: Keys should be stored hashed in case somebody manage to dump the db
-    key      = models.CharField(max_length=128)
+    key      = models.CharField(max_length=512)
 
     def __unicode__(self):
         return self.name
 
 
 class Validation(models.Model):
-    date = models.DateTimeField(default=timezone.now())
+    date = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, related_name='validation_user')
     team = models.ForeignKey(Team, related_name='validation_team')
     challenge = models.ForeignKey(Challenge, related_name='validation_challenge')
@@ -84,7 +84,7 @@ class TeamJoinRequest(models.Model):
     requester = models.ForeignKey(User, related_name='teamjoinrequest_requester')
     responder = models.ForeignKey(User, related_name='teamjoinrequest_responder')
 
-    created = models.DateTimeField(default=datetime.datetime.now())
+    created = models.DateTimeField(default=datetime.datetime.now)
     key     = models.CharField(max_length=64, unique=True)
 
     @classmethod
@@ -152,7 +152,7 @@ class TeamJoinRequest(models.Model):
         expiration_date = self.created + \
             datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
 
-        #   if expiration_date <= timezone.now():
-        #       self.delete()
+        if expiration_date <= timezone.now():
+            self.delete()
 
         return expiration_date <= timezone.now()

@@ -8,7 +8,7 @@
 {% block body_id %}home{% endblock %}
 {% block body_class %}home{% endblock %}
 
-{% block banner %}    
+{% block banner %}
     <h1>Bienvenue à la HackingWeek&nbsp;!</h1>
     <p>
       La HackingWeek est un concours de sécurité en ligne destiné aux
@@ -16,7 +16,7 @@
       Elle se déroulera du Vendredi 21 Février 2014 (18h) au Dimanche
       2 Mars 2014 (minuit).
     </p>
-    
+
     {% if user.is_authenticated %}
         <p>Créez ou rejoignez une <a href="{% url 'team_list' %}" class="btn btn-primary large">équipe</a> !</p>
     {% else %}
@@ -34,7 +34,7 @@
 
     <p>La HackingWeek est un <strong>concours de sécurité
       informatique</strong> ouvert à toute personne ayant <strong>le
-      status d'étudiant</strong> quelle que soit sa nationalité et son
+      statut d'étudiant</strong> quelle que soit sa nationalité et son
       pays de résidence. Cependant, les épreuves étant en français, il
       faut pouvoir comprendre cette langue.</p>
 
@@ -47,7 +47,7 @@
     <p>Le concours débutera le <strong>Vendredi 21 Février 2014 à
       18h</strong> (Europe/Paris) et se terminera le <strong>Dimanche
       2 Mars 2014 à minuit</strong> (Europe/Paris). Ce qui laisse
-      environs neuf jours à toutes les équipes pour faire un maximum
+      environ neuf jours à toutes les équipes pour faire un maximum
       d'épreuves et de marquer des points.</p>
 
     <p>Le classement sera affiché en temps-réel et ne sera définitif
@@ -68,20 +68,19 @@
       pour participer au concours.</p>
 
     <p><strong class="text-danger">Attention!</strong> Notez bien que
-       seules les personnes qui font parti d'une équipe pourront
-       participer au concours. Il faut donc impérativement que
+       seules les personnes qui font partie d'une équipe pourront
+       participer au concours. Il faut donc impérativement que vous
        essayiez de rejoindre ou de créer une équipe avant le démarrage
        du concours.</p>
 
     <p>Lors du coup d'envoi, les épreuves seront rendues accessibles
-      en ligne à tous les inscrit qui auront une équipe. Ces épreuves
+      en ligne à tous les inscrits qui auront une équipe. Ces épreuves
       sont du type
       «&nbsp;<a href="https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security">Capture
       The Flag</a>&nbsp;» (CTF). C'est à dire que chaque épreuve
       contient une petite énigme à résoudre qui permettra de trouver
-      un mot de passe qu'il conviendra ensuite d'écrire dans le champs
-      prévu à cet effet sur la page de l'épreuve afin de valider
-      l'épreuve pour votre équipe.</p>
+      un mot de passe qu'il faudra ensuite retranscrire sur la page de
+      l'épreuve afin de valider l'épreuve pour votre équipe.</p>
 
      <p>Les épreuves feront appel à des compétences variées parmi les
         thèmes suivants: <strong>cryptologie</strong>,
@@ -97,13 +96,18 @@
        obtenir des informations, n'hésitez pas à nous contacter et à
        nous suivre sur Twitter.</p>
     <p>
+      <a class="btn btn-default btn-lg" href="http://twitter.com/HackingWeek">
+	<span class="fa fa-twitter"></span> @HackingWeek
+      </a>
+    </p>
+    <p>
       <a class="btn btn-default btn-lg" href="mailto:contact@hackingweek.fr?subject=%5BHackingWeek%5D">
 	<span class="fa fa-envelope"></span> contact@hackingweek.fr
       </a>
     </p>
     <p>
-      <a class="btn btn-default btn-lg" href="http://twitter.com/HackingWeek">
-	<span class="fa fa-twitter"></span> @HackingWeek
+      <a class="btn btn-default btn-lg" href="irc://#hackingweek@freenode.net">
+	IRC #hackingweek@freenode
       </a>
     </p>
 {% endblock %}
@@ -127,12 +131,12 @@
         var endDate = new Date("2014 March 2 24:00:00");
 
       if (currentDate < startDate)
-      {		      
+      {
         // Calculate the difference in seconds between start and current date
         var diff = startDate.getTime() / 1000 - currentDate.getTime() / 1000;
         var msg = 'La HackingWeek commence dans:';
       }
-      else if (currentDate < endDate) 
+      else if (currentDate < endDate)
       {
         // Calculate the difference in seconds between current and end date
         var diff = endDate.getTime() / 1000 - currentDate.getTime() / 1000;
@@ -143,7 +147,7 @@
         // Game is over
         var diff = 0;
         var msg = 'Le concours est termin&eacute;.';
-      }			       
+      }
         // Instantiate a coutdown FlipClock
         clock = $('.clock').FlipClock(diff, {
           countdown: true,
@@ -157,5 +161,5 @@
 	  }
         });
       });
-    </script>		
+    </script>
 {% endblock %}
