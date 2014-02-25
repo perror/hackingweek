@@ -16,8 +16,6 @@ from hackingweek import settings
 
 
 class Team(models.Model):
-    # FIXME: should be removed, but see in templates/team-list.html
-    max_members = settings.TEAM_MAX_MEMBERS
     name = models.CharField(max_length=128, unique=True)
     members = models.ManyToManyField(User, null=True, blank=True)
 

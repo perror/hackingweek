@@ -7,7 +7,6 @@ from django.template.base import Variable, VariableDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 
 from hackingweek.settings import CONTEST_START_DATE
-
 from hackingweek.models import Challenge, Team, UserProfile, Validation
 
 

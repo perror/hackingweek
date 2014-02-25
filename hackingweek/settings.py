@@ -1,3 +1,4 @@
+import datetime
 import os
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
@@ -178,7 +179,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # User-account module settings
 ##############################
-ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_OPEN_SIGNUP = False
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = True
 ACCOUNT_EMAIL_UNIQUE = True
@@ -196,7 +197,6 @@ AUTHENTICATION_BACKENDS = [
 THEME_CONTACT_EMAIL = 'hackingweek@gmail.com'
 AUTH_PROFILE_MODULE = 'hackingweek.UserProfile'
 
-TEAM_MAX_MEMBERS = 5
 TEAM_JOIN_REQUEST_EXPIRE_DAYS = 2
 
 CONTEST_START_DATE = '2014-02-21 18:00'

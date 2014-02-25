@@ -17,13 +17,13 @@
 	  <tr>
 	    <th>{% trans "Name" %}</th>
 	    <th>{% trans "Members" %}</th>
-	    {% if user.is_authenticated %}<th></th>{% endif %}
+	    {% if not is_contest_started and user.is_authenticated %}<th></th>{% endif %}
 	  </tr>
 	  {% for team in object_list|sort_lower:"name" %}
 	  <tr>
 	    <td>{{ team.name }}</td>
 	    <td>{{ team.members.all|join:", " }}.</td>
-	    {% if user.is_authenticated %}<td>{% if team.members.all|length < team.max_members and user.team_set.all.count == 0 %}<a href="{% url 'team_join_request' pk=team.pk %}" class="btn btn-primary btn-xs pull-right">{% trans "Join Team" %}</a>{% endif %}{% if user in team.members.all %}<a href="{% url 'team_quit' pk=team.pk %}" class="btn btn-primary btn-xs pull-right">{% trans "Quit Team" %}</a>{% endif %}</td>{% endif %}
+	    {% if not is_contest_started and user.is_authenticated %}<td>{% if user.team_set.all.count == 0 %}<a href="{% url 'team_join_request' pk=team.pk %}" class="btn btn-primary btn-xs pull-right">{% trans "Join Team" %}</a>{% elif user in team.members.all %}<a href="{% url 'team_quit' pk=team.pk %}" class="btn btn-primary btn-xs pull-right">{% trans "Quit Team" %}</a>{% endif %}</td>{% endif %}
 	  </tr>
 	  {% empty %}
 	  <tr>
@@ -34,7 +34,7 @@
 	  {% endfor %}
 	</table>
 
-	{% if user.is_authenticated and user.team_set.all.count == 0 %}
+	{% if not is_contest_started and user.is_authenticated and user.team_set.all.count == 0 %}
 	<div class="pull-left"><a href="{% url 'team_create' %}" class="btn btn-primary btn-xs">{% trans "Create Team" %}</a></div>
 	{% endif %}
       </div>

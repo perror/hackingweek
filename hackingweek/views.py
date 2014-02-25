@@ -17,6 +17,8 @@ import account.views
 from hackingweek.decorators import has_team_required
 from hackingweek.forms import SettingsForm, SignupForm, ChallengeValidationForm
 from hackingweek.models import Challenge, Team, UserProfile, Validation
+from hackingweek.settings import CONTEST_START_DATE
+
 
 def validate(request, pk):
    errors = []
@@ -130,22 +132,19 @@ def validate(request, pk):
    return HttpResponseRedirect('/challenges/')
 
 
+def is_contest_started():
+   start_date = \
+       datetime.datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
+
+   return datetime.datetime.now() >= start_date
+
+
 class ChallengeListView(ListView):
    model = Challenge
    success_url = reverse_lazy('challenges')
 
    def get_context_data(self, **kwargs):
       context = super(ChallengeListView, self).get_context_data(**kwargs)
-
-      # Check if the contest is open
-      start_date = \
-          datetime.datetime.strptime(settings.CONTEST_START_DATE, "%Y-%m-%d %H:%M")
-
-      if (datetime.datetime.now() >= start_date):
-         context['is_contest_open'] = True
-      else:
-         context['is_contest_open'] = False
-
       context['active_teams'] = Team.objects.filter(is_active=True).count()
 
       challenge_status = {}
@@ -180,8 +179,9 @@ class ChallengeListView(ListView):
          challenge_status[challenge.pk] = \
              (validations.count(), is_done, is_breakthrough)
 
-         context['challenge_status'] = challenge_status
          context['has_team'] = (team <> None)
+         context['challenge_status'] = challenge_status
+         context['is_contest_started'] = is_contest_started()
 
       return context
 
@@ -233,6 +233,8 @@ class TeamListView(ListView):
 
    def get_context_data(self, **kwargs):
       context = super(TeamListView, self).get_context_data(**kwargs)
+      context['is_contest_started'] = is_contest_started()
+
       return context
 
 
@@ -392,10 +394,6 @@ class TeamJoinRequestView(UpdateView):
 
    def form_valid(self, form):
       username = self.request.user.username
-
-      # Checking but shouldn't be possible anyway...
-      if (self.object.members.all().count() >= settings.TEAM_MAX_MEMBERS):
-         return HttpResponseRedirect(self.get_success_url())
 
       # Sending a request to join to each team member
       for member in self.object.members.all():

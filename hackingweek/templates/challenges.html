@@ -13,7 +13,7 @@
 {% block body %}
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-	{% if is_contest_open or request.user.is_staff %}
+	{% if is_contest_started or request.user.is_staff %}
 	{% regroup object_list|sort_lower:"category.name" by category as challenges %}
 	{% if challenges|length > 0 %}
 	<table class="table table-hover">
@@ -37,7 +37,7 @@
 	      {% challenge_score challenge_status active_teams item.pk %} points
 	    </td>
 	    <td>{% with status=challenge_status|get_item:item.pk %}
-	      <button class="btn btn-{% challenge_button_color challenge_status item.pk has_team %} btn-xs" data-toggle="modal" data-target="#id-{{ item.pk }}">&nbsp;{% challenge_button_text challenge_status item.pk has_team %}&nbsp;{% if status.2 or status.0 == 0 %}<span class="fa fa-star"></span>&nbsp;{% endif %}</button>{% endwith %}
+	      <button class="btn btn-{% challenge_button_color challenge_status item.pk has_team %} btn-xs" data-toggle="modal" data-target="#id-{{ item.pk }}">&nbsp;{% challenge_button_text challenge_status item.pk has_team %}&nbsp;{% if status.2 or status.0 == 0 %}&nbsp;<span class="fa fa-star"></span>&nbsp;{% endif %}</button>{% endwith %}
 	    </td>
 	  </tr>
 	    {% endfor %}
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    {% if is_contest_open or request.user.is_staff %}
+    {% if is_contest_started or request.user.is_staff %}
     {% for challenge in object_list %}
     {% with status=challenge_status|get_item:challenge.pk %}
     <div class="modal fade" id="id-{{ challenge.pk }}" tabindex="-1" role="dialog" aria-labelledby="label-{{ challenge.pk }}" aria-hidden="true">
