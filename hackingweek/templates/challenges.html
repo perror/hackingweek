@@ -15,21 +15,16 @@
       <div class="col-md-10 col-md-offset-1">
 	{% if is_contest_open or request.user.is_staff %}
 	{% regroup object_list|sort_lower:"category.name" by category as challenges %}
-
-	{% if challenges|length == 0 %}
-	<p>{% trans "No challenge available yet"%}.</p>
-	{% else %}
+	{% if challenges|length > 0 %}
 	<table class="table table-hover">
 	  {% for category in challenges %}
 	  <tr>
-	    <th class="lead">{{ category.grouper|title }}</th>
-	    <td></td>
-	    <td></td>
-	    <td></td>
+	    <th class="lead" colspan="5"><strong>{{ category.grouper|title }}</strong></th>
 	  </tr>
 	  <tr class="active">
 	    <th>{% trans "Name" %}</th>
 	    <th>{% trans "Author" %}</th>
+	    <th>{% trans "Validations" %}</th>
 	    <th>{% trans "Value" %}</th>
 	    <th>{% trans "Status" %}</th>
 	  </tr>
@@ -37,16 +32,19 @@
 	  <tr>
 	    <td>{{ item.name }}</td>
 	    <td>{{ item.author }}</td>
+	    <td>{% with status=challenge_status|get_item:item.pk %}{{ status.0 }}{% endwith %}</td>
 	    <td>
 	      {% challenge_score challenge_status active_teams item.pk %} points
 	    </td>
 	    <td>{% with status=challenge_status|get_item:item.pk %}
-	      <button class="btn btn-{% challenge_button_color challenge_status item.pk %} btn-xs" {% if not status.1 %}data-toggle="modal" data-target="#id-{{ item.pk }}"{% else %}disabled="disabled"{% endif %}>&nbsp;{% challenge_button_text challenge_status item.pk %}&nbsp;</button>{% endwith %}
+	      <button class="btn btn-{% challenge_button_color challenge_status item.pk has_team %} btn-xs" data-toggle="modal" data-target="#id-{{ item.pk }}">&nbsp;{% challenge_button_text challenge_status item.pk has_team %}&nbsp;{% if status.2 or status.0 == 0 %}<span class="fa fa-star"></span>&nbsp;{% endif %}</button>{% endwith %}
 	    </td>
 	  </tr>
 	    {% endfor %}
 	  {% endfor %}
 	</table>
+	{% else %}
+	<p>{% trans "No challenge available yet"%}.</p>
 	{% endif %}
 
 	{% if object_list|length > 0 %}
@@ -63,7 +61,6 @@
     {% if is_contest_open or request.user.is_staff %}
     {% for challenge in object_list %}
     {% with status=challenge_status|get_item:challenge.pk %}
-    {% if not status.1 %}
     <div class="modal fade" id="id-{{ challenge.pk }}" tabindex="-1" role="dialog" aria-labelledby="label-{{ challenge.pk }}" aria-hidden="true">
       <div class="modal-dialog">
 	<div class="modal-content">
@@ -77,6 +74,7 @@
 	  </div>
 
 	  <div class="modal-footer">
+	    {% if has_team and not status.1 %}
 	    <form id="form-{{ challenge.pk }}" method="post" action="/validate/{{ challenge.pk }}/">
 	      <div class="form-group">
 		{% csrf_token %}
@@ -87,10 +85,17 @@
 		<button type="button" class="btn btn-default"	data-dismiss="modal">{% trans "Close" %}</button>
 	      </div>
 	    </form>
+	    {% else %}
+	    <form id="form-{{ challenge.pk }}" method="post" action="">
+	      <div class="form-group">
+		<button type="button" class="btn btn-default"	data-dismiss="modal">{% trans "Close" %}</button>
+	      </div>
+	    </form>
+	    {% endif %}
 	  </div>
 	</div>
       </div>
-    </div>{% endif %}{% endwith %}
+    </div>{% endwith %}
     {% endfor %}
     {% endif %}
  {% endblock %}

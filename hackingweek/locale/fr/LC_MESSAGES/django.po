@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-16 18:51+0100\n"
+"POT-Creation-Date: 2014-02-25 00:59+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,27 +54,27 @@ msgstr "Le concours n'a pas encore commencé !"
 msgid "The contest is finished !"
 msgstr "Le concours est fini !"
 
-#: views.py:300
+#: views.py:321
 msgid "Team has been created."
 msgstr "L'équipe a été créée."
 
-#: views.py:326
+#: views.py:347
 msgid "User has been removed from team."
 msgstr "L'utilisateur a été retiré de l'équipe."
 
-#: views.py:330
+#: views.py:351
 msgid "Team has been supressed (empty team)."
 msgstr "L'équipe a été supprimée (équipe vide)."
 
-#: views.py:368
+#: views.py:389
 msgid "A request to join the team have been sent to all members."
 msgstr "Une requête pour rejoindre l'équipe a été envoyée à tous ses membres."
 
-#: views.py:406
+#: views.py:428
 msgid "User has been accepted in the team."
 msgstr "L'utilisateur a été accepté dans l'équipe."
 
-#: views.py:410
+#: views.py:432
 msgid "User request cannot be completed ! This key does not match this team."
 msgstr ""
 "La requête n'a pu être complétée ! Cette clef ne correspond pas à la bonne "
@@ -101,44 +101,48 @@ msgstr "Se connecter"
 msgid "Signup"
 msgstr "Créer un compte"
 
-#: templates/about.html:6 templates/site_base.html:29
+#: templates/about.html:6 templates/site_base.html:27
 msgid "About"
 msgstr "À propos"
 
-#: templates/challenges.html:8 templates/site_base.html:25
+#: templates/challenges.html:8 templates/site_base.html:24
 msgid "Challenges"
 msgstr "Épreuves"
 
-#: templates/challenges.html:20
-msgid "No challenge available yet"
-msgstr "Pas d'épreuve accessible pour l'instant"
-
-#: templates/challenges.html:27 templates/contestant-list.html:18
+#: templates/challenges.html:25 templates/contestant-list.html:18
 #: templates/team-list.html:18
 msgid "Name"
 msgstr "Nom"
 
-#: templates/challenges.html:28
+#: templates/challenges.html:26
 msgid "Author"
 msgstr "Auteur"
 
-#: templates/challenges.html:29
+#: templates/challenges.html:27 templates/ranking.html:21
+msgid "Validations"
+msgstr "Validations"
+
+#: templates/challenges.html:28
 msgid "Value"
 msgstr "Valeur"
 
-#: templates/challenges.html:30 templates/challenges.html.py:49
+#: templates/challenges.html:29 templates/challenges.html.py:51
 msgid "Status"
 msgstr "Statut"
 
-#: templates/challenges.html:77
+#: templates/challenges.html:47
+msgid "No challenge available yet"
+msgstr "Pas d'épreuve accessible pour l'instant"
+
+#: templates/challenges.html:81
 msgid "Key"
 msgstr "Clef"
 
-#: templates/challenges.html:80
+#: templates/challenges.html:84
 msgid "Submit"
 msgstr "Valider"
 
-#: templates/challenges.html:81
+#: templates/challenges.html:85 templates/challenges.html.py:91
 msgid "Close"
 msgstr "Fermer"
 
@@ -150,7 +154,7 @@ msgstr "Candidats"
 msgid "No contestant registered yet"
 msgstr "Aucun candidat n'est encore inscrit"
 
-#: templates/ranking.html:8 templates/site_base.html:27
+#: templates/ranking.html:8 templates/site_base.html:25
 msgid "Ranking"
 msgstr "Classement"
 
@@ -166,19 +170,15 @@ msgstr "Équipe"
 msgid "Score"
 msgstr "Score"
 
-#: templates/ranking.html:21
-msgid "Validations"
-msgstr "Validations"
-
 #: templates/ranking.html:22
 msgid "Breakthroughs"
 msgstr "Percées"
 
-#: templates/ranking.html:38
+#: templates/ranking.html:34
 msgid "No challenge has been solved yet"
 msgstr "Aucune épreuve n'a encore été résolue"
 
-#: templates/rules.html:6 templates/site_base.html:28
+#: templates/rules.html:6 templates/site_base.html:26
 msgid "Contest Rules"
 msgstr "Règlement"
 
@@ -493,14 +493,14 @@ msgstr ""
 msgid "[%(current_site)s] '%(user)s' requested to join your team"
 msgstr "[%(current_site)s] '%(user)s' souhaite rejoindre votre équipe"
 
-#: templatetags/hackingweek_tags.py:56 templatetags/hackingweek_tags.py:62
-msgid "Breakthrough"
-msgstr "Percée"
-
-#: templatetags/hackingweek_tags.py:58
+#: templatetags/hackingweek_tags.py:77
 msgid "Done"
 msgstr "Fait"
 
-#: templatetags/hackingweek_tags.py:60
+#: templatetags/hackingweek_tags.py:79
 msgid "To Do"
 msgstr "À Faire"
+
+#: templatetags/hackingweek_tags.py:81
+msgid "View"
+msgstr "Voir"

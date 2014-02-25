@@ -43,16 +43,16 @@ def challenge_count(request):
         return challenge_count - validation_count
 
 @register.simple_tag
-def challenge_button_color(challenge_status, pk):
+def challenge_button_color(challenge_status, pk, has_team):
     count, is_done, is_breakthrough = challenge_status[pk]
 
-    if (is_done):
-        if (is_breakthrough):
-            return "warning"
-        else:
+    if (has_team):
+        if (is_done):
             return "success"
+        else:
+            return "danger"
     else:
-        return "danger"
+        return "info"
 
 @register.simple_tag
 def challenge_score(challenge_status, active_teams, pk):
@@ -69,18 +69,16 @@ def challenge_score(challenge_status, active_teams, pk):
         return active_teams * (active_teams - count)
 
 @register.simple_tag
-def challenge_button_text(challenge_status, pk):
+def challenge_button_text(challenge_status, pk, has_team):
     count, is_done, is_breakthrough = challenge_status[pk]
 
-    if (is_done):
-        if (is_breakthrough):
-            return _("Breakthrough")
-        else:
+    if (has_team):
+        if (is_done):
             return _("Done")
-    elif (count > 0):
-        return _("To Do")
+        else:
+            return _("To Do")
     else:
-        return _("Breakthrough")
+        return _("View")
 
 @register.simple_tag
 def active(request, pattern):

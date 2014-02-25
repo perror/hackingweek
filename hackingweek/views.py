@@ -150,9 +150,12 @@ class ChallengeListView(ListView):
 
       challenge_status = {}
 
-      try:
-         team  = self.request.user.team_set.filter()[:1].get()
-      except Team.DoesNotExist:
+      if self.request.user.is_authenticated():
+         try:
+            team  = self.request.user.team_set.filter()[:1].get()
+         except Team.DoesNotExist:
+            team = None
+      else:
          team = None
 
       for challenge in Challenge.objects.all():
@@ -178,6 +181,7 @@ class ChallengeListView(ListView):
              (validations.count(), is_done, is_breakthrough)
 
          context['challenge_status'] = challenge_status
+         context['has_team'] = (team <> None)
 
       return context
 
