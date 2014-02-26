@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -51,12 +51,12 @@ def validate(request, pk):
 
    # Check if the contest is open
    start_date = \
-       datetime.datetime.strptime(settings.CONTEST_START_DATE, "%Y-%m-%d %H:%M")
+       datetime.strptime(settings.CONTEST_START_DATE, "%Y-%m-%d %H:%M")
 
    end_date = \
-       datetime.datetime.strptime(settings.CONTEST_END_DATE, "%Y-%m-%d %H:%M")
+       datetime.strptime(settings.CONTEST_END_DATE, "%Y-%m-%d %H:%M")
 
-   now = datetime.datetime.now()
+   now = datetime.now()
 
    if (now <= start_date):
       messages.add_message(request,
@@ -134,9 +134,9 @@ def validate(request, pk):
 
 def is_contest_started():
    start_date = \
-       datetime.datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
+       datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
 
-   return datetime.datetime.now() >= start_date
+   return datetime.now() >= start_date
 
 
 class ChallengeListView(ListView):

@@ -1,11 +1,11 @@
-import datetime
+from datetime import datetime
 
 from django.contrib.auth.decorators import user_passes_test, login_required
 
 from hackingweek.models import Team
 from hackingweek.settings import CONTEST_START_DATE
 
-has_no_team = user_passes_test(lambda u: u.team_set.all().count() == 0 and datetime.datetime.now() <= datetime.datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M"))
+has_no_team = user_passes_test(lambda u: u.team_set.all().count() == 0 and datetime.now() <= datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M"))
 
 def has_no_team_required(view_func):
     decorated_view_func = login_required(has_no_team(view_func))
