@@ -6,11 +6,12 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic.list import ListView
-from django.shortcuts import render
 
 import account.views
 
@@ -137,6 +138,15 @@ def is_contest_started():
        datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
 
    return datetime.now() >= start_date
+
+
+class HomepageView(TemplateView):
+
+   def get_context_data(self, **kwargs):
+      context = super(HomepageView, self).get_context_data(**kwargs)
+      context['is_contest_started'] = is_contest_started()
+
+      return context
 
 
 class ChallengeListView(ListView):

@@ -17,12 +17,14 @@
       2 Mars 2014 (minuit).
     </p>
 
-    {% if user.is_authenticated %}
+    {% if not is_contest_started %}
+      {% if user.is_authenticated %}
         <p>Créez ou rejoignez une <a href="{% url 'team_list' %}" class="btn btn-primary large">équipe</a> !</p>
-    {% else %}
+      {% else %}
         {% url 'account_login' as login_url %}
         {% url 'account_signup' as signup_url %}
         <p>Vous pouvez <a href="{{ login_url }}" class="btn btn-default">vous connecter</a> ou bien <a href="{{ signup_url }}" class="btn btn-primary">créer un compte</a> pour participer au concours.</p>
+      {% endif %}
     {% endif %}
 
     <div class="message" style="text-align:center;margin-top:15px"></div>

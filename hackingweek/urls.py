@@ -17,7 +17,7 @@ from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView, 
 from hackingweek.decorators import has_no_team_required, has_team_required
 
 urlpatterns = patterns("",
-    url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
+    url(r"^$", hackingweek.views.HomepageView.as_view(template_name="homepage.html"), name="home"),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^about/$", TemplateView.as_view(template_name="about.html"), name="about"),
     url(r"^accounts/settings/$", hackingweek.views.SettingsView.as_view(), name="account_settings"),
