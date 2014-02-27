@@ -50,6 +50,10 @@ def validate(request, pk):
          },
       }
 
+   # Check for the last attempt timestamp
+   now = datetime.datetime.now()
+
+   
    # Check if the contest is open
    start_date = \
        datetime.strptime(settings.CONTEST_START_DATE, "%Y-%m-%d %H:%M")
