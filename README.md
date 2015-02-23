@@ -12,19 +12,15 @@ Work in progress...
     $> virtualenv pinax
     $> cd pinax
     $> . bin/activate
+    $> git clone https://github.com/perror/hackingweek.git
     $> cd hackingweek
     $> pip install -r config/requirements.pip
-    $> python manage.py syncdb
-    $> python manage.py runserver
+    $> ./manage.py syncdb
+    $> ./manage.py runserver
 
 
-2. Get the hackingweek code
----------------------------
-
-    git clone git@github.com:perror/hackingweek.git
-
-
-3. Generate the locals
+2. Generate the locals
 ----------------------
 
-    django-admin.py compilemessages --locale=fr
+    $> django-admin.py makemessages --locale=fr
+    $> django-admin.py compilemessages --locale=fr
