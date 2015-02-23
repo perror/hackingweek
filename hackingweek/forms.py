@@ -9,12 +9,13 @@ from hackingweek.models import Challenge, Team
 
 # List of study levels.
 LEVEL_CHOICES = (
-    ('Terminale', 'Terminale'),
+    ('Lyceen', 'Lyceen'),
     ('Bac+1', 'Bac+1'),
     ('Bac+2', 'Bac+2'),
     ('Bac+3', 'Bac+3'),
     ('Bac+4', 'Bac+4'),
-    ('Bac+5', 'Bac+5')
+    ('Bac+5', 'Bac+5'),
+    ('Autre', 'Autre'),
     )
 
 
