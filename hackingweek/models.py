@@ -9,8 +9,6 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
-from account.utils import random_token
-
 from hackingweek import settings
 
 
@@ -97,7 +95,8 @@ class TeamJoinRequest(models.Model):
             # If not, return None
             joinrequest = None
         except cls.DoesNotExist:
-            kwargs['key'] = random_token()
+            from uuid import uuid1
+            kwargs['key'] = uuid1().hex
             joinrequest = cls(**kwargs)
             joinrequest.save()
 
