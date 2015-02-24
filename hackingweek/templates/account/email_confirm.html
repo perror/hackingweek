@@ -11,11 +11,11 @@
 {% block body %}
     <div class="row">
         <div class="col-lg-5">
-            <form method="post" action="{% url "account_confirm_email" key=confirmation.key %}">
+            <form method="POST" action="{% url "account_confirm_email" key=confirmation.key %}">
                 <legend>{% trans "Confirm Email" %}</legend>
                 <fieldset>
                     {% csrf_token %}
-                    <p>{% blocktrans with email=confirmation.email_address.email %}Confirm email address <b>{{ email }}</b>?{% endblocktrans %}</p>
+                    <p>{% blocktrans with email=confirmation.email_address.email %}Confirm email address <strong>{{ email }}</strong>?{% endblocktrans %}</p>
                     <button type="submit" class="btn btn-primary">{% trans "Confirm" %}</button>
                 </fieldset>
             </form>

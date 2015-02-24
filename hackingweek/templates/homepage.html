@@ -11,10 +11,9 @@
 {% block banner %}
     <h1>Bienvenue à la HackingWeek&nbsp;!</h1>
     <p>
-      La HackingWeek est un concours de sécurité en ligne destiné aux
-      étudiants Francophones.<br/>
-      Elle se déroulera du Vendredi 21 Février 2014 (18h) au Dimanche
-      2 Mars 2014 (minuit).
+      La HackingWeek est un concours de sécurité en ligne Francophones.<br/>
+      Elle se déroulera du Vendredi 3 Avril 2015 (18h) au Dimanche
+      11 Avril 2015 (minuit).
     </p>
 
     {% if not is_contest_started %}
@@ -35,10 +34,9 @@
     <h2>Qu'est-ce que c'est&nbsp;?</h2>
 
     <p>La HackingWeek est un <strong>concours de sécurité
-      informatique</strong> ouvert à toute personne ayant <strong>le
-      statut d'étudiant</strong> quelle que soit sa nationalité et son
-      pays de résidence. Cependant, les épreuves étant en français, il
-      faut pouvoir comprendre cette langue.</p>
+      informatique</strong> ouvert à toute personne, quelle que soit
+      sa nationalité et son pays de résidence. Cependant, les épreuves
+      étant en français, il faut pouvoir comprendre cette langue.</p>
 
     <p>Le concours se déroule <strong>entièrement en-ligne</strong>
       via ce site qui permet à la fois d'accéder aux épreuves et d'y
@@ -46,9 +44,9 @@
       participer à ce concours (oui, vous pouvez participer depuis
       votre divan en mangeant des chips!).</p>
 
-    <p>Le concours débutera le <strong>Vendredi 21 Février 2014 à
+    <p>Le concours débutera le <strong>Vendredi 3 Avril 2015 à
       18h</strong> (Europe/Paris) et se terminera le <strong>Dimanche
-      2 Mars 2014 à minuit</strong> (Europe/Paris). Ce qui laisse
+      11 Avril 2015 à minuit</strong> (Europe/Paris). Ce qui laisse
       environ neuf jours à toutes les équipes pour faire un maximum
       d'épreuves et de marquer des points.</p>
 
@@ -66,14 +64,13 @@
 
     <p><strong>Les inscriptions sont ouvertes</strong> et le seront
       jusqu'au début du concours. Les inscrits doivent créer une
-      équipe ou bien en rejoindre une (maximum 5 personnes par équipe)
-      pour participer au concours.</p>
+      équipe ou bien en rejoindre une pour participer au concours.</p>
 
     <p><strong class="text-danger">Attention!</strong> Notez bien que
        seules les personnes qui font partie d'une équipe pourront
        participer au concours. Il faut donc impérativement que vous
-       essayiez de rejoindre ou de créer une équipe avant le démarrage
-       du concours.</p>
+       rejoigniez ou créiez une équipe avant le démarrage du
+       concours.</p>
 
     <p>Lors du coup d'envoi, les épreuves seront rendues accessibles
       en ligne à tous les inscrits qui auront une équipe. Ces épreuves
@@ -85,9 +82,9 @@
       l'épreuve afin de valider l'épreuve pour votre équipe.</p>
 
      <p>Les épreuves feront appel à des compétences variées parmi les
-        thèmes suivants: <strong>cryptologie</strong>,
-       <strong>exploit</strong>, <strong>reverse</strong> et
-       <strong>web</strong>.</p>
+       thèmes suivants: <strong>cryptologie</strong>, <strong>exploit</strong>,
+       <strong>forensique</strong>, <strong>réseau</strong> et
+       <strong>reverse</strong>.</p>
 {% endblock %}
 
 {% block column-3 %}
@@ -114,9 +111,13 @@
     </p>
 {% endblock %}
 
+{% block extra_style %}
+    <link href="{% static "css/flipclock.css" %}" rel="stylesheet">
+{% endblock %}
+
 {% block extra_script %}
-    <script src="{% static "js/flipclock/flipclock.min.js" %}"></script>
-    <script src="{% static "js/flipclock/lang/fr-fr.js" %}"></script>
+    <script src="{% static "js/flipclock.min.js" %}"></script>
+    <script src="{% static "js/fr.js" %}"></script>
 
     <script type="text/javascript">
       // FIXME: Transition from one state to another is not handled
@@ -127,10 +128,10 @@
         var currentDate = new Date();
 
         // Set the starting date
-        var startDate  = new Date("2014 February 21 18:00:00");
+        var startDate  = new Date("2015 April 3 18:00:00");
 
         // Set the ending date
-        var endDate = new Date("2014 March 2 24:00:00");
+        var endDate = new Date("2015 April 11 24:00:00");
 
       if (currentDate < startDate)
       {

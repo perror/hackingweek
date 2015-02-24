@@ -13,7 +13,8 @@
     <div class="row">
         <div class="col-lg-4">
             <form method="POST" action="{% url "account_login" %}" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-                <legend>{% trans "Log in to an existing account" %}</legend>
+	      <fieldset>
+		<legend>{% trans "Log in to an existing account" %}</legend>
                 {% csrf_token %}
                 {{ form|bootstrap }}
                 {% if redirect_field_value %}
@@ -21,7 +22,8 @@
                 {% endif %}
                 <a href="{% url "account_password_reset" %}" class="btn btn-default">{% trans "Forgot your password?" %}</a>
                 <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
-            </form>
+	      </fieldset>
+	    </form>
         </div>
         <div class="col-lg-4">
             {% include "account/_login_sidebar.html" %}

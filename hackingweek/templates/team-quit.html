@@ -10,13 +10,13 @@
 
 {% block body %}
     <h1>Quitter l'équipe '{{ object.name }}'</h1>
-    
+
     <p>Si vous le confirmez, vous quitterez l'équipe dans laquelle
       vous étiez. Si c'est effectivement ce que vous désirez, appuyez
       sur le bouton ci-dessous.</p>
-    
-    <form method="post" action="{% url 'team_quit' pk=team.pk %}">
+
+    <form method="POST" action="{% url 'team_quit' pk=team.pk %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Quitter l'équipe</button>
-    </form>   
+    </form>
 {% endblock body%}

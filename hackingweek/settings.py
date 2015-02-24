@@ -7,6 +7,11 @@ PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# Django HTML validator plugin
+HTMLVALIDATOR_ENABLED = True
+#HTMLVALIDATOR_FAILFAST = True
+HTMLVALIDATOR__VNU_JAR = '../contrib/vnu.jar'
+
 ADMINS = [
     # ("Your Name", "your_email@example.com"),
 ]

@@ -10,13 +10,13 @@
 
 {% block body %}
     <h1>Rejoindre l'équipe '{{ object.name }}'</h1>
-    
+
     <p>Si vous le confirmez, un e-mail sera envoyé à chaque membre de
       l'équipe. Pour que vous intégriez l'équipe, il faut et il suffit
       que l'un d'eux accepte votre demande sous 48h.</p>
-    
-    <form method="post" action="{% url 'team_join_request' pk=team.pk %}">
+
+    <form method="POST" action="{% url 'team_join_request' pk=team.pk %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-success">{% trans "Request to join" %}</button>
-    </form>   
+    </form>
 {% endblock body%}

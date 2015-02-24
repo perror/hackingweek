@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-25 00:59+0100\n"
+"POT-Creation-Date: 2015-02-24 22:35+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,63 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:33 forms.py:39
+#: forms.py:34 forms.py:40
 msgid "Real Name"
 msgstr "Nom Réel"
 
-#: forms.py:34 forms.py:40 templates/contestant-list.html:19
+#: forms.py:35 forms.py:41 templates/contestant-list.html:19
 msgid "School"
 msgstr "Établissement"
 
-#: forms.py:35 forms.py:41 templates/contestant-list.html:20
+#: forms.py:36 forms.py:42 templates/contestant-list.html:20
 msgid "Study Level"
 msgstr "Diplôme en cours"
 
-#: views.py:26
+#: views.py:29
 msgid "Sorry, wrong key. Try again !"
 msgstr "Désolé, mauvaise clef. Essayez à nouveau !"
 
-#: views.py:30
+#: views.py:33
 msgid "Congratulation, you found the key !"
 msgstr "Excellent, vous avez trouvé la clef !"
 
-#: views.py:34
+#: views.py:37
 msgid "Great, you just made a breakthrough !"
 msgstr "Félicitation, vous venez de faire une percée !"
 
-#: views.py:38
+#: views.py:41
 msgid "This challenge was already done by your team !"
 msgstr "Cette épreuve a déjà été validée par votre équipe !"
 
-#: views.py:42
+#: views.py:45
 msgid "The contest is not yet started !"
 msgstr "Le concours n'a pas encore commencé !"
 
-#: views.py:46
+#: views.py:49
 msgid "The contest is finished !"
 msgstr "Le concours est fini !"
 
-#: views.py:321
+#: views.py:333
 msgid "Team has been created."
 msgstr "L'équipe a été créée."
 
-#: views.py:347
+#: views.py:359
 msgid "User has been removed from team."
 msgstr "L'utilisateur a été retiré de l'équipe."
 
-#: views.py:351
+#: views.py:363
 msgid "Team has been supressed (empty team)."
 msgstr "L'équipe a été supprimée (équipe vide)."
 
-#: views.py:389
+#: views.py:401
 msgid "A request to join the team have been sent to all members."
 msgstr "Une requête pour rejoindre l'équipe a été envoyée à tous ses membres."
 
-#: views.py:428
+#: views.py:436
 msgid "User has been accepted in the team."
 msgstr "L'utilisateur a été accepté dans l'équipe."
 
-#: views.py:432
+#: views.py:440
 msgid "User request cannot be completed ! This key does not match this team."
 msgstr ""
 "La requête n'a pu être complétée ! Cette clef ne correspond pas à la bonne "
@@ -101,11 +101,11 @@ msgstr "Se connecter"
 msgid "Signup"
 msgstr "Créer un compte"
 
-#: templates/about.html:6 templates/site_base.html:27
+#: templates/about.html:6 templates/site_base.html:26
 msgid "About"
 msgstr "À propos"
 
-#: templates/challenges.html:8 templates/site_base.html:24
+#: templates/challenges.html:8 templates/site_base.html:23
 msgid "Challenges"
 msgstr "Épreuves"
 
@@ -146,15 +146,15 @@ msgstr "Valider"
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/contestant-list.html:8 templates/site_base.html:23
+#: templates/contestant-list.html:8 templates/site_base.html:22
 msgid "Contestants"
 msgstr "Candidats"
 
-#: templates/contestant-list.html:29
+#: templates/contestant-list.html:30
 msgid "No contestant registered yet"
 msgstr "Aucun candidat n'est encore inscrit"
 
-#: templates/ranking.html:8 templates/site_base.html:25
+#: templates/ranking.html:8 templates/site_base.html:24
 msgid "Ranking"
 msgstr "Classement"
 
@@ -178,11 +178,11 @@ msgstr "Percées"
 msgid "No challenge has been solved yet"
 msgstr "Aucune épreuve n'a encore été résolue"
 
-#: templates/rules.html:6 templates/site_base.html:26
+#: templates/rules.html:6 templates/site_base.html:25
 msgid "Contest Rules"
 msgstr "Règlement"
 
-#: templates/site_base.html:22 templates/team-list.html:8
+#: templates/site_base.html:21 templates/team-list.html:8
 msgid "Teams"
 msgstr "Équipes"
 
@@ -228,7 +228,7 @@ msgid "Settings"
 msgstr "Paramètres du compte"
 
 #: templates/account/base.html:16 templates/account/password_change.html:7
-#: templates/account/password_change.html:16
+#: templates/account/password_change.html:17
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
@@ -242,8 +242,8 @@ msgid "Confirm Email"
 msgstr "Courriel de confirmation"
 
 #: templates/account/email_confirm.html:18
-#, python-format
-msgid "Confirm email address <b>%(email)s</b>?"
+#, fuzzy, python-format
+msgid "Confirm email address <strong>%(email)s</strong>?"
 msgstr "Confirmez-vous le couriel <b>%(email)s</b>?"
 
 #: templates/account/email_confirm.html:19
@@ -278,15 +278,15 @@ msgstr "Couriel confirmé"
 msgid "You have confirmed <b>%(email)s</b>"
 msgstr "Vous avez confirmé le couriel <b>%(email)s</b>"
 
-#: templates/account/login.html:7 templates/account/login.html.py:23
+#: templates/account/login.html:7 templates/account/login.html.py:24
 msgid "Log in"
 msgstr "Se connecter"
 
-#: templates/account/login.html:16
+#: templates/account/login.html:17
 msgid "Log in to an existing account"
 msgstr "Se connecter sur un compte existant"
 
-#: templates/account/login.html:22
+#: templates/account/login.html:23
 msgid "Forgot your password?"
 msgstr "Oubli du mot de passe&nbsp;?"
 
@@ -306,11 +306,11 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: templates/account/password_reset.html:8
-#: templates/account/password_reset.html:19
+#: templates/account/password_reset.html:20
 msgid "Password reset"
 msgstr "Réinitialisation du mot de passe"
 
-#: templates/account/password_reset.html:20
+#: templates/account/password_reset.html:21
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll send you "
 "an email allowing you to reset it."
@@ -493,14 +493,14 @@ msgstr ""
 msgid "[%(current_site)s] '%(user)s' requested to join your team"
 msgstr "[%(current_site)s] '%(user)s' souhaite rejoindre votre équipe"
 
-#: templatetags/hackingweek_tags.py:77
+#: templatetags/hackingweek_tags.py:76
 msgid "Done"
 msgstr "Fait"
 
-#: templatetags/hackingweek_tags.py:79
+#: templatetags/hackingweek_tags.py:78
 msgid "To Do"
 msgstr "À Faire"
 
-#: templatetags/hackingweek_tags.py:81
+#: templatetags/hackingweek_tags.py:80
 msgid "View"
 msgstr "Voir"

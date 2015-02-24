@@ -75,7 +75,7 @@
 
 	  <div class="modal-footer">
 	    {% if has_team and not status.1 %}
-	    <form id="form-{{ challenge.pk }}" method="post" action="/validate/{{ challenge.pk }}/">
+	    <form id="form-{{ challenge.pk }}" method="POST" action="/validate/{{ challenge.pk }}/">
 	      <div class="form-group">
 		{% csrf_token %}
 		<input id="input-{{ challenge.pk }}" type="text" class="form-control" placeholder="{% trans 'Key' %}" name="key">

@@ -2,6 +2,7 @@
 *~
 .htpasswd
 dev.db
+contrib/
 hackingweek/locale/fr/LC_MESSAGES/django.mo
 hackingweek/migrations/
 hackingweek/private_settings.py

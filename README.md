@@ -24,3 +24,28 @@ Work in progress...
 
     $> django-admin.py makemessages --locale=fr
     $> django-admin.py compilemessages --locale=fr
+
+
+3. Running the tests and code coverage
+--------------------------------------
+
+Running the tests:
+
+    $> ./manage.py test [--verbosity=3]
+
+Code coverage with `coverage.py`:
+
+    $> coverage run --source='.' manage.py test
+    $> coverage report
+
+To get a full HTML coverage report:
+
+    $> coverage html
+    $> iceweasel htmlcov/index.html
+
+HTML validation:
+
+- Go to https://github.com/validator/validator/releases/latest.
+- Get the last release of vnu.jar.
+- Install it into the contrib/vnu.jar directory at project root
+  (or change the HTMLVALIDATOR_VNU_JAR variable in settings.py accordingly).

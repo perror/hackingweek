@@ -10,15 +10,15 @@
 
 {% block body %}
     <h1>Accepter '{{ object.requester }}' dans votre équipe&nbsp;?</h1>
-    
+
     <p>L'utilisateur '{{ object.requester }}' désire rejoindre l'équipe '{{ object.team.name }}'
       dans laquelle vous êtes inscrit.</p>
 
     <p>Si vous acceptez sa demande, appuyez sur le bouton ci-dessous.
       Sinon, ignorez simplement cette page.</p>
 
-    <form method="post" action="">
+    <form method="POST" action="">
         {% csrf_token %}
         <button type="submit" class="btn btn-success">{% trans "Accept User" %}</button>
-    </form>   
+    </form>
 {% endblock body%}

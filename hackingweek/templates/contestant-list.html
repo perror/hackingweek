@@ -26,7 +26,11 @@
 	    <td>{{ user.get_profile.study_level }}</td>
 	  </tr>
 	  {% empty %}
-	  <tr><td>{% trans "No contestant registered yet" %}.</td></tr>
+	  <tr>
+	    <td>{% trans "No contestant registered yet" %}.</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
 	  {% endfor %}
 	</table>
       </div>
