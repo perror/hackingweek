@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 22:35+0100\n"
+"POT-Creation-Date: 2015-02-24 23:58+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,15 +236,33 @@ msgstr "Changer le mot de passe"
 msgid "Delete account"
 msgstr "Supprimer le compte"
 
+#: templates/account/delete.html:6 templates/account/delete.html.py:12
+msgid "Delete Account"
+msgstr "Supprimer le compte"
+
+#: templates/account/delete.html:14
+#, python-format
+msgid ""
+"If you go ahead and delete your account, your information will be "
+"<strong>expunged within %(ACCOUNT_DELETION_EXPUNGE_HOURS)s hours</strong>."
+msgstr ""
+"Si vous validez la suppression de votre compte, vos informations seront "
+"<strong>supprimées dans les prochaines %(ACCOUNT_DELETION_EXPUNGE_HOURS)s "
+"heures</strong>."
+
+#: templates/account/delete.html:18
+msgid "Delete My Account"
+msgstr "Supprimer le compte"
+
 #: templates/account/email_confirm.html:6
 #: templates/account/email_confirm.html:15
 msgid "Confirm Email"
 msgstr "Courriel de confirmation"
 
 #: templates/account/email_confirm.html:18
-#, fuzzy, python-format
+#, python-format
 msgid "Confirm email address <strong>%(email)s</strong>?"
-msgstr "Confirmez-vous le couriel <b>%(email)s</b>?"
+msgstr "Confirmez-vous le couriel <strong>%(email)s</strong>?"
 
 #: templates/account/email_confirm.html:19
 msgid "Confirm"
@@ -370,7 +388,7 @@ msgstr "Nouveau mot de passe"
 #: templates/account/password_reset_token_fail.html:6
 #: templates/account/password_reset_token_fail.html:9
 msgid "Bad token"
-msgstr ""
+msgstr "Token incorrect"
 
 #: templates/account/password_reset_token_fail.html:11
 #, python-format
