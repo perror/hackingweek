@@ -45,7 +45,7 @@ To get a full HTML coverage report:
 
 HTML validation:
 
-- Go to https://github.com/validator/validator/releases/latest.
-- Get the last release of vnu.jar.
-- Install it into the contrib/vnu.jar directory at project root
-  (or change the HTMLVALIDATOR_VNU_JAR variable in settings.py accordingly).
+- Go to `https://github.com/validator/validator/releases/latest`.
+- Get the last release of `vnu.jar`.
+- Install it at `contrib/vnu.jar` at project root.
+  (or change the `HTMLVALIDATOR_VNU_JAR` variable in settings.py accordingly).
