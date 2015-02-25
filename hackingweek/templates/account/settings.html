@@ -13,10 +13,12 @@
     <div class="row">
         <div class="col-lg-5">
             <form method="POST" action="{% url "account_settings" %}">
+              <fieldset>
                 <legend>{% trans "Account" %}</legend>
                 {% csrf_token %}
                 {{ form|bootstrap }}
                 <button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
+              </fieldset>
             </form>
         </div>
     </div>
