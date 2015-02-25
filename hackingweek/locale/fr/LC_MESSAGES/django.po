@@ -302,7 +302,7 @@ msgstr "Se connecter"
 
 #: templates/account/login.html:17
 msgid "Log in to an existing account"
-msgstr "Se connecter sur un compte existant"
+msgstr "Se connecter à un compte existant"
 
 #: templates/account/login.html:23
 msgid "Forgot your password?"
