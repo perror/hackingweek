@@ -1,9 +1,11 @@
 *.pyc
 *~
+.coverage
 .htpasswd
-dev.db
 contrib/
+dev.db
 hackingweek/locale/fr/LC_MESSAGES/django.mo
 hackingweek/migrations/
 hackingweek/private_settings.py
 hackingweek/site_media/
+htmlcov/
