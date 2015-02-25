@@ -13,6 +13,7 @@
     <div class="row">
         <div class="col-lg-4">
             <form id="signup_form" method="POST" action="{% url "account_signup" %}" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+	      <fieldset>
                 <legend>{% trans "Sign up" %}</legend>
                 {% csrf_token %}
                 {{ form|bootstrap }}
@@ -20,6 +21,7 @@
                     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
                 <button type="submit" class="btn btn-primary">{% trans "Sign up" %}</button>
+	      </fieldset>
             </form>
         </div>
         <div class="col-lg-4">
