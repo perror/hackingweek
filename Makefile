@@ -1,10 +1,14 @@
 MANAGE = ./manage.py
 
-.PHONY:	clean coverage help locales pofiles run syncdb test test-dbg
+LOCALESDIR = hackingweek/locale
+LOCALES = $(LOCALESDIR)/fr/LC_MESSAGES/django.mo
+
+
+.PHONY:	clean coverage help locales run syncdb test test-dbg
 
 all: syncdb run
 
-run:
+run: $(LOCALES)
 	$(MANAGE) runserver 0.0.0.0:8000
 
 syncdb:
@@ -22,22 +26,24 @@ coverage:
 	coverage html
 
 locales:
-	cd hackingweek/ && django-admin.py compilemessages --locale=fr
-
-pofiles:
 	cd hackingweek/ && django-admin.py makemessages --locale=fr
 
+$(LOCALESDIR)/fr/LC_MESSAGES/django.mo: $(LOCALESDIR)/fr/LC_MESSAGES/django.po
+	cd hackingweek/ && django-admin.py compilemessages --locale=fr
+
 clean:
-	rm -f `find . -name "*.pyc"` .coverage
-	rm -rf htmlcov/
+	@rm -f `find . -name "*.pyc"` .coverage
+	@rm -rf htmlcov/
+
+distclean: clean
+	@rm -f $(LOCALES)
 
 help:
 	@echo "Makefile usage:"
 	@echo "  make [all]\tsync and run the server"
 	@echo "  make run\trun the server"
 	@echo "  make syncdb\tsync the database (and migrate)"
-	@echo "  make locales\tcompile the locales"
-	@echo "  make pofiles\tgenerate the po files"
+	@echo "  make locales\tgenerate the locale po files"
 	@echo "  make test\trun the test suite"
 	@echo "  make test-dbg\trun the test suite with high verbosity"
 	@echo "  make coverage\trun the test suite with coverage plugin"
