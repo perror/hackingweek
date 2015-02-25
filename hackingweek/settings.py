@@ -172,10 +172,8 @@ FIXTURE_DIRS = [
 
 # Private settings
 ##################
-try:
-    from private_settings import *
-except ImportError:
-    pass
+from private_settings import *
+
 
 # Email settings
 ################
