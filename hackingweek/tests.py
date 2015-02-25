@@ -88,7 +88,7 @@ class CheckRedirectionFromPrivatePages(TestCase):
 
 
 class CheckLoggedUserPages(TestCase):
-    """Check if a logged user can access to private pages."""
+    """Check if a logged user can access to private and public pages."""
     def setUp(self):
         self.client = ValidatingClient()
         self.user = User.objects.create_user('test_user', 'user@test.net', 'secret')
@@ -104,6 +104,34 @@ class CheckLoggedUserPages(TestCase):
 
     def test_logged_user_account_delete(self):
         response = self.client.get('/accounts/delete/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_homepage(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_team_list(self):
+        response = self.client.get('/team/list/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_contestant_list(self):
+        response = self.client.get('/contestant/list/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_challenges(self):
+        response = self.client.get('/challenges/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_ranking(self):
+        response = self.client.get('/ranking/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_rules(self):
+        response = self.client.get('/rules/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_about(self):
+        response = self.client.get('/about/')
         self.assertEqual(response.status_code, 200)
 
     def tearDown(self):
