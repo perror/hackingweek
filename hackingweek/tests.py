@@ -22,6 +22,7 @@ class ChallengeMethodTests(TestCase):
         chall.body = 'No comment'
         chall.key = '12345'
 
+
 class CheckPublicPages(TestCase):
     """Check if all public pages are accessible to anonymous users."""
 
@@ -60,6 +61,11 @@ class CheckPublicPages(TestCase):
         response = self.client.get('/accounts/login/')
         self.assertEqual(response.status_code, 200)
 
+    def test_public_account_signup(self):
+        response = self.client.get('/accounts/signup/')
+        self.assertEqual(response.status_code, 200)
+
+
 class CheckRedirectionFromPrivatePages(TestCase):
     """Check if all private pages are properly redirected to public pages."""
     def setUp(self):
@@ -80,12 +86,20 @@ class CheckLoggedUserPages(TestCase):
     """Check if a logged user can access to private pages."""
     def setUp(self):
         self.client = ValidatingClient()
+        self.user = User.objects.create_user('test_user', 'user@test.net', 'secret')
         self.client.login(username='test_user', password='secret')
 
     def test_logged_user_account_settings(self):
         response = self.client.get('/accounts/settings/')
-        self.assertRedirects(response, '/accounts/login/?next=/accounts/settings/')
+        self.assertEqual(response.status_code, 200)
 
     def test_logged_user_account_password(self):
         response = self.client.get('/accounts/password/')
-        self.assertRedirects(response, '/accounts/password/reset/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_logged_user_account_delete(self):
+        response = self.client.get('/accounts/delete/')
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+            self.user.delete()
