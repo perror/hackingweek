@@ -81,6 +81,11 @@ class CheckRedirectionFromPrivatePages(TestCase):
         self.assertRedirects(response, '/accounts/password/reset/',
                              status_code=302, target_status_code=200)
 
+    def test_redirection_account_delete(self):
+        response = self.client.get('/accounts/delete/', follow=True)
+        self.assertRedirects(response, '/',
+                             status_code=302, target_status_code=200)
+
 
 class CheckLoggedUserPages(TestCase):
     """Check if a logged user can access to private pages."""
