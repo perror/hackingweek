@@ -183,7 +183,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # User-account module settings
 ##############################
-ACCOUNT_OPEN_SIGNUP = False
+ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = True
 ACCOUNT_EMAIL_UNIQUE = True
