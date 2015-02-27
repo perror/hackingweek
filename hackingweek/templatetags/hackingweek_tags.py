@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from django import template
 from django.contrib.auth.models import User
@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.template.base import Variable, VariableDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 
-from hackingweek.settings import CONTEST_START_DATE
+from hackingweek.settings import CONTEST_BEGIN_DATE
 from hackingweek.models import Challenge, Team, Validation
 
 
@@ -22,10 +22,7 @@ def team_count():
 
 @register.simple_tag
 def challenge_count(request):
-    start = \
-        datetime.datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
-
-    if (datetime.datetime.now() <= start):
+    if (datetime.now() <= CONTEST_BEGIN_DATE):
         return 0
     else:
         challenge_count = Challenge.objects.all().count()

@@ -127,16 +127,16 @@
         // Grab the current date
         var currentDate = new Date();
 
-        // Set the starting date
-        var startDate  = new Date("2015 April 3 18:00:00");
+        // Set the begining date
+        var beginDate  = new Date("{{ contest_begin_date }}");
 
         // Set the ending date
-        var endDate = new Date("2015 April 11 24:00:00");
+        var endDate = new Date("{{ contest_end_date }}");
 
-      if (currentDate < startDate)
+      if (currentDate < beginDate)
       {
         // Calculate the difference in seconds between start and current date
-        var diff = startDate.getTime() / 1000 - currentDate.getTime() / 1000;
+        var diff = beginDate.getTime() / 1000 - currentDate.getTime() / 1000;
         var msg = 'La HackingWeek commence dans:';
       }
       else if (currentDate < endDate)

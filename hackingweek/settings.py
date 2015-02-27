@@ -1,5 +1,8 @@
 import os
 
+from datetime import datetime
+
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -200,15 +203,13 @@ THEME_CONTACT_EMAIL = 'hackingweek@gmail.com'
 
 TEAM_JOIN_REQUEST_EXPIRE_DAYS = 2
 
-CONTEST_START_DATE = '2015-04-03 18:00'
-CONTEST_END_DATE   = '2015-04-11 00:01'
-CONTEST_END_DATE_DISPLAYED = ''
-CONTEST_END_DATE_REAL = ''
+CONTEST_BEGIN_DATE = datetime.strptime('2015-04-03 18:00', "%Y-%m-%d %H:%M")
+CONTEST_END_DATE   = datetime.strptime('2015-04-12 00:01', "%Y-%m-%d %H:%M")
 
 from django.contrib.messages import constants as message_constants
 
-MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
-                message_constants.INFO: 'info',
+MESSAGE_TAGS = {message_constants.DEBUG:   'debug',
+                message_constants.INFO:    'info',
                 message_constants.SUCCESS: 'success',
                 message_constants.WARNING: 'warning',
-                message_constants.ERROR: 'danger',}
+                message_constants.ERROR:   'danger',}

@@ -18,7 +18,7 @@ import account.views
 from hackingweek.decorators import has_team_required
 from hackingweek.forms import SettingsForm, SignupForm, ChallengeValidationForm
 from hackingweek.models import Challenge, Team, UserProfile, Validation
-from hackingweek.settings import CONTEST_START_DATE
+from hackingweek.settings import CONTEST_BEGIN_DATE, CONTEST_END_DATE
 
 
 def validate(request, pk):
@@ -51,22 +51,16 @@ def validate(request, pk):
       }
 
    # Check if the contest is open
-   start_date = \
-       datetime.strptime(settings.CONTEST_START_DATE, "%Y-%m-%d %H:%M")
-
-   end_date = \
-       datetime.strptime(settings.CONTEST_END_DATE, "%Y-%m-%d %H:%M")
-
    now = datetime.now()
 
-   if (now <= start_date):
+   if (now <= CONTEST_BEGIN_DATE):
       messages.add_message(request,
                            _messages['before_start']['level'],
                            _messages['before_start']['text'])
 
       return HttpResponseRedirect('/challenges/')
 
-   if (now >= end_date):
+   if (now >= CONTEST_END_DATE):
       messages.add_message(request,
                            _messages['after_end']['level'],
                            _messages['after_end']['text'])
@@ -134,10 +128,7 @@ def validate(request, pk):
 
 
 def is_contest_started():
-   start_date = \
-       datetime.strptime(CONTEST_START_DATE, "%Y-%m-%d %H:%M")
-
-   return datetime.now() >= start_date
+   return datetime.now() >= CONTEST_BEGIN_DATE
 
 
 class HomepageView(TemplateView):
@@ -145,6 +136,8 @@ class HomepageView(TemplateView):
    def get_context_data(self, **kwargs):
       context = super(HomepageView, self).get_context_data(**kwargs)
       context['is_contest_started'] = is_contest_started()
+      context['contest_begin_date'] = CONTEST_BEGIN_DATE.strftime('%Y %B %d %H:%M:%S')
+      context['contest_end_date']   = CONTEST_END_DATE.strftime('%Y %B %d %H:%M:%S')
 
       return context
 
