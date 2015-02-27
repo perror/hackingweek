@@ -7,15 +7,16 @@ import account.forms
 from hackingweek.models import Challenge, Team
 
 
-# List of study levels.
-LEVEL_CHOICES = (
+# List of possible status
+STATUS_CHOICES = (
     ('Lyceen', 'Lyceen'),
     ('Bac+1', 'Bac+1'),
     ('Bac+2', 'Bac+2'),
     ('Bac+3', 'Bac+3'),
     ('Bac+4', 'Bac+4'),
     ('Bac+5', 'Bac+5'),
-    ('Autre', 'Autre'),
+    ('Doctorant', 'Doctorant'),
+    ('Professionnel',  'Professionnel'),
     )
 
 
@@ -31,12 +32,16 @@ class ChallengeValidationForm(forms.Form):
 
 
 class SignupForm(account.forms.SignupForm):
-    real_name   = forms.CharField(label=_("Real Name"), max_length=128)
-    school      = forms.CharField(label=_("School"), max_length=128)
-    study_level = forms.ChoiceField(label=_("Study Level"), choices=LEVEL_CHOICES)
+    first_name = forms.CharField(label=_("First Name"), max_length=30)
+    last_name  = forms.CharField(label=_("Last Name"), max_length=30)
+
+    status       = forms.ChoiceField(label=_("Status"), choices=STATUS_CHOICES)
+    organisation = forms.CharField(label=_("Organisation"), max_length=128)
 
 
 class SettingsForm(account.forms.SettingsForm):
-    real_name   = forms.CharField(label=_("Real Name"), max_length=128)
-    school      = forms.CharField(label=_("School"), max_length=128)
-    study_level = forms.ChoiceField(label=_("Study Level"), choices=LEVEL_CHOICES)
+    first_name = forms.CharField(label=_("First Name"), max_length=30)
+    last_name  = forms.CharField(label=_("Last Name"), max_length=30)
+
+    status       = forms.ChoiceField(label=_("Status"), choices=STATUS_CHOICES)
+    organisation = forms.CharField(label=_("Organisation"), max_length=128)

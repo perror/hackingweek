@@ -204,12 +204,14 @@ class SignupView(account.views.SignupView):
       super(SignupView, self).after_signup(form)
 
    def create_profile(self, form):
-      profile = self.created_user.get_profile()
-      
-      profile.real_name   = form.cleaned_data['real_name']
-      profile.school      = form.cleaned_data['school']
-      profile.study_level = form.cleaned_data['study_level']
-      
+      user = self.created_user
+      user.first_name = form.cleaned_data['first_name']
+      user.last_name  = form.cleaned_data['last_name']
+      user.save()
+
+      profile = user.userprofile
+      profile.status       = form.cleaned_data['status']
+      profile.organisation = form.cleaned_data['organisation']
       profile.save()
 
 
@@ -218,23 +220,26 @@ class SettingsView(account.views.SettingsView):
 
    def get_initial(self):
       initial = super(SettingsView, self).get_initial()
-      profile = self.request.user.get_profile()
 
-      initial['real_name']   = profile.real_name
-      initial['school']      = profile.school
-      initial['study_level'] = profile.study_level
+      initial["first_name"] = self.request.user.first_name
+      initial["last_name"]  = self.request.user.last_name
+
+      initial["status"]        = self.request.user.userprofile.status
+      initial["organisation"]  = self.request.user.userprofile.organisation
 
       return initial
 
    def update_settings(self, form):
       super(SettingsView, self).update_settings(form)
-      
-      profile = self.request.user.get_profile()
-      
-      profile.real_name   = form.cleaned_data['real_name']
-      profile.school      = form.cleaned_data['school']
-      profile.study_level = form.cleaned_data['study_level']
-      
+
+      user = self.request.user
+      user.first_name = form.cleaned_data['first_name']
+      user.last_name  = form.cleaned_data['last_name']
+      user.save()
+
+      profile = user.userprofile
+      profile.status       = form.cleaned_data['status']
+      profile.organisation = form.cleaned_data['organisation']
       profile.save()
 
 

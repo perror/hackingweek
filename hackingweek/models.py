@@ -12,6 +12,14 @@ from django.utils.translation import ugettext_lazy as _
 from hackingweek import settings
 
 
+class UserProfile(models.Model):
+    """Decorate the regular User model with extra information about the user"""
+    user = models.OneToOneField(User)
+
+    status       = models.CharField(max_length=32)
+    organisation = models.CharField(max_length=128)
+
+
 class Team(models.Model):
     name = models.CharField(max_length=128, unique=True)
     members = models.ManyToManyField(User, null=True, blank=True)
@@ -66,14 +74,6 @@ class Score(models.Model):
 
 
 # TODO: Remove empty team when the last user destroy his account
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-
-    real_name   = models.CharField(max_length=128)
-    school      = models.CharField(max_length=128)
-    study_level = models.CharField(max_length=32)
-
-
 class TeamJoinRequest(models.Model):
     team      = models.ForeignKey(Team)
     requester = models.ForeignKey(User, related_name='teamjoinrequest_requester')

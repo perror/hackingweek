@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 23:58+0100\n"
+"POT-Creation-Date: 2015-02-27 13:45+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:34 forms.py:40
-msgid "Real Name"
-msgstr "Nom Réel"
+#: forms.py:35 forms.py:43
+msgid "First Name"
+msgstr "Prénom"
 
-#: forms.py:35 forms.py:41 templates/contestant-list.html:19
-msgid "School"
-msgstr "Établissement"
+#: forms.py:36 forms.py:44
+msgid "Last Name"
+msgstr "Nom"
 
-#: forms.py:36 forms.py:42 templates/contestant-list.html:20
-msgid "Study Level"
-msgstr "Diplôme en cours"
+#: forms.py:38 forms.py:46 templates/challenges.html:29
+#: templates/challenges.html.py:51 templates/contestant-list.html:20
+msgid "Status"
+msgstr "Statut"
+
+#: forms.py:39 forms.py:47 templates/contestant-list.html:19
+msgid "Organisation"
+msgstr "Organisation"
 
 #: views.py:29
 msgid "Sorry, wrong key. Try again !"
@@ -54,34 +59,34 @@ msgstr "Le concours n'a pas encore commencé !"
 msgid "The contest is finished !"
 msgstr "Le concours est fini !"
 
-#: views.py:333
+#: views.py:338
 msgid "Team has been created."
 msgstr "L'équipe a été créée."
 
-#: views.py:359
+#: views.py:364
 msgid "User has been removed from team."
 msgstr "L'utilisateur a été retiré de l'équipe."
 
-#: views.py:363
+#: views.py:368
 msgid "Team has been supressed (empty team)."
 msgstr "L'équipe a été supprimée (équipe vide)."
 
-#: views.py:401
+#: views.py:406
 msgid "A request to join the team have been sent to all members."
 msgstr "Une requête pour rejoindre l'équipe a été envoyée à tous ses membres."
 
-#: views.py:436
+#: views.py:441
 msgid "User has been accepted in the team."
 msgstr "L'utilisateur a été accepté dans l'équipe."
 
-#: views.py:440
+#: views.py:445
 msgid "User request cannot be completed ! This key does not match this team."
 msgstr ""
 "La requête n'a pu être complétée ! Cette clef ne correspond pas à la bonne "
 "équipe."
 
 #: templates/_account_bar.html:12 templates/account/base.html:10
-#: templates/account/settings.html:7 templates/account/settings.html.py:16
+#: templates/account/settings.html:7 templates/account/settings.html.py:17
 msgid "Account"
 msgstr "Votre compte"
 
@@ -125,10 +130,6 @@ msgstr "Validations"
 #: templates/challenges.html:28
 msgid "Value"
 msgstr "Valeur"
-
-#: templates/challenges.html:29 templates/challenges.html.py:51
-msgid "Status"
-msgstr "Statut"
 
 #: templates/challenges.html:47
 msgid "No challenge available yet"
@@ -186,8 +187,8 @@ msgstr "Règlement"
 msgid "Teams"
 msgstr "Équipes"
 
-#: templates/team-create.html:7 templates/team-create.html.py:16
-#: templates/team-create.html:22 templates/team-list.html:38
+#: templates/team-create.html:7 templates/team-create.html.py:17
+#: templates/team-create.html:23 templates/team-list.html:38
 msgid "Create Team"
 msgstr "Créer une équipe"
 
@@ -319,7 +320,7 @@ msgstr "Êtez-vous sûr de vouloir vous déconnecter&nbsp;?"
 
 #: templates/account/password_change.html:20
 #: templates/account/password_reset_token.html:17
-#: templates/account/settings.html:19
+#: templates/account/settings.html:20
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -400,8 +401,8 @@ msgstr ""
 "qu'il  a déjà été utilisé. Essayez à nouveau de <a href=\"%(url)s"
 "\">réinitialiser votre mot de passe</a>."
 
-#: templates/account/signup.html:7 templates/account/signup.html.py:16
-#: templates/account/signup.html:22 templates/account/signup_closed.html:6
+#: templates/account/signup.html:7 templates/account/signup.html.py:17
+#: templates/account/signup.html:23 templates/account/signup_closed.html:6
 msgid "Sign up"
 msgstr "Créer un compte"
 

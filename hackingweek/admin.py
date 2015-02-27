@@ -1,7 +1,23 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
 import models
+
 from hackingweek.forms import ChallengeForm
+from hackingweek.models import UserProfile
+
+
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+
+class UserAdmin(UserAdmin):
+    inlines = (UserProfileInline, )
+
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -31,10 +47,3 @@ class TeamAdmin(admin.ModelAdmin):
      list_filter  = ('name', 'is_active')
 
 admin.site.register(models.Team, TeamAdmin)
-
-
-class UserProfileAdmin(admin.ModelAdmin):
-     list_display = ['user', 'real_name', 'school', 'study_level']
-     list_filter  = ('user',)
-
-admin.site.register(models.UserProfile, UserProfileAdmin)

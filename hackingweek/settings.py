@@ -197,12 +197,13 @@ AUTHENTICATION_BACKENDS = [
 # HackingWeek specific settings
 ###############################
 THEME_CONTACT_EMAIL = 'hackingweek@gmail.com'
-AUTH_PROFILE_MODULE = 'hackingweek.UserProfile'
 
 TEAM_JOIN_REQUEST_EXPIRE_DAYS = 2
 
 CONTEST_START_DATE = '2015-04-03 18:00'
 CONTEST_END_DATE   = '2015-04-11 00:01'
+CONTEST_END_DATE_DISPLAYED = ''
+CONTEST_END_DATE_REAL = ''
 
 from django.contrib.messages import constants as message_constants
 

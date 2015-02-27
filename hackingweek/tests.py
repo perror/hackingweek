@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from htmlvalidator.client import ValidatingClient
 
-from hackingweek.models import Category, Challenge, UserProfile
+from hackingweek.models import Category, Challenge
 
 def wrong_challenge():
     chall = Challenge()
