@@ -2,17 +2,17 @@ import os
 
 from datetime import datetime
 
+from django.utils import timezone
+
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-# DEBUG = False
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # Django HTML validator plugin
 HTMLVALIDATOR_ENABLED = True
-#HTMLVALIDATOR_FAILFAST = True
 HTMLVALIDATOR__VNU_JAR = '../contrib/vnu.jar'
 
 ADMINS = [
@@ -177,7 +177,6 @@ FIXTURE_DIRS = [
 ##################
 from private_settings import *
 
-
 # Email settings
 ################
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -203,8 +202,8 @@ THEME_CONTACT_EMAIL = 'hackingweek@gmail.com'
 
 TEAM_JOIN_REQUEST_EXPIRE_DAYS = 2
 
-CONTEST_BEGIN_DATE = datetime.strptime('2015-04-03 18:00', "%Y-%m-%d %H:%M")
-CONTEST_END_DATE   = datetime.strptime('2015-04-12 00:01', "%Y-%m-%d %H:%M")
+CONTEST_BEGIN_DATE = '2015-04-03 18:00'
+CONTEST_END_DATE   = '2015-04-12 00:01'
 
 from django.contrib.messages import constants as message_constants
 

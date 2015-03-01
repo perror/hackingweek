@@ -1,18 +1,17 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
-
-from django.contrib.auth.decorators import login_required
 from django.contrib import admin
-
-from django.views.generic import ListView
-from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, RedirectView, TemplateView
 
 import hackingweek.views
 
 from hackingweek import views
 from hackingweek.models import Team
-from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView, TeamJoinRequestView, TeamQuitView, ContestantListView, ChallengeListView, RankingView
+from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView
+from hackingweek.views import TeamJoinRequestView, TeamQuitView
+from hackingweek.views import ContestantListView, ChallengeListView, RankingView
 
 from hackingweek.decorators import has_no_team_required, has_team_required
 
@@ -33,6 +32,7 @@ urlpatterns = patterns("",
     url(r"^team/list/$", TeamListView.as_view(template_name="team-list.html"), name="team_list"),
     url(r"^team/quit/(?P<pk>\d+)/$", has_team_required(TeamQuitView.as_view(template_name="team-quit.html")), name="team_quit"),
     url(r"^validate/(?P<pk>\d+)/$", has_team_required(views.validate), name="validate"),
+    url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name="index")
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

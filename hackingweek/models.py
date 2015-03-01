@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import models
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from hackingweek import settings
@@ -56,18 +57,18 @@ class Challenge(models.Model):
 
 
 class Validation(models.Model):
-    date = models.DateTimeField(default=datetime.now)
+    date = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, related_name='validation_user')
     team = models.ForeignKey(Team, related_name='validation_team')
     challenge = models.ForeignKey(Challenge, related_name='validation_challenge')
 
 
 class Score(models.Model):
-    score         = models.IntegerField(default=0)
-    team          = models.ForeignKey(Team)
-    challenges    = models.ManyToManyField(Challenge,
-                                           related_name='score_challenges',
-                                           null=True, blank=True)
+    score      = models.IntegerField(default=0)
+    team       = models.ForeignKey(Team)
+    challenges = models.ManyToManyField(Challenge,
+                                        related_name='score_challenges',
+                                        null=True, blank=True)
     breakthroughs = models.ManyToManyField(Challenge,
                                            related_name='score_breakthroughs',
                                            null=True, blank=True)
@@ -79,7 +80,7 @@ class TeamJoinRequest(models.Model):
     requester = models.ForeignKey(User, related_name='teamjoinrequest_requester')
     responder = models.ForeignKey(User, related_name='teamjoinrequest_responder')
 
-    created = models.DateTimeField(default=datetime.now)
+    created = models.DateTimeField(default=timezone.now)
     key     = models.CharField(max_length=64, unique=True)
 
     @classmethod
@@ -148,7 +149,7 @@ class TeamJoinRequest(models.Model):
         expiration_date = self.created + \
             datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
 
-        if expiration_date <= datetime.now():
+        if expiration_date <= timezone.now():
             self.delete()
 
-        return expiration_date <= datetime.now()
+        return expiration_date <= timezone.now()

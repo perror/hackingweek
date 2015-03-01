@@ -17,9 +17,8 @@ import account.views
 
 from hackingweek.decorators import has_team_required
 from hackingweek.forms import SettingsForm, SignupForm, ChallengeValidationForm
-from hackingweek.models import Challenge, Team, UserProfile, Validation
-from hackingweek.settings import CONTEST_BEGIN_DATE, CONTEST_END_DATE
-
+from hackingweek.models import Challenge, Team, TeamJoinRequest, UserProfile, Validation
+from hackingweek.utils import begin_date, end_date
 
 def validate(request, pk):
    errors = []
@@ -51,16 +50,16 @@ def validate(request, pk):
       }
 
    # Check if the contest is open
-   now = datetime.now()
+   now = timezone.now()
 
-   if (now <= CONTEST_BEGIN_DATE):
+   if (now <= begin_date()):
       messages.add_message(request,
                            _messages['before_start']['level'],
                            _messages['before_start']['text'])
 
       return HttpResponseRedirect('/challenges/')
 
-   if (now >= CONTEST_END_DATE):
+   if (now >= end_date()):
       messages.add_message(request,
                            _messages['after_end']['level'],
                            _messages['after_end']['text'])
@@ -128,7 +127,7 @@ def validate(request, pk):
 
 
 def is_contest_started():
-   return datetime.now() >= CONTEST_BEGIN_DATE
+   return timezone.now() >= begin_date()
 
 
 class HomepageView(TemplateView):
@@ -136,8 +135,8 @@ class HomepageView(TemplateView):
    def get_context_data(self, **kwargs):
       context = super(HomepageView, self).get_context_data(**kwargs)
       context['is_contest_started'] = is_contest_started()
-      context['contest_begin_date'] = CONTEST_BEGIN_DATE.strftime('%Y %B %d %H:%M:%S')
-      context['contest_end_date']   = CONTEST_END_DATE.strftime('%Y %B %d %H:%M:%S')
+      context['contest_begin_date'] = begin_date().strftime('%Y %B %d %H:%M:%S')
+      context['contest_end_date']   = end_date().strftime('%Y %B %d %H:%M:%S')
 
       return context
 
@@ -384,10 +383,6 @@ class TeamQuitView(DeleteView):
       return HttpResponseRedirect(reverse_lazy('team_list'))
 
 
-
-from hackingweek import settings
-from hackingweek.models import TeamJoinRequest
-
 class TeamJoinRequestView(UpdateView):
    template_name = 'team-join-request.html'
    model = Team
@@ -405,7 +400,7 @@ class TeamJoinRequestView(UpdateView):
 
       # Sending a request to join to each team member
       for member in self.object.members.all():
-         joinrequest = TeamJoinRequest.create(created=datetime.now(),
+         joinrequest = TeamJoinRequest.create(created=timezone.now(),
                                               team=self.object,
                                               requester=self.request.user,
                                               responder=member)

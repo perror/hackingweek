@@ -22,7 +22,7 @@ test-dbg:
 	$(MANAGE) test --verbosity=3
 
 coverage:
-	coverage run --source='.' $(MANAGE) test
+	coverage run --omit "*tests*" --source='.' $(MANAGE) test
 	coverage html
 
 locales:

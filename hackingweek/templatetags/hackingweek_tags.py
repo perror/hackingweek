@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.template.base import Variable, VariableDoesNotExist
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 
-from hackingweek.settings import CONTEST_BEGIN_DATE
 from hackingweek.models import Challenge, Team, Validation
-
+from hackingweek.utils import begin_date
 
 register = template.Library()
 
@@ -22,7 +22,7 @@ def team_count():
 
 @register.simple_tag
 def challenge_count(request):
-    if (datetime.now() <= CONTEST_BEGIN_DATE):
+    if timezone.now() <= begin_date():
         return 0
     else:
         challenge_count = Challenge.objects.all().count()
