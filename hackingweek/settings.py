@@ -13,7 +13,7 @@ TEMPLATE_DEBUG = DEBUG
 
 # Django HTML validator plugin
 HTMLVALIDATOR_ENABLED = True
-HTMLVALIDATOR__VNU_JAR = '../contrib/vnu.jar'
+HTMLVALIDATOR_VNU_JAR = './contrib/vnu.jar'
 
 ADMINS = [
     # ("Your Name", "your_email@example.com"),
