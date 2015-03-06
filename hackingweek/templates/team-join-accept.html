@@ -17,7 +17,7 @@
     <p>Si vous acceptez sa demande, appuyez sur le bouton ci-dessous.
       Sinon, ignorez simplement cette page.</p>
 
-    <form method="POST" action="{% url "team_join_accept" %}">
+    <form method="POST">
       {% csrf_token %}
       <button type="submit" class="btn btn-success">{% trans "Accept User" %}</button>
     </form>

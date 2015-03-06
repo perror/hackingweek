@@ -3,18 +3,18 @@ from datetime import datetime, timedelta
 from htmlvalidator.client import ValidatingClient
 
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
 from django.utils import timezone
 
-from hackingweek.models import Category, Challenge, Team, Validation
-
-import hackingweek.settings
+from hackingweek.models import Category, Challenge, Team, TeamJoinRequest, Validation
+from hackingweek.forms import ChallengeValidationForm
 
 def one_day_before():
     date = timezone.now() + timedelta(days=-1)
     return date.strftime('%Y-%m-%d %H:%M')
 
-def two_day_before():
+def two_days_before():
     date = timezone.now() + timedelta(days=-2)
     return date.strftime('%Y-%m-%d %H:%M')
 
@@ -22,7 +22,7 @@ def one_day_after():
     date = timezone.now() + timedelta(days=1)
     return date.strftime('%Y-%m-%d %H:%M')
 
-def two_day_after():
+def two_days_after():
     date = timezone.now() + timedelta(days=2)
     return date.strftime('%Y-%m-%d %H:%M')
 
@@ -66,44 +66,46 @@ class CheckPublicPages(TestCase):
     def test_public_homepage(self):
         # Before contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
-                           CONTEST_END_DATE=two_day_after()):
-            response = self.client.get('/')
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.get(reverse('home'))
             self.assertEqual(response.status_code, 200)
 
         # During contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
                            CONTEST_END_DATE=one_day_after()):
-            response = self.client.get('/')
+            response = self.client.get(reverse('home'))
             self.assertEqual(response.status_code, 200)
 
         # After contest
-        with self.settings(CONTEST_BEGIN_DATE=two_day_before(),
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
                            CONTEST_END_DATE=one_day_before()):
-            response = self.client.get('/')
+            response = self.client.get(reverse('home'))
             self.assertEqual(response.status_code, 200)
 
     def test_public_team_list_empty(self):
         self.team.delete()
 
-        response = self.client.get('/team/list/')
+        response = self.client.get(reverse('team_list'))
         self.assertEqual(response.status_code, 200)
 
         self.team.save()
 
     def test_public_team_list(self):
-        response = self.client.get('/team/list/')
+        response = self.client.get(reverse('team_list'))
         self.assertEqual(response.status_code, 200)
 
     def test_public_contestant_list_empty(self):
-        self.user.delete()
+        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
+                           CONTEST_END_DATE=one_day_after()):
+            self.user.delete()
 
-        response = self.client.get('/contestant/list/')
-        self.assertEqual(response.status_code, 200)
+            response = self.client.get(reverse('contestant_list'))
+            self.assertEqual(response.status_code, 200)
 
         self.user.save()
 
     def test_public_contestant_list(self):
-        response = self.client.get('/contestant/list/')
+        response = self.client.get(reverse('contestant_list'))
         self.assertEqual(response.status_code, 200)
 
     def test_public_challenge_list_empty(self):
@@ -111,20 +113,20 @@ class CheckPublicPages(TestCase):
 
         # Before contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
-                           CONTEST_END_DATE=two_day_after()):
-            response = self.client.get('/challenges/')
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.get(reverse('challenges'))
             self.assertEqual(response.status_code, 200)
 
         # During contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
                            CONTEST_END_DATE=one_day_after()):
-            response = self.client.get('/challenges/')
+            response = self.client.get(reverse('challenges'))
             self.assertEqual(response.status_code, 200)
 
         # After contest
-        with self.settings(CONTEST_BEGIN_DATE=two_day_before(),
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
                            CONTEST_END_DATE=one_day_before()):
-            response = self.client.get('/challenges/')
+            response = self.client.get(reverse('challenges'))
             self.assertEqual(response.status_code, 200)
 
         self.challenge.save()
@@ -132,70 +134,59 @@ class CheckPublicPages(TestCase):
     def test_public_challenge_list(self):
         # Before contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
-                           CONTEST_END_DATE=two_day_after()):
-            response = self.client.get('/challenges/')
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.get(reverse('challenges'))
             self.assertEqual(response.status_code, 200)
 
         # During contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
                            CONTEST_END_DATE=one_day_after()):
-            response = self.client.get('/challenges/')
+            response = self.client.get(reverse('challenges'))
             self.assertEqual(response.status_code, 200)
 
         # After contest
-        with self.settings(CONTEST_BEGIN_DATE=two_day_before(),
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
                            CONTEST_END_DATE=one_day_before()):
-            response = self.client.get('/challenges/')
+            response = self.client.get(reverse('challenges'))
             self.assertEqual(response.status_code, 200)
 
     def test_public_ranking_list_empty(self):
         self.validation.delete()
+        self.team.is_active = False
+        self.team.save()
 
-        # Before contest
-        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
-                           CONTEST_END_DATE=two_day_after()):
-            response = self.client.get('/ranking/')
-            self.assertEqual(response.status_code, 200)
+        response = self.client.get(reverse('ranking'))
+        self.assertEqual(response.status_code, 200)
 
-        # During contest
-        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
-                           CONTEST_END_DATE=one_day_after()):
-            response = self.client.get('/ranking/')
-            self.assertEqual(response.status_code, 200)
-
-        # After contest
-        with self.settings(CONTEST_BEGIN_DATE=two_day_before(),
-                           CONTEST_END_DATE=one_day_before()):
-            response = self.client.get('/ranking/')
-            self.assertEqual(response.status_code, 200)
-
+        self.team.is_active = True
+        self.team.save()
         self.validation.save()
 
     def test_public_ranking_list(self):
         # Before contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
-                           CONTEST_END_DATE=two_day_after()):
-            response = self.client.get('/ranking/')
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.get(reverse('ranking'))
             self.assertEqual(response.status_code, 200)
 
         # During contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
                            CONTEST_END_DATE=one_day_after()):
-            response = self.client.get('/ranking/')
+            response = self.client.get(reverse('ranking'))
             self.assertEqual(response.status_code, 200)
 
         # After contest
-        with self.settings(CONTEST_BEGIN_DATE=two_day_before(),
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
                            CONTEST_END_DATE=one_day_before()):
-            response = self.client.get('/ranking/')
+            response = self.client.get(reverse('ranking'))
             self.assertEqual(response.status_code, 200)
 
     def test_public_rules(self):
-        response = self.client.get('/rules/')
+        response = self.client.get(reverse('rules'))
         self.assertEqual(response.status_code, 200)
 
     def test_public_about(self):
-        response = self.client.get('/about/')
+        response = self.client.get(reverse('about'))
         self.assertEqual(response.status_code, 200)
 
     def test_public_login(self):
@@ -228,7 +219,7 @@ class CheckRedirectionFromPrivatePages(TestCase):
 
     def test_redirection_accounts_logout(self):
         response = self.client.get('/accounts/logout/', follow=True)
-        self.assertRedirects(response, '/',
+        self.assertRedirects(response, reverse('home'),
                              status_code=302, target_status_code=200)
 
     def test_redirection_accounts_settings(self):
@@ -243,11 +234,11 @@ class CheckRedirectionFromPrivatePages(TestCase):
 
     def test_redirection_accounts_delete(self):
         response = self.client.get('/accounts/delete/', follow=True)
-        self.assertRedirects(response, '/',
+        self.assertRedirects(response, reverse('home'),
                              status_code=302, target_status_code=200)
 
     def test_redirection_team_create(self):
-        response = self.client.get('/team/create/', follow=True)
+        response = self.client.get(reverse('team_create'), follow=True)
         self.assertRedirects(response, '/accounts/login/?next=/team/create/',
                              status_code=302, target_status_code=200)
 
@@ -263,7 +254,7 @@ class CheckSignUp(TestCase):
 
     def test_signup(self):
         with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
-                           CONTEST_END_DATE=two_day_after()):
+                           CONTEST_END_DATE=two_days_after()):
             response = self.client.get('/accounts/signup/')
             self.assertEqual(response.status_code, 200)
 
@@ -314,28 +305,114 @@ class CheckTeamCreation(TestCase):
 
     def test_logged_user_team_create(self):
         with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
-                           CONTEST_END_DATE=two_day_after()):
-            response = self.client.get('/team/create/', follow=True)
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.get(reverse('team_create'), follow=True)
             self.assertEqual(response.status_code, 200)
 
             data = response.context['form'].initial
             data['name'] = 'team'
 
-            response = self.client.post('/team/create/', data)
+            response = self.client.post(reverse('team_create'), data)
 
 
-class CheckValdatingChallenge(TestCase):
+class CheckTeamJoin(TestCase):
     def setUp(self):
-        self.client = ValidatingClient(enforce_csrf_checks=True)
+        self.client = ValidatingClient()
 
         self.user = User.objects.create_user('test_user', 'user@test.net', 'secret')
         self.user.save()
         self.client.login(username='test_user', password='secret')
 
+        self.user0 = User.objects.create_user('test_user0', 'user0@test.net', 'secret')
+        self.user0.save()
+
+        self.team = Team(name='team')
+        self.team.save()
+        self.team.members.add(self.user0)
+        self.team.save()
+
+    def tearDown(self):
+        self.user.delete()
+        self.team.delete()
+
+    def test_logged_user_team_join(self):
+        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
+                           CONTEST_END_DATE=two_days_after()):
+            url = '/team/join/request/' + str(self.team.pk) + '/'
+
+            response = self.client.get(url)
+            response = self.client.post(url, {})
+
+            self.assertRedirects(response, reverse('team_list'),
+                                 status_code=302, target_status_code=200)
+
+            # Trying to resubmit
+            response = self.client.post(url, {})
+
+            self.assertRedirects(response, reverse('team_list'),
+                                 status_code=302, target_status_code=200)
+
+            self.client.logout()
+            self.client.login(username='test_user0', password='secret')
+
+            fake_key = '1'
+            url = '/team/join/accept/' + str(self.team.pk) + '/' + fake_key + '/'
+            response = self.client.post(url, {})
+
+            key = TeamJoinRequest.objects.get(pk=1).key
+            url = '/team/join/accept/' + str(self.team.pk) + '/' + key + '/'
+            response = self.client.post(url, {})
+
+
+class CheckTeamQuit(TestCase):
+    """Check if all private pages are properly redirected to public pages."""
+    def setUp(self):
+        self.client = Client()
+
+        self.user = User.objects.create_user('test_user', 'user@test.net', 'secret')
+        self.user.save()
+        self.client.login(username='test_user', password='secret')
+
+        self.team = Team(name='team')
+        self.team.save()
+        self.team.members.add(self.user)
+        self.team.save()
+
+    def tearDown(self):
+        self.team.delete()
+        self.user.delete()
+
+    def test_team_quit(self):
+        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
+                           CONTEST_END_DATE=two_days_after()):
+            url = '/team/quit/' + str(self.team.pk) + '/'
+
+            response = self.client.get(url)
+            response = self.client.post(url, {})
+
+            self.assertRedirects(response, reverse('team_list'),
+                                 status_code=302, target_status_code=200)
+
+
+class CheckValidatingChallenge(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+        self.user = User.objects.create_user('test_user', 'user@test.net', 'secret')
+        self.user.save()
+
         self.team = Team(name='team', is_active=True)
         self.team.save()
         self.team.members.add(self.user)
         self.team.save()
+
+        self.user0 = User.objects.create_user('test_user0', 'user0@test.net', 'secret')
+        self.user0.save()
+
+        self.team0 = Team(name='team0', is_active=True)
+        self.team0.save()
+        self.team0.members.add(self.user0)
+        self.team0.save()
 
         self.category = Category(name='category')
         self.category.save()
@@ -349,17 +426,113 @@ class CheckValdatingChallenge(TestCase):
         self.category.delete()
         self.team.delete()
         self.user.delete()
+        self.team0.delete()
+        self.user0.delete()
 
-    def test_validate_challenge(self):
+    def test_unlogged_attempt_challenge(self):
+        # Before contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, '/accounts/login/?next=/validate/1/',
+                                 status_code=302, target_status_code=200)
+
+        # During contest
         with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
                            CONTEST_END_DATE=one_day_after()):
-            response = self.client.get('/challenges/', follow=True)
-            self.assertEqual(response.status_code, 200)
-# TODO !!!
-#            data = response.context['id-1'].initial
-#            data['input-1'] = '12345'
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, '/accounts/login/?next=/validate/1/',
+                                 status_code=302, target_status_code=200)
 
-#            response = self.client.post('/validate/1/', data)
+        # After contest
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
+                           CONTEST_END_DATE=one_day_before()):
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, '/accounts/login/?next=/validate/1/',
+                                 status_code=302, target_status_code=200)
+
+    def test_invalid_get_challenge(self):
+        self.client.login(username='test_user', password='secret')
+
+        # Before contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
+                           CONTEST_END_DATE=one_day_after()):
+            response = self.client.get('/validate/1/')
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+    def test_invalid_challenge(self):
+        self.client.login(username='test_user', password='secret')
+
+        # Before contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.post('/validate/1/', {'key' : '1'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+        # During contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
+                           CONTEST_END_DATE=one_day_after()):
+            response = self.client.post('/validate/1/', {'key' : '1'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+        # After contest
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
+                           CONTEST_END_DATE=one_day_before()):
+            response = self.client.post('/validate/1/', {'key' : '1'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+    def test_validate_breakthrought_challenge(self):
+        self.client.login(username='test_user', password='secret')
+
+        # Before contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+        # During contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
+                           CONTEST_END_DATE=one_day_after()):
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+        # After contest
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
+                           CONTEST_END_DATE=one_day_before()):
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+    def test_validate_normal_challenge(self):
+        # During contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
+                           CONTEST_END_DATE=one_day_after()):
+            # First validation (breakthrough)
+            self.client.login(username='test_user', password='secret')
+
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+            self.client.logout()
+            # Second validation (normal)
+            self.client.login(username='test_user0', password='secret')
+
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
+
+            # Re-validation (normal)
+            self.client.login(username='test_user0', password='secret')
+
+            response = self.client.post('/validate/1/', {'key' : '12345'})
+            self.assertRedirects(response, reverse('challenges'),
+                                 status_code=302, target_status_code=200)
 
 
 class CheckLoggedUserPages(TestCase):
@@ -435,15 +608,39 @@ class CheckLoggedUserPages(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_logged_user_homepage(self):
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
+        # Before contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
+                           CONTEST_END_DATE=two_days_after()):
+            response = self.client.get(reverse('home'))
+            self.assertEqual(response.status_code, 200)
+
+        # During contest
+        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
+                           CONTEST_END_DATE=one_day_after()):
+            response = self.client.get(reverse('home'))
+            self.assertEqual(response.status_code, 200)
+
+        # After contest
+        with self.settings(CONTEST_BEGIN_DATE=two_days_before(),
+                           CONTEST_END_DATE=one_day_before()):
+            response = self.client.get(reverse('home'))
+            self.assertEqual(response.status_code, 200)
 
     def test_logged_user_team_list(self):
-        response = self.client.get('/team/list/')
-        self.assertEqual(response.status_code, 200)
+        with self.settings(CONTEST_BEGIN_DATE=one_day_after(),
+                           CONTEST_END_DATE=two_days_after()):
+            self.team.delete()
+            response = self.client.get(reverse('team_list'))
+            self.assertEqual(response.status_code, 200)
+            self.team.save()
+
+        with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
+                           CONTEST_END_DATE=one_day_after()):
+            response = self.client.get(reverse('team_list'))
+            self.assertEqual(response.status_code, 200)
 
     def test_logged_user_team_create_with_a_team(self):
-        response = self.client.get('/team/create/', follow=True)
+        response = self.client.get(reverse('team_create'), follow=True)
         self.assertRedirects(response, '/?next=/team/create/',
                              status_code=302, target_status_code=200)
 
@@ -456,21 +653,21 @@ class CheckLoggedUserPages(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_logged_user_contestant_list(self):
-        response = self.client.get('/contestant/list/')
+        response = self.client.get(reverse('contestant_list'))
         self.assertEqual(response.status_code, 200)
 
     def test_logged_user_challenge_list(self):
-        response = self.client.get('/challenges/')
+        response = self.client.get(reverse('challenges'))
         self.assertEqual(response.status_code, 200)
 
     def test_logged_user_ranking_list(self):
-        response = self.client.get('/ranking/')
+        response = self.client.get(reverse('ranking'))
         self.assertEqual(response.status_code, 200)
 
     def test_logged_user_rules(self):
-        response = self.client.get('/rules/')
+        response = self.client.get(reverse('rules'))
         self.assertEqual(response.status_code, 200)
 
     def test_logged_user_about(self):
-        response = self.client.get('/about/')
+        response = self.client.get(reverse('about'))
         self.assertEqual(response.status_code, 200)

@@ -3,6 +3,7 @@ MANAGE = ./manage.py
 LOCALESDIR = hackingweek/locale
 LOCALES = $(LOCALESDIR)/fr/LC_MESSAGES/django.mo
 
+OMITFLAGS = --omit "*tests*","*migrations*"
 
 .PHONY:	clean coverage help locales run syncdb test test-dbg
 
@@ -21,9 +22,13 @@ test:
 test-dbg:
 	$(MANAGE) test --verbosity=3
 
-coverage:
-	coverage run --omit "*tests*" --source='.' $(MANAGE) test
+cover:
+	coverage run  $(OMITFLAGS) --source='.' $(MANAGE) test
 	coverage html
+
+coverall:
+	coverage run --rcfile='templates.coveragerc' $(OMITFLAGS) --source='.' $(MANAGE) test
+	DJANGO_SETTINGS_MODULE=hackingweek.settings coverage html --rcfile='templates.coveragerc'
 
 locales:
 	cd hackingweek/ && django-admin.py makemessages --locale=fr
@@ -46,6 +51,7 @@ help:
 	@echo "  make locales\tgenerate the locale po files"
 	@echo "  make test\trun the test suite"
 	@echo "  make test-dbg\trun the test suite with high verbosity"
-	@echo "  make coverage\trun the test suite with coverage plugin"
+	@echo "  make cover\trun the test suite on .py files with coverage plugin"
+	@echo "  make coverall\trun the test suite on all files with coverage plugin"
 	@echo "  make clean\tremove unnecessary files"
 	@echo "  make help\tdisplay this help"

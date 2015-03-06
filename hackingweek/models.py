@@ -1,5 +1,5 @@
 import urllib
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -147,7 +147,7 @@ class TeamJoinRequest(models.Model):
 
     def key_expired(self):
         expiration_date = self.created + \
-            datetime.timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
+            timedelta(days=settings.TEAM_JOIN_REQUEST_EXPIRE_DAYS)
 
         if expiration_date <= timezone.now():
             self.delete()
