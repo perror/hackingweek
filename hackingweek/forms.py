@@ -32,16 +32,10 @@ class ChallengeValidationForm(forms.Form):
 
 
 class SignupForm(account.forms.SignupForm):
-    first_name = forms.CharField(label=_("First Name"), max_length=30)
-    last_name  = forms.CharField(label=_("Last Name"), max_length=30)
-
     status       = forms.ChoiceField(label=_("Status"), choices=STATUS_CHOICES)
     organisation = forms.CharField(label=_("Organisation"), max_length=128)
 
 
 class SettingsForm(account.forms.SettingsForm):
-    first_name = forms.CharField(label=_("First Name"), max_length=30)
-    last_name  = forms.CharField(label=_("Last Name"), max_length=30)
-
     status       = forms.ChoiceField(label=_("Status"), choices=STATUS_CHOICES)
     organisation = forms.CharField(label=_("Organisation"), max_length=128)

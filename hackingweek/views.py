@@ -197,8 +197,6 @@ class SignupView(account.views.SignupView):
 
    def create_profile(self, form):
       user = self.created_user
-      user.first_name = form.cleaned_data['first_name']
-      user.last_name  = form.cleaned_data['last_name']
       user.save()
 
       profile = user.userprofile
@@ -213,9 +211,6 @@ class SettingsView(account.views.SettingsView):
    def get_initial(self):
       initial = super(SettingsView, self).get_initial()
 
-      initial["first_name"] = self.request.user.first_name
-      initial["last_name"]  = self.request.user.last_name
-
       initial["status"]        = self.request.user.userprofile.status
       initial["organisation"]  = self.request.user.userprofile.organisation
 
@@ -225,8 +220,6 @@ class SettingsView(account.views.SettingsView):
       super(SettingsView, self).update_settings(form)
 
       user = self.request.user
-      user.first_name = form.cleaned_data['first_name']
-      user.last_name  = form.cleaned_data['last_name']
       user.save()
 
       profile = user.userprofile

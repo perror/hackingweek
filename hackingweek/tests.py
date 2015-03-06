@@ -263,8 +263,6 @@ class CheckSignUp(TestCase):
             data['password'] = 'password'
             data['password_confirm'] = 'password'
             data['email'] = 'user@mail.net'
-            data['first_name'] = 'firstname'
-            data['last_name'] = 'lastname'
             data['status'] = 'Bac+1'
             data['organisation'] = 'organisation'
 
@@ -284,8 +282,6 @@ class CheckSettings(TestCase):
         self.assertEqual(response.status_code, 200)
 
         data = response.context['form'].initial
-        data['first_name'] = 'firstname'
-        data['last_name'] = 'lastname'
         data['status'] = 'Bac+1'
         data['organisation'] = 'organisation'
 
