@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, Http404
@@ -138,6 +139,70 @@ class HomepageView(TemplateView):
       context['contest_begin_date'] = begin_date().strftime('%Y %B %d %H:%M:%S')
       context['contest_end_date']   = end_date().strftime('%Y %B %d %H:%M:%S')
 
+      return context
+
+
+class ContestantView(TemplateView):
+   model = User
+
+   def get_context_data(self, **kwargs):
+      context = super(ContestantView, self).get_context_data(**kwargs)
+
+      try:
+         # Get user data
+         user = User.objects.filter(pk=self.kwargs.get('pk', None))[0]
+         context['is_valid'] = not user.is_staff
+         context['username'] = user.username
+
+         # Get profile data
+         profile = user.userprofile
+         context['bio']          = profile.bio
+         context['status']       = profile.status
+         context['organisation'] = profile.organisation
+
+         # Get team data
+         try:
+            team = user.team_set.filter()[:1].get()
+            context['has_team'] = True
+            context['team'] = team.name
+            context['team_pk'] = team.pk
+         except ObjectDoesNotExist:
+            context['has_team'] = False
+
+         # Get validations data
+         try:
+            context['validations'] = Validation.objects.filter(user=user)
+         except ObjectDoesNotExist:
+            pass
+
+      except IndexError:
+         context['is_valid'] = False
+
+      return context
+
+
+class TeamView(TemplateView):
+   model = Team
+
+   def get_context_data(self, **kwargs):
+      context = super(TeamView, self).get_context_data(**kwargs)
+
+      try:
+         # Get team data
+         team = Team.objects.filter(pk=self.kwargs.get('pk', None))[0]
+         context['is_valid'] = True
+         context['name'] = team.name
+         context['members'] = team.members
+
+         # Get validations data
+         try:
+            context['validations'] = Validation.objects.filter(team=team)
+         except ObjectDoesNotExist:
+            pass
+
+      except IndexError:
+         context['is_valid'] = False
+         
       return context
 
 

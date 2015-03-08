@@ -9,9 +9,8 @@ import hackingweek.views
 
 from hackingweek import views
 from hackingweek.models import Team
-from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView
-from hackingweek.views import TeamJoinRequestView, TeamQuitView
-from hackingweek.views import ContestantListView, ChallengeListView, RankingView
+from hackingweek.views import TeamListView, TeamCreateView, TeamJoinAcceptView, TeamJoinRequestView, TeamQuitView, TeamView
+from hackingweek.views import ContestantView, ContestantListView, ChallengeListView, RankingView
 
 from hackingweek.decorators import has_no_team_required, has_team_required
 
@@ -24,8 +23,10 @@ urlpatterns = patterns("",
     url(r"^accounts/", include("account.urls")),
     url(r"^challenges/$", ChallengeListView.as_view(template_name="challenges.html"), name="challenges"),
     url(r"^contestant/list/$", ContestantListView.as_view(template_name="contestant-list.html"), name="contestant_list"),
+    url(r"^contestant/(?P<pk>\d+)/$", ContestantView.as_view(template_name="contestant.html"), name="contestant"),
     url(r"^ranking/$", RankingView.as_view(template_name="ranking.html"), name="ranking"),
     url(r"^rules/$", TemplateView.as_view(template_name="rules.html"), name="rules"),
+    url(r"^team/(?P<pk>\d+)/$", TeamView.as_view(template_name="team.html"), name="team"),
     url(r"^team/create/$", has_no_team_required(TeamCreateView.as_view(template_name="team-create.html")), name="team_create"),
     url(r"^team/join/accept/(?P<pk>\d+)/(?P<key>\w+)/$", TeamJoinAcceptView.as_view(template_name="team-join-accept.html"), name="team_join_accept"),
     url(r"^team/join/request/(?P<pk>\d+)/$", has_no_team_required(TeamJoinRequestView.as_view(template_name="team-join-request.html")), name="team_join_request"),

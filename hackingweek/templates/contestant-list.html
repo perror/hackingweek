@@ -21,7 +21,7 @@
 	  </tr>
 	  {% for user in object_list|sort_lower:"username" %}
 	  <tr>
-	    <td>{{ user.username }}</td>
+	    <td><a href="/contestant/{{ user.pk }}/">{{ user.username }}</a></td>
 	    <td>{{ user.userprofile.organisation }}</td>
 	    <td>{{ user.userprofile.status }}</td>
 	  </tr>
@@ -35,4 +35,4 @@
 	</table>
       </div>
     </div>
- {% endblock %}
+{% endblock %}

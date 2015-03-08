@@ -1,0 +1,48 @@
+{% extends "site_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap %}
+{% load hackingweek_tags %}
+
+{% block head_title %}{% trans "Team" %}{% endblock %}
+
+{% block body_id %}team{% endblock %}
+{% block body_class %}team{% endblock %}
+
+{% block body %}
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+  {% if is_valid %}
+       <h1><strong>{{ name }}</strong></h1>
+       <hr/>
+
+       <h4><strong>{% trans "Validations" %}</strong></h4>
+    {% if validations|length > 0 %}
+       <table class="table table-hover">
+	 <tr class="active">
+	   <th>{% trans "Challenge" %}</th>
+	   <th>{% trans "Date" %}</th>
+	   <th>{% trans "Contestant" %}</th>
+	   <th>{% trans "Validations" %}</th>
+	   <th>{% trans "Breakthrough" %}</th>
+	 </tr>
+	{% for item in validations %}
+	 <tr>
+	   <td>{{ item.challenge.name }}</td>
+	   <td>{{ item.date }}</td>
+	   <td>{{ item.user }}</td>
+	   <td>10</td>
+	   <td><span class="fa fa-star"></span></td>
+	 </tr>
+	{% endfor %}
+       </table>
+    {% else %}
+       <p>{% blocktrans %}No challenge validated yet.{% endblocktrans %}</p>
+    {% endif %}
+  {% else %}
+      <h3>{% blocktrans %}This team does not exists.{% endblocktrans %}</h3>
+  {% endif %}
+    </div>
+      </div>
+{% endblock %}

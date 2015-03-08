@@ -1301,3 +1301,8 @@ button.close{padding:0;cursor:pointer;background:transparent;border:0;-webkit-ap
 .fa-share-alt:before{content:"\f1e0"}
 .fa-share-alt-square:before{content:"\f1e1"}
 .fa-bomb:before{content:"\f1e2"}
+body{padding-top:80px;position:relative}
+.modal form{margin-bottom:0}
+#footer{margin-top:80px}
+#footer p{margin-bottom:0}
+#footer p.right{float:right}

@@ -1,0 +1,52 @@
+{% extends "site_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load bootstrap %}
+{% load hackingweek_tags %}
+
+{% block head_title %}{% trans "Contestant" %}{% endblock %}
+
+{% block body_id %}contestant{% endblock %}
+{% block body_class %}contestant{% endblock %}
+
+{% block body %}
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+  {% if is_valid %}
+       <h1><strong>{{ username }}</strong></h1>
+       <h4>({{ organisation }}, {{ status }}{% if has_team %}, <a href="/team/{{ team_pk }}/">{{ team }}</a>{% endif %})</h4>
+       <hr/>
+
+    {% if bio %}
+       <h4><strong>{% trans "Bio" %}</strong></h4>
+       <p>{{ bio }}</p>
+    {% endif %}
+
+       <h4><strong>{% trans "Validations" %}</strong></h4>
+    {% if validations|length > 0 %}
+       <table class="table table-hover">
+	 <tr class="active">
+	   <th>{% trans "Challenge" %}</th>
+	   <th>{% trans "Date" %}</th>
+	   <th>{% trans "Validations" %}</th>
+	   <th>{% trans "Breakthrough" %}</th>
+	 </tr>
+	{% for item in validations %}
+	 <tr>
+	   <td>{{ item.challenge.name }}</td>
+	   <td>{{ item.date }}</td>
+	   <td>10</td>
+	   <td><span class="fa fa-star"></span></td>
+	 </tr>
+	{% endfor %}
+       </table>
+    {% else %}
+       <p>{% blocktrans %}No challenge validated yet.{% endblocktrans %}</p>
+    {% endif %}
+  {% else %}
+      <h3>{% blocktrans %}This user does not exists.{% endblocktrans %}</h3>
+  {% endif %}
+    </div>
+      </div>
+{% endblock %}
