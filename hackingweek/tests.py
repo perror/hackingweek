@@ -94,6 +94,10 @@ class CheckPublicPages(TestCase):
         response = self.client.get(reverse('team_list'))
         self.assertEqual(response.status_code, 200)
 
+    def test_public_team_1(self):
+        response = self.client.get('/team/1/')
+        self.assertEqual(response.status_code, 200)
+
     def test_public_contestant_list_empty(self):
         with self.settings(CONTEST_BEGIN_DATE=one_day_before(),
                            CONTEST_END_DATE=one_day_after()):
@@ -106,6 +110,10 @@ class CheckPublicPages(TestCase):
 
     def test_public_contestant_list(self):
         response = self.client.get(reverse('contestant_list'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_public_contestant_1(self):
+        response = self.client.get('/contestant/1/')
         self.assertEqual(response.status_code, 200)
 
     def test_public_challenge_list_empty(self):
