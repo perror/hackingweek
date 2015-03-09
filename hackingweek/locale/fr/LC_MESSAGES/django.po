@@ -171,7 +171,7 @@ msgstr "Percée"
 
 #: templates/contestant.html:45 templates/team.html:41
 msgid "No challenge validated yet."
-msgstr "Pas d'épreuve validée pour l'instant"
+msgstr "Pas d'épreuve validée pour l'instant."
 
 #: templates/contestant.html:48
 msgid "This user does not exists."
