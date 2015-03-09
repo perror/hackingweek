@@ -150,28 +150,34 @@ class ContestantView(TemplateView):
 
       try:
          # Get user data
-         user = User.objects.filter(pk=self.kwargs.get('pk', None))[0]
-         context['is_valid'] = not user.is_staff
-         context['username'] = user.username
-
-         # Get profile data
-         profile = user.userprofile
-         context['bio']          = profile.bio
-         context['status']       = profile.status
-         context['organisation'] = profile.organisation
+         contestant = User.objects.filter(pk=self.kwargs.get('pk', None))[0]
+         context['is_valid'] = not contestant.is_staff
+         context['contestant'] = contestant
+         context['profile'] = contestant.userprofile
 
          # Get team data
          try:
-            team = user.team_set.filter()[:1].get()
+            team = contestant.team_set.filter()[:1].get()
             context['has_team'] = True
-            context['team'] = team.name
-            context['team_pk'] = team.pk
+            context['team'] = team
          except ObjectDoesNotExist:
             context['has_team'] = False
 
          # Get validations data
          try:
-            context['validations'] = Validation.objects.filter(user=user)
+            user_validations = Validation.objects.filter(user=contestant)
+
+            validations = []
+
+            for item in user_validations:
+               current_validations = Validation.objects.filter(challenge=item.challenge)
+               breakthrough  = (team == current_validations[:1].get().team)
+
+               validations.append({ 'validation': item,
+                                    'count' : len(current_validations),
+                                    'breakthrough' : breakthrough })
+
+            context['validations'] = validations
          except ObjectDoesNotExist:
             pass
 
@@ -179,7 +185,6 @@ class ContestantView(TemplateView):
          context['is_valid'] = False
 
       return context
-
 
 class TeamView(TemplateView):
    model = Team
@@ -191,12 +196,23 @@ class TeamView(TemplateView):
          # Get team data
          team = Team.objects.filter(pk=self.kwargs.get('pk', None))[0]
          context['is_valid'] = True
-         context['name'] = team.name
-         context['members'] = team.members
+         context['team'] = team
 
          # Get validations data
          try:
-            context['validations'] = Validation.objects.filter(team=team)
+            team_validations = Validation.objects.filter(team=team)
+
+            validations = []
+
+            for item in team_validations:
+               current_validations = Validation.objects.filter(challenge=item.challenge)
+               breakthrough  = (team == current_validations[:1].get().team)
+
+               validations.append({ 'validation': item,
+                                    'count' : len(current_validations),
+                                    'breakthrough' : breakthrough })
+
+            context['validations'] = validations
          except ObjectDoesNotExist:
             pass
 

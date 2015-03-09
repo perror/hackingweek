@@ -5,19 +5,40 @@
 {% load bootstrap %}
 {% load hackingweek_tags %}
 
-{% block head_title %}{% trans "Team" %}{% endblock %}
+{% block head_title %}{{ team.name }}{% endblock %}
 
-{% block body_id %}team{% endblock %}
-{% block body_class %}team{% endblock %}
+{% block body_id %}{{ team.name }}{% endblock %}
+{% block body_class %}{{ team.name }}{% endblock %}
 
 {% block body %}
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
   {% if is_valid %}
-       <h1><strong>{{ name }}</strong></h1>
-       <hr/>
+       <h1><strong>{{ team.name }}</strong></h1>
 
-       <h4><strong>{% trans "Validations" %}</strong></h4>
+       <h3 class="page-header">{% trans "Members" %}</h3>
+	<table class="table table-striped table-hover">
+	  <tr>
+	    <th>{% trans "Name" %}</th>
+	    <th>{% trans "Organisation" %}</th>
+	    <th>{% trans "Status" %}</th>
+	  </tr>
+	  {% for user in team.members.all|sort_lower:"username" %}
+	  <tr>
+	    <td><a href="/contestant/{{ user.pk }}/">{{ user.username }}</a></td>
+	    <td>{{ user.userprofile.organisation }}</td>
+	    <td>{{ user.userprofile.status }}</td>
+	  </tr>
+	  {% empty %}
+	  <tr>
+	    <td>{% trans "No contestant registered yet" %}.</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  {% endfor %}
+       </table>
+
+       <h3 class="page-header">{% trans "Validations" %}</h3>
     {% if validations|length > 0 %}
        <table class="table table-hover">
 	 <tr class="active">
@@ -29,11 +50,11 @@
 	 </tr>
 	{% for item in validations %}
 	 <tr>
-	   <td>{{ item.challenge.name }}</td>
-	   <td>{{ item.date }}</td>
-	   <td>{{ item.user }}</td>
-	   <td>10</td>
-	   <td><span class="fa fa-star"></span></td>
+	   <td>{{ item.validation.challenge.name }}</td>
+	   <td>{{ item.validation.date }}</td>
+	   <td>{{ item.validation.user }}</td>
+	   <td>{{ item.count }}</td>
+	   <td>{% if item.breakthrough %}<span class="fa fa-star"></span>{% endif %}</td>
 	 </tr>
 	{% endfor %}
        </table>

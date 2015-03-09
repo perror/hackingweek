@@ -5,7 +5,7 @@
 {% load bootstrap %}
 {% load hackingweek_tags %}
 
-{% block head_title %}{% trans "Contestant" %}{% endblock %}
+{% block head_title %}{{ contestant }}{% endblock %}
 
 {% block body_id %}contestant{% endblock %}
 {% block body_class %}contestant{% endblock %}
@@ -14,16 +14,15 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
   {% if is_valid %}
-       <h1><strong>{{ username }}</strong></h1>
-       <h4>({{ organisation }}, {{ status }}{% if has_team %}, <a href="/team/{{ team_pk }}/">{{ team }}</a>{% endif %})</h4>
-       <hr/>
+       <h1><strong>{{ contestant }}</strong></h1>
+       <h4>({{ profile.organisation }}, {{ profile.status }}{% if has_team %}, <a href="/team/{{ team.pk }}/">{{ team.name }}</a>{% endif %})</h4>
 
-    {% if bio %}
-       <h4><strong>{% trans "Bio" %}</strong></h4>
-       <p>{{ bio }}</p>
+    {% if profile.bio %}
+       <h3 class="page-header">{% trans "Bio" %}</h3>
+       <p>{{ profile.bio }}</p>
     {% endif %}
 
-       <h4><strong>{% trans "Validations" %}</strong></h4>
+       <h3 class="page-header">{% trans "Validations" %}</h3>
     {% if validations|length > 0 %}
        <table class="table table-hover">
 	 <tr class="active">
@@ -34,10 +33,10 @@
 	 </tr>
 	{% for item in validations %}
 	 <tr>
-	   <td>{{ item.challenge.name }}</td>
-	   <td>{{ item.date }}</td>
-	   <td>10</td>
-	   <td><span class="fa fa-star"></span></td>
+	   <td>{{ item.validation.challenge.name }}</td>
+	   <td>{{ item.validation.date }}</td>
+	   <td>{{ item.count }}</td>
+	   <td>{% if item.breakthrough %}<span class="fa fa-star"></span>{% endif %}</td>
 	 </tr>
 	{% endfor %}
        </table>
@@ -45,7 +44,7 @@
        <p>{% blocktrans %}No challenge validated yet.{% endblocktrans %}</p>
     {% endif %}
   {% else %}
-      <h3>{% blocktrans %}This user does not exists.{% endblocktrans %}</h3>
+      <h3>{% blocktrans %}This contestant does not exists.{% endblocktrans %}</h3>
   {% endif %}
     </div>
       </div>
