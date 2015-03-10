@@ -37,7 +37,5 @@ class SignupForm(account.forms.SignupForm):
 
 
 class SettingsForm(account.forms.SettingsForm):
-    bio          = forms.CharField(label=_("Bio"), max_length=256,
-                                   required=False, widget=forms.Textarea)
     status       = forms.ChoiceField(label=_("Status"), choices=STATUS_CHOICES)
     organisation = forms.CharField(label=_("Organisation"), max_length=128)

@@ -17,7 +17,6 @@ class UserProfile(models.Model):
     """Decorate the regular User model with extra information about the user"""
     user = models.OneToOneField(User)
 
-    bio          = models.CharField(max_length=256)
     status       = models.CharField(max_length=32)
     organisation = models.CharField(max_length=128)
 

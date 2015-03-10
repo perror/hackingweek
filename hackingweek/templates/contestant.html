@@ -17,11 +17,6 @@
        <h1><strong>{{ contestant }}</strong></h1>
        <h4>({{ profile.organisation }}, {{ profile.status }}{% if has_team %}, <a href="/team/{{ team.pk }}/">{{ team.name }}</a>{% endif %})</h4>
 
-    {% if profile.bio %}
-       <h3 class="page-header">{% trans "Bio" %}</h3>
-       <p>{{ profile.bio }}</p>
-    {% endif %}
-
        <h3 class="page-header">{% trans "Validations" %}</h3>
     {% if validations|length > 0 %}
        <table class="table table-hover">
