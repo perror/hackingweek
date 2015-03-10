@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
@@ -281,7 +280,7 @@ class SignupView(account.views.SignupView):
       user.save()
 
       profile = user.userprofile
-      profile.bio          = form.cleaned_data['bio']
+      profile.bio          = ''
       profile.status       = form.cleaned_data['status']
       profile.organisation = form.cleaned_data['organisation']
       profile.save()
