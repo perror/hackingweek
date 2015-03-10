@@ -536,6 +536,7 @@ class TeamJoinAcceptView(UpdateView):
                )
          return HttpResponseRedirect(self.get_success_url())
 
+      # !FIXME: Check if the requester has already a team or not
       joinrequest.team.members.add(joinrequest.requester)
       joinrequest.send_join_accept()
       joinrequest.delete()
