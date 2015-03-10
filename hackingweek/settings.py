@@ -202,8 +202,8 @@ THEME_CONTACT_EMAIL = 'hackingweek@gmail.com'
 
 TEAM_JOIN_REQUEST_EXPIRE_DAYS = 2
 
-CONTEST_BEGIN_DATE = '2015-04-03 20:00'
-CONTEST_END_DATE   = '2015-04-12 02:01'
+CONTEST_BEGIN_DATE = '2015-04-03 19:00'
+CONTEST_END_DATE   = '2015-04-12 01:01'
 
 from django.contrib.messages import constants as message_constants
 
