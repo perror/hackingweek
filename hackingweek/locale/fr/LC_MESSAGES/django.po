@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-09 00:07+0100\n"
+"POT-Creation-Date: 2015-03-13 20:02+0100\n"
 "PO-Revision-Date: 2014-Jan-3 10:38+Europe/Paris\n"
 "Last-Translator: Emmanuel Fleury <emmanuel.fleury@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,64 +18,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:35 forms.py:42 templates/contestant.html:22
-msgid "Bio"
-msgstr "Bio"
-
-#: forms.py:37 forms.py:44 templates/challenges.html:29
+#: forms.py:35 forms.py:40 templates/challenges.html:29
 #: templates/challenges.html.py:51 templates/contestant-list.html:20
+#: templates/team.html:24
 msgid "Status"
 msgstr "Statut"
 
-#: forms.py:38 forms.py:45 templates/contestant-list.html:19
+#: forms.py:36 forms.py:41 templates/contestant-list.html:19
+#: templates/team.html:23
 msgid "Organisation"
 msgstr "Organisation"
 
-#: views.py:29
+#: views.py:28
 msgid "Sorry, wrong key. Try again !"
 msgstr "Désolé, mauvaise clef. Essayez à nouveau !"
 
-#: views.py:33
+#: views.py:32
 msgid "Congratulation, you found the key !"
 msgstr "Excellent, vous avez trouvé la clef !"
 
-#: views.py:37
+#: views.py:36
 msgid "Great, you just made a breakthrough !"
 msgstr "Félicitation, vous venez de faire une percée !"
 
-#: views.py:41
+#: views.py:40
 msgid "This challenge was already done by your team !"
 msgstr "Cette épreuve a déjà été validée par votre équipe !"
 
-#: views.py:45
+#: views.py:44
 msgid "The contest is not yet started !"
 msgstr "Le concours n'a pas encore commencé !"
 
-#: views.py:49
+#: views.py:48
 msgid "The contest is finished !"
 msgstr "Le concours est fini !"
 
-#: views.py:391
+#: views.py:403
 msgid "Team has been created."
 msgstr "L'équipe a été créée."
 
-#: views.py:417
+#: views.py:429
 msgid "User has been removed from team."
 msgstr "L'utilisateur a été retiré de l'équipe."
 
-#: views.py:421
+#: views.py:433
 msgid "Team has been supressed (empty team)."
 msgstr "L'équipe a été supprimée (équipe vide)."
 
-#: views.py:455
+#: views.py:467
 msgid "A request to join the team have been sent to all members."
 msgstr "Une requête pour rejoindre l'équipe a été envoyée à tous ses membres."
 
-#: views.py:490
+#: views.py:502
 msgid "User has been accepted in the team."
 msgstr "L'utilisateur a été accepté dans l'équipe."
 
-#: views.py:494
+#: views.py:506
+msgid "User request cannot be completed ! This user already joined a team."
+msgstr ""
+"La requête n'a pu être complétée ! Cet utilisateur a déjà rejoint une équipe."
+
+#: views.py:510
 msgid "User request cannot be completed ! This key does not match this team."
 msgstr ""
 "La requête n'a pu être complétée ! Cette clef ne correspond pas à la bonne "
@@ -111,7 +114,7 @@ msgid "Challenges"
 msgstr "Épreuves"
 
 #: templates/challenges.html:25 templates/contestant-list.html:18
-#: templates/team-list.html:18
+#: templates/team-list.html:18 templates/team.html:22
 msgid "Name"
 msgstr "Nom"
 
@@ -119,9 +122,9 @@ msgstr "Nom"
 msgid "Author"
 msgstr "Auteur"
 
-#: templates/challenges.html:27 templates/contestant.html:26
-#: templates/contestant.html.py:32 templates/ranking.html:21
-#: templates/team.html:20 templates/team.html.py:27
+#: templates/challenges.html:27 templates/contestant.html:20
+#: templates/contestant.html.py:26 templates/ranking.html:21
+#: templates/team.html:41 templates/team.html.py:48
 msgid "Validations"
 msgstr "Validations"
 
@@ -149,33 +152,29 @@ msgstr "Fermer"
 msgid "Contestants"
 msgstr "Candidats"
 
-#: templates/contestant-list.html:30
+#: templates/contestant-list.html:30 templates/team.html:34
 msgid "No contestant registered yet"
 msgstr "Aucun candidat n'est encore inscrit"
 
-#: templates/contestant.html:8 templates/team.html:26
-msgid "Contestant"
-msgstr "Candidat"
-
-#: templates/contestant.html:30 templates/team.html:24
+#: templates/contestant.html:24 templates/team.html:45
 msgid "Challenge"
 msgstr "Épreuve"
 
-#: templates/contestant.html:31 templates/team.html:25
+#: templates/contestant.html:25 templates/team.html:46
 msgid "Date"
 msgstr "Date"
 
-#: templates/contestant.html:33 templates/team.html:28
+#: templates/contestant.html:27 templates/team.html:49
 msgid "Breakthrough"
 msgstr "Percée"
 
-#: templates/contestant.html:45 templates/team.html:41
+#: templates/contestant.html:39 templates/team.html:62
 msgid "No challenge validated yet."
 msgstr "Pas d'épreuve validée pour l'instant."
 
-#: templates/contestant.html:48
-msgid "This user does not exists."
-msgstr "Cet utilisateur n'existe pas."
+#: templates/contestant.html:42
+msgid "This contestant does not exists."
+msgstr "Ce candidat n'existe pas."
 
 #: templates/ranking.html:8 templates/site_base.html:23
 msgid "Ranking"
@@ -185,7 +184,7 @@ msgstr "Classement"
 msgid "Rank"
 msgstr "Rang"
 
-#: templates/ranking.html:19 templates/team.html:8
+#: templates/ranking.html:19
 msgid "Team"
 msgstr "Équipe"
 
@@ -230,7 +229,7 @@ msgstr "Envoi d'une requête pour rejoindre l'équipe"
 msgid "Request to join"
 msgstr "Envoi de la requête"
 
-#: templates/team-list.html:19
+#: templates/team-list.html:19 templates/team.html:19
 msgid "Members"
 msgstr "Membres"
 
@@ -246,7 +245,11 @@ msgstr "Quitter l'équipe"
 msgid "No team registered yet"
 msgstr "Aucune équipe n'est encore inscrite"
 
-#: templates/team.html:44
+#: templates/team.html:47
+msgid "Contestant"
+msgstr "Candidat"
+
+#: templates/team.html:65
 msgid "This team does not exists."
 msgstr "Cette équipe n'existe pas."
 
@@ -549,6 +552,12 @@ msgstr "À Faire"
 #: templatetags/hackingweek_tags.py:77
 msgid "View"
 msgstr "Voir"
+
+#~ msgid "Bio"
+#~ msgstr "Bio"
+
+#~ msgid "This user does not exists."
+#~ msgstr "Cet utilisateur n'existe pas."
 
 #~ msgid "First Name"
 #~ msgstr "Prénom"

@@ -501,6 +501,10 @@ class TeamJoinAcceptView(UpdateView):
          "level": messages.SUCCESS,
          "text": _("User has been accepted in the team.")
          },
+      "already_has_team": {
+         "level": messages.ERROR,
+         "text": _("User request cannot be completed ! This user already joined a team.")
+         },
       "wrong_team": {
          "level": messages.ERROR,
          "text": _("User request cannot be completed ! This key does not match this team.")
@@ -536,16 +540,23 @@ class TeamJoinAcceptView(UpdateView):
                )
          return HttpResponseRedirect(self.get_success_url())
 
-      # !FIXME: Check if the requester has already a team or not
-      joinrequest.team.members.add(joinrequest.requester)
-      joinrequest.send_join_accept()
-      joinrequest.delete()
+      if joinrequest.requester.team_set.filter()[:1].get() is None:
+         joinrequest.team.members.add(joinrequest.requester)
+         joinrequest.send_join_accept()
 
-      if self.messages.get("team_join_accept"):
+         if self.messages.get("team_join_accept"):
+            messages.add_message(
+               self.request,
+               self.messages["team_join_accept"]["level"],
+               self.messages["team_join_accept"]["text"]
+            )
+      else:
          messages.add_message(
             self.request,
-            self.messages["team_join_accept"]["level"],
-            self.messages["team_join_accept"]["text"]
-            )
+            self.messages['already_has_team']['level'],
+            self.messages['wrong_team']['text']
+         )
+
+      joinrequest.delete()
 
       return HttpResponseRedirect(self.get_success_url())
