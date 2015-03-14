@@ -336,6 +336,7 @@ class CheckTeamJoin(TestCase):
         self.team.save()
 
     def tearDown(self):
+        self.user0.delete()
         self.user.delete()
         self.team.delete()
 

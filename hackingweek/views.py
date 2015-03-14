@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -509,6 +507,10 @@ class TeamJoinAcceptView(UpdateView):
          "level": messages.ERROR,
          "text": _("User request cannot be completed ! This key does not match this team.")
          },
+      "request_does_not_exist": {
+         "level": messages.ERROR,
+         "text": _("User request cannot be completed ! This request does not exist.")
+         },
       }
 
    def get_object(self, queryset=None):
@@ -540,21 +542,28 @@ class TeamJoinAcceptView(UpdateView):
                )
          return HttpResponseRedirect(self.get_success_url())
 
-      if joinrequest.requester.team_set.filter()[:1].get() is None:
-         joinrequest.team.members.add(joinrequest.requester)
-         joinrequest.send_join_accept()
+      try:
+         if joinrequest.requester.team_set.filter()[:1].get() is None:
+            joinrequest.team.members.add(joinrequest.requester)
+            joinrequest.send_join_accept()
 
-         if self.messages.get("team_join_accept"):
+            if self.messages.get("team_join_accept"):
+               messages.add_message(
+                  self.request,
+                  self.messages["team_join_accept"]["level"],
+                  self.messages["team_join_accept"]["text"]
+               )
+         else:
             messages.add_message(
                self.request,
-               self.messages["team_join_accept"]["level"],
-               self.messages["team_join_accept"]["text"]
+               self.messages['already_has_team']['level'],
+               self.messages['already_has_team']['text']
             )
-      else:
+      except ObjectDoesNotExist:
          messages.add_message(
             self.request,
-            self.messages['already_has_team']['level'],
-            self.messages['wrong_team']['text']
+            self.messages['request_does_not_exist']['level'],
+            self.messages['request_does_not_exist']['text']
          )
 
       joinrequest.delete()
