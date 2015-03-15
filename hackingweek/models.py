@@ -47,6 +47,10 @@ class Team(models.Model):
     name = models.CharField(max_length=128, unique=True)
     members = models.ManyToManyField(User, null=True, blank=True)
 
+    # Storing Team score data
+    score         = models.IntegerField(default=0)
+    breakthroughs = models.IntegerField(default=0)
+
     # The 'is_active' field denotes if the team has validated at least
     # one challenge in order to know if it has to be considered as
     # active in the contest.
@@ -63,18 +67,6 @@ class Validation(models.Model):
     challenge = models.ForeignKey(Challenge, related_name='validation_challenge')
 
 
-# class Score(models.Model):
-#     score      = models.IntegerField(default=0)
-#     team       = models.ForeignKey(Team)
-#     challenges = models.ManyToManyField(Challenge,
-#                                         related_name='score_challenges',
-#                                         null=True, blank=True)
-#     breakthroughs = models.ManyToManyField(Challenge,
-#                                            related_name='score_breakthroughs',
-#                                            null=True, blank=True)
-
-
-# TODO: Remove empty team when the last user destroy his account
 class TeamJoinRequest(models.Model):
     team      = models.ForeignKey(Team)
     requester = models.ForeignKey(User, related_name='teamjoinrequest_requester')

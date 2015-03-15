@@ -86,6 +86,9 @@ def validate(request, pk):
                   messages.add_message(request,
                                        _messages['already_done']['level'],
                                        _messages['already_done']['text'])
+
+                  return HttpResponseRedirect('/challenges/')
+
                except Validation.DoesNotExist:
                   # Validation was not already registered, creating it
                   validation = Validation(date=now,
@@ -107,6 +110,46 @@ def validate(request, pk):
                                        challenge=challenge)
                validation.save()
                team.is_active = True
+               team.save()
+
+            # Recompute score for everybody #
+            # ############################# #
+            teams =  Team.objects.filter(is_active=True).all()
+            teams_count = teams.count()
+
+            # Compute the score for each challenge and the first team
+            challenge_scores = {}
+            for challenge in Challenge.objects.all():
+               validations = Validation.objects.filter(challenge=challenge)
+
+               first_validation = validations.first()
+               if (first_validation is not None):
+                  first_team = first_validation.team
+               else:
+                  first_team = None
+
+               count = validations.count()
+
+               # challenge_score contains the score for a challenge and the
+               # team which make de the breakthrough (None otherwise).
+               challenge_scores[challenge.pk] = \
+                           (teams_count * (teams_count - count + 1), first_team)
+
+            # Compute the score for each team
+            for team  in teams:
+               score = 0
+               breakthroughs = 0
+               validations = Validation.objects.filter(team=team)
+               for validation in validations:
+                  score_challenge, first_team = challenge_scores[validation.challenge.pk]
+                  score += score_challenge
+                  # Get the bonus if team has a breakthrough
+                  if (team == first_team):
+                     score += teams_count
+                     breakthroughs += 1
+
+               team.score = score
+               team.breakthroughs = breakthroughs
                team.save()
 
          else:
@@ -333,41 +376,13 @@ class RankingView(ListView):
          except Team.DoesNotExist:
             user_team = None
 
-      # Compute the score for each challenge and the first team
-      challenge_scores = {}
-      for challenge in Challenge.objects.all():
-         validations = Validation.objects.filter(challenge=challenge)
-
-         try:
-            first_team = validations[:1].get().team
-         except Validation.DoesNotExist:
-            first_team = None
-
-         count = validations.count()
-
-         # challenge_score contains the score for a challenge and the
-         # team which make de the breakthrough (None otherwise).
-         challenge_scores[challenge.pk] = \
-             (teams_count * (teams_count - count + 1), first_team)
-
-      # Compute the score for each team
+      # Get the score for each team
       ranking = []
       for team  in teams:
-         score = 0
-         breakthroughs = 0
-         validations = Validation.objects.filter(team=team)
-         for validation in validations:
-            score_challenge, first_team = challenge_scores[validation.challenge.pk]
-            if (team == first_team):
-               score += score_challenge + teams_count
-               breakthroughs += 1
-            else:
-               score += score_challenge
-
          ranking.append({'name': team.name,
-                         'score': score,
-                         'validations': validations.count(),
-                         'breakthroughs': breakthroughs,
+                         'score': team.score,
+                         'validations': Validation.objects.filter(team=team).count(),
+                         'breakthroughs': team.breakthroughs,
                          'user_team': (team == user_team),
                          })
 
