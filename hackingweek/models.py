@@ -13,27 +13,6 @@ from django.utils.translation import ugettext_lazy as _
 from hackingweek import settings
 
 
-class UserProfile(models.Model):
-    """Decorate the regular User model with extra information about the user"""
-    user = models.OneToOneField(User)
-
-    status       = models.CharField(max_length=32)
-    organisation = models.CharField(max_length=128)
-
-
-class Team(models.Model):
-    name = models.CharField(max_length=128, unique=True)
-    members = models.ManyToManyField(User, null=True, blank=True)
-
-    # The 'is_active' field denotes if the team has validated at least
-    # one challenge in order to know if it has to be considered as
-    # active in the contest.
-    is_active = models.BooleanField(default=False)
-
-    def __unicode__(self):
-        return self.name
-
-
 class Category(models.Model):
     name = models.CharField(max_length=128)
 
@@ -56,6 +35,27 @@ class Challenge(models.Model):
         return self.name
 
 
+class UserProfile(models.Model):
+    """Decorate the regular User model with extra information about the user"""
+    user = models.OneToOneField(User)
+
+    status       = models.CharField(max_length=32)
+    organisation = models.CharField(max_length=128)
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    members = models.ManyToManyField(User, null=True, blank=True)
+
+    # The 'is_active' field denotes if the team has validated at least
+    # one challenge in order to know if it has to be considered as
+    # active in the contest.
+    is_active = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Validation(models.Model):
     date = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, related_name='validation_user')
@@ -63,15 +63,15 @@ class Validation(models.Model):
     challenge = models.ForeignKey(Challenge, related_name='validation_challenge')
 
 
-class Score(models.Model):
-    score      = models.IntegerField(default=0)
-    team       = models.ForeignKey(Team)
-    challenges = models.ManyToManyField(Challenge,
-                                        related_name='score_challenges',
-                                        null=True, blank=True)
-    breakthroughs = models.ManyToManyField(Challenge,
-                                           related_name='score_breakthroughs',
-                                           null=True, blank=True)
+# class Score(models.Model):
+#     score      = models.IntegerField(default=0)
+#     team       = models.ForeignKey(Team)
+#     challenges = models.ManyToManyField(Challenge,
+#                                         related_name='score_challenges',
+#                                         null=True, blank=True)
+#     breakthroughs = models.ManyToManyField(Challenge,
+#                                            related_name='score_breakthroughs',
+#                                            null=True, blank=True)
 
 
 # TODO: Remove empty team when the last user destroy his account
