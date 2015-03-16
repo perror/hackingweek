@@ -379,7 +379,8 @@ class RankingView(ListView):
       # Get the score for each team
       ranking = []
       for team  in teams:
-         ranking.append({'name': team.name,
+         ranking.append({'pk': team.pk,
+                         'name': team.name,
                          'score': team.score,
                          'validations': Validation.objects.filter(team=team).count(),
                          'breakthroughs': team.breakthroughs,

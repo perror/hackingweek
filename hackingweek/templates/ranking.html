@@ -24,7 +24,7 @@
 	  {% for team in ranking %}
 	  <tr{% if team.user_team %} class="warning"{% endif %}>
 	    <td>{{ forloop.counter }}.</td>
-	    <td>{{ team.name }}</td>
+	    <td><a href="/team/{{ team.pk }}/">{{ team.name }}</a></td>
 	    <td>{{ team.score }} points</td>
 	    <td>{{ team.validations }}</td>
 	    <td>{% for n in team.breakthroughs|repeat %}<span class="fa fa-star"></span> {% endfor %}</td>
