@@ -544,42 +544,45 @@ class TeamJoinAcceptView(UpdateView):
       return TeamJoinRequest.objects.all()
 
    def form_valid(self, form):
-      joinrequest = TeamJoinRequest.objects.get(key=self.kwargs['key'])
-      team = Team.objects.get(pk=self.kwargs['pk'])
-
-      # FIXME: This should be checked in the get_object and NOT here!!!
-      # Check if the Request is for the right team
-      if not team == joinrequest.team:
-         if self.messages.get("wrong_team"):
-            messages.add_message(
-               self.request,
-               self.messages['wrong_team']['level'],
-               self.messages['wrong_team']['text']
-               )
-         return HttpResponseRedirect(self.get_success_url())
-
       try:
-         if joinrequest.requester.team_set.filter()[:1].get() is None:
-            joinrequest.team.members.add(joinrequest.requester)
-            joinrequest.send_join_accept()
+         joinrequest = TeamJoinRequest.objects.get(key=self.kwargs['key'])
+         team = Team.objects.get(pk=self.kwargs['pk'])
 
-            if self.messages.get("team_join_accept"):
+         # Check if the Request is for the right team
+         if not team == joinrequest.team:
+            if self.messages.get('wrong_team'):
                messages.add_message(
                   self.request,
-                  self.messages["team_join_accept"]["level"],
-                  self.messages["team_join_accept"]["text"]
+                  self.messages['wrong_team']['level'],
+                  self.messages['wrong_team']['text']
                )
-         else:
+            return HttpResponseRedirect(self.get_success_url())
+
+      except ObjectDoesNotExist:
+         if self.messages.get('request_does_not_exist'):
             messages.add_message(
                self.request,
-               self.messages['already_has_team']['level'],
-               self.messages['already_has_team']['text']
+               self.messages['request_does_not_exist']['level'],
+               self.messages['request_does_not_exist']['text']
             )
-      except ObjectDoesNotExist:
+         return HttpResponseRedirect(self.get_success_url())
+
+      # Check if requester has already a team or not
+      if not joinrequest.requester.team_set.filter()[:1]:
+         joinrequest.team.members.add(joinrequest.requester)
+         joinrequest.send_join_accept()
+
+         if self.messages.get("team_join_accept"):
+            messages.add_message(
+               self.request,
+               self.messages["team_join_accept"]["level"],
+               self.messages["team_join_accept"]["text"]
+            )
+      else:
          messages.add_message(
             self.request,
-            self.messages['request_does_not_exist']['level'],
-            self.messages['request_does_not_exist']['text']
+            self.messages['already_has_team']['level'],
+            self.messages['already_has_team']['text']
          )
 
       joinrequest.delete()
